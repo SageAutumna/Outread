@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Bucket
+   uuid = "AC44CCE4-960F-4FE7-A25A-6894BD65E682"
+   type = "1"
+   version = "2.0">
+   <Breakpoints>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "769451FA-FCCF-4CDB-AB9E-8F205CCCE717"
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "Outread/Modules/Main/ViewModel/MainPageVM.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "36"
+            endingLineNumber = "36"
+            landmarkName = "handleOnAppear(for:categoryName:)"
+            landmarkType = "7">
+            <Locations>
+               <Location
+                  uuid = "769451FA-FCCF-4CDB-AB9E-8F205CCCE717 - 9c7baa691d8d9bd"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "Outread.MainPageVM.handleOnAppear(for: Outread.Product) -&gt; ()"
+                  moduleName = "Outread"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/mac003/Downloads/Outread-main/Outread/Modules/Main/ViewModel/MainPageVM.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "36"
+                  endingLineNumber = "36"
+                  offsetFromSymbolStart = "168">
+               </Location>
+               <Location
+                  uuid = "769451FA-FCCF-4CDB-AB9E-8F205CCCE717 - 9c7baa691d8d99a"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "Outread.MainPageVM.handleOnAppear(for: Outread.Product) -&gt; ()"
+                  moduleName = "Outread"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/mac003/Downloads/Outread-main/Outread/Modules/Main/ViewModel/MainPageVM.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "37"
+                  endingLineNumber = "37"
+                  offsetFromSymbolStart = "884">
+               </Location>
+               <Location
+                  uuid = "769451FA-FCCF-4CDB-AB9E-8F205CCCE717 - fe326821c0fcc60"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "Outread.MainPageVM.handleOnAppear(for: Outread.Product, categoryName: Swift.String) -&gt; ()"
+                  moduleName = "Outread"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/mac003/Downloads/Outread-main/Outread/Modules/Main/ViewModel/MainPageVM.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "36"
+                  endingLineNumber = "36"
+                  offsetFromSymbolStart = "160">
+               </Location>
+            </Locations>
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "4FFEC6B6-7AB4-4E0D-BD82-ACEF8FE54905"
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "Outread/Modules/Main/ViewModel/MainPageVM.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "40"
+            endingLineNumber = "40"
+            landmarkName = "handleOnAppear(for:categoryName:)"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+   </Breakpoints>
+</Bucket>
