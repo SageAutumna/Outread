@@ -14,5 +14,12 @@
 		<string>Poppins-Light.ttf</string>
 		<string>Poppins-Thin.ttf</string>
 	</array>
+	<key>UILaunchScreen</key>
+	<dict>
+		<key>UIColorName</key>
+		<string>launchscreenbg</string>
+		<key>UIImageName</key>
+		<string>Logo</string>
+	</dict>
 </dict>
 </plist>
