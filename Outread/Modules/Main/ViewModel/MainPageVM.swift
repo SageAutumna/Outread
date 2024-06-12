@@ -32,8 +32,9 @@ final class MainPageVM: ObservableObject {
         }
     }
     
-    func handleOnAppear(for product: Product) {
-        if isMoreProductAvailable && products.last?.id == product.id {
+    func handleOnAppear(for product: Product,categoryName:String) {
+       let productList = filterProducts(for: categoryName)
+        if isMoreProductAvailable && product.id == productList.last?.id {
             productPage += 1
             Task {
                 isMoreProductAvailable = getAllProduct(page: productPage)
@@ -69,9 +70,7 @@ final class MainPageVM: ObservableObject {
         guard !fetchedProducts.isEmpty else { return false }
         if page == 1 { products.removeAll() }
         products.append(contentsOf: fetchedProducts)
-        if page == 1 {
             featuredProduct = products.first { $0.categories?.contains { $0.name.uppercased() == "free".uppercased() } ?? false }
-        }
         return true
     }
     
@@ -81,6 +80,7 @@ final class MainPageVM: ObservableObject {
         Task {
             do {
                 isLoadMoreData = try await fetchAllProduct(page: page)
+                
             } catch let error as APIError {
                 UIApplication.keyWindow?.rootViewController?.showAlert(msg: error.description)
             } catch {

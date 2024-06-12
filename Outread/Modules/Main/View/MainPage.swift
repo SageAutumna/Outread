@@ -52,10 +52,11 @@ struct MainPageView: View {
                 Spacer()
                     .frame(maxWidth: .infinity)
             }
-            
-            Text("Featured Read of the Day")
-                .font(.poppins(weight: .medium, size: 18))
-                .foregroundColor(.white)
+            if let _ = viewModel.featuredProduct {
+                Text("Featured Read of the Day")
+                    .font(.poppins(weight: .medium, size: 18))
+                    .foregroundColor(.white)
+            }
         }
         .padding(.horizontal, 15)
     }
@@ -113,7 +114,7 @@ struct MainPageView: View {
             .frame(width: categoryName.lowercased() == "playlist" ? ((UIScreen.main.bounds.size.width - 45) / 2) * 1.3 : ((UIScreen.main.bounds.size.width - 45) / 2))
 //            .padding(.leading, 8)
             .onAppear {
-                viewModel.handleOnAppear(for: product)
+                viewModel.handleOnAppear(for: product, categoryName: categoryName)
             }
             .onTapGesture {
                 router.push(.flashcardMain(product: product, categories: viewModel.categories))

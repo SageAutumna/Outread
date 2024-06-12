@@ -63,7 +63,6 @@ struct FlashcardMainView: View {
                 }
             }
             .onTapGesture {
-                debugPrint("tapges")
                 let item = LocalDataStorage.init(id: product.id ?? 0, name: product.name ?? "", shortDescription: product.shortDescription ?? "", categories: product.categories ?? [], images: product.images ?? [], metaData: product.metaData ?? [],descData:product.desc ?? "")
                 
                 let filter = bookmarksList.filter{$0.id == item.id}
@@ -123,25 +122,6 @@ struct FlashcardMainView: View {
             Spacer()
             bookmarks
         }.padding(.top,10)
-        //            .onTapGesture {
-        //                debugPrint("tapges")
-        //                let item = LocalDataStorage.init(id: product.id, name: product.name, shortDescription: product.shortDescription, categories: product.categories, images: product.images, metaData: product.metaData,descData:product.desc)
-        //
-        //                let filter = bookmarksList.filter{$0.id == item.id}
-        //
-        //                if filter.count > 0 {
-        //                    let index = bookmarksList.firstIndex{$0.id == item.id}
-        //                    context.delete(bookmarksList[index ?? -1])
-        //                } else {
-        //                    context.insert(item)
-        //                }
-        //                do {
-        //                    try context.save()
-        //                    print("saved successfully")
-        //                        } catch {
-        //                            print("save error----\(error)")
-        //                        }
-        //            }
     }
     
     private func loadArticle() {
