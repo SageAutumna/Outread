@@ -31,6 +31,7 @@ struct FlashcardView: View {
                             HUDView(showHUD: $isLoading)
                             
                         } else if !list.isEmpty {
+                            ScrollView {
                             VStack(alignment: .leading,spacing: 0) {
                                 Text(list[currentSectionIndex].0)
                                     .foregroundColor(Color.white)
@@ -39,39 +40,14 @@ struct FlashcardView: View {
                                     .padding([.leading,.trailing],25)
                                 
                                 
-                                ScrollView {
                                     Text(list[currentSectionIndex].1)
                                         .foregroundColor(Color.white)
                                         .font(.poppins(weight: .regular, size: 20))
                                         .padding([.leading,.trailing],25)
                                     
-                                }.padding(.bottom,10)
+                                }
                                 
-                                //                            HStack {
-                                //                                Button(action: {
-                                //                                    withAnimation {
-                                //                                        currentSectionIndex = currentSectionIndex - 1
-                                //                                }
-                                //                                }) {
-                                //                                    Text("Previous")
-                                //                                        .foregroundColor(Color.white).opacity(currentSectionIndex <= 0 ? 0.5 : 1)
-                                //                                }
-                                //                                .disabled(currentSectionIndex <= 0)
-                                //
-                                //                                Spacer()
-                                //
-                                //                                Button(action: {
-                                //                                    withAnimation {
-                                //                                        currentSectionIndex = currentSectionIndex + 1
-                                //                                    }
-                                //                                }) {
-                                //                                    Text("Next")
-                                //                                        .foregroundColor(Color.white).opacity(currentSectionIndex >= list.count - 1 ? 0.5 : 1)
-                                //                                }
-                                //                                .disabled(currentSectionIndex >= list.count - 1)
-                                //                            }
-                                // .padding()
-                            }
+                            }.padding(.bottom,10)
                         } else {
                             Text("Unable to load article")
                                 .foregroundColor(Color.white)
@@ -84,7 +60,6 @@ struct FlashcardView: View {
                 }
             }
         }
-        .navigationBarTitle("Article", displayMode: .inline)
         .gesture(DragGesture(minimumDistance: 3.0, coordinateSpace: .local)
             .onEnded { value in
                 print(value.translation)
@@ -106,35 +81,6 @@ struct FlashcardView: View {
         
     }
     
-//    private func loadArticle() {
-//        NetworkManager.shared.fetchArticleByTitle(productName) { fetchedContent in
-//            if let content = fetchedContent {
-//                // Convert HTML to plain text
-//                let plainText = content.htmlToString
-//                articleContent = plainText
-//                var arrDetails = [String]()
-//                    let body = content.allStringsBetween(start: "<p>", end: "</p>")
-//                for i in body {
-//                    arrDetails.append((i as? String)?.htmlToString ?? "")
-//                }
-//                arrDetails = arrDetails.filter{!($0.isEmpty)}
-//                for i in arrDetails {
-//                    if i.count < 100 {
-//                        list.append((i,""))
-//                    } else {
-//                        if !list.isEmpty {
-//                            let obj = list.last
-//                            let body = "\(obj?.1 ?? "")\n\(i)"
-//                            list.removeLast()
-//                            list.append((obj?.0 ?? "",body))
-//                        }
-//                    }
-//
-//                }
-//            }
-//            self.isLoading = false
-//        }
-//    }
 }
 
 extension String {
@@ -149,6 +95,10 @@ var htmlToString: String {
         return ""
     }
 }
+    
+    var removeHtmlTags : String {
+        self.replacingOccurrences(of: "<[^>]+>", with: "", options: .regularExpression, range: nil)
+    }
 }
 
 extension NetworkManager {

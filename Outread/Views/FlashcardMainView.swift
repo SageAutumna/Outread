@@ -63,22 +63,7 @@ struct FlashcardMainView: View {
                 }
             }
             .onTapGesture {
-                let item = LocalDataStorage.init(id: product.id ?? 0, name: product.name ?? "", shortDescription: product.shortDescription ?? "", categories: product.categories ?? [], images: product.images ?? [], metaData: product.metaData ?? [],descData:product.desc ?? "")
-                
-                let filter = bookmarksList.filter{$0.id == item.id}
-                
-                if filter.count > 0 {
-                    let index = bookmarksList.firstIndex{$0.id == item.id}
-                    context.delete(bookmarksList[index ?? -1])
-                } else {
-                    context.insert(item)
-                }
-                do {
-                    try context.save()
-                    print("saved successfully")
-                } catch {
-                    print("save error----\(error)")
-                }
+                bookmarkProduct(product)
             }
         }
             .gesture(DragGesture(minimumDistance: 3.0, coordinateSpace: .local)
@@ -145,13 +130,34 @@ struct FlashcardMainView: View {
                             let body = "\(obj?.1 ?? "")\n\(i)"
                             list.removeLast()
                             list.append((obj?.0 ?? "",body))
+                        } else {
+                            if i.contains(":") {
+                                let data = i.components(separatedBy: ":")
+                                list.append((data[0],data[1]))
+                            }
                         }
                     }
-                    
                 }
                 list = list.filter{!($0.1.isEmpty)}
                 isLoading = false
             }
+        }
+    }
+    
+    
+    func bookmarkProduct(_ product: Product) {
+        let item = LocalDataStorage(id: product.id ?? 0, name: product.name ?? "", shortDescription: product.shortDescription ?? "", categories: product.categories ?? [], images: product.images ?? [], metaData: product.metaData ?? [], descData: product.desc ?? "")
+        
+        if let existingIndex = bookmarksList.firstIndex(where: { $0.id == item.id }) {
+            context.delete(bookmarksList[existingIndex])
+        } else {
+            context.insert(item)
+        }
+        
+        do {
+            try context.save()
+        } catch {
+            UIApplication.keyWindow?.rootViewController?.showAlert(msg: error.localizedDescription)
         }
     }
     
@@ -182,21 +188,10 @@ struct FlashcardMainView: View {
     private var bookmarks : some View {
         VStack {
             ZStack {
-                //                Button(action: {
-                //                    let item = Item(timestamp: Date(), product: product)
-                //                    if items.contains(item) {
-                //                        items.removeAll { obj in
-                //                            obj == item
-                //                        }
-                //                    } else {
-                //                        context.insert(item)
-                //                    }
-                //                }) {
-                let item = LocalDataStorage.init(id: product.id ?? 0, name: product.name ?? "", shortDescription: product.shortDescription ?? "", categories: product.categories ?? [], images: product.images ?? [], metaData: product.metaData ?? [],descData:product.desc ?? "")
                 
-                let filter = bookmarksList.filter{$0.id == item.id}
-                if filter.count > 0 {
-                    Image(uiImage: UIImage(resource: .icBookmark))
+                
+                if isBookmarkAdded {
+                    Image(uiImage: UIImage(resource: .icBookmarked))
                         .resizable()
                         .frame(width:22, height: 28)
                         .foregroundColor(.white)
@@ -210,27 +205,15 @@ struct FlashcardMainView: View {
                         .padding(.trailing, 0)
                         .padding([.trailing],15)
                 }
-                
-                
-                //  .onTapGesture {
-                //                            let item = Item(product: product)
-                //                                                if items.contains(item) {
-                //                                                    context?.delete(item)
-                //                                                } else {
-                //                                                    context?.insert(item)
-                //                                                }
-                //                            do {
-                //                                try context?.save()
-                //                                    } catch {
-                //                                        print(error)
-                //                                    }
-                //                        }
-                
-                
-                //}.frame(width:100, height: 70)
             }
         }
         
+    }
+    
+    
+    var isBookmarkAdded : Bool {
+        let item = LocalDataStorage.init(id: product.id ?? 0, name: product.name ?? "", shortDescription: product.shortDescription ?? "", categories: product.categories ?? [], images: product.images ?? [], metaData: product.metaData ?? [],descData:product.desc ?? "")
+        return bookmarksList.filter{$0.id == item.id}.count > .zero
     }
     
     var headerTitle : some View {
@@ -244,7 +227,7 @@ struct FlashcardMainView: View {
     
     var subHeader : some View {
         VStack {
-            Text(product.shortDescription?.htmlToString ?? "")
+            Text(product.shortDescription?.removeHtmlTags ?? "")
                 .font(.custom("Poppins-Regular", size: 17))
                 .foregroundColor(.white)
                 .padding([.leading,.trailing], 15)
@@ -273,7 +256,7 @@ struct FlashcardMainView: View {
     
     var descriptionView : some View {
         VStack {
-            Text(product.desc?.htmlToString ?? "")
+            Text(product.desc?.removeHtmlTags ?? "")
                 .font(.custom("Poppins-Medium", size: 17))
                 .foregroundColor(.white)
                 .padding([.leading,.trailing], 15)
