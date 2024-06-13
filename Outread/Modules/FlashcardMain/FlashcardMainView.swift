@@ -14,7 +14,7 @@ struct FlashcardMainView: View {
     var width = (UIScreen.main.bounds.size.width - 45 )/2
     var height = ((UIScreen.main.bounds.size.width - 45  )/2) * 1.3
     @State private var articleContent: String?
-    @State private var list = [(String,String)]()
+    @State private var list = [ListType]()
     @Environment(\.dismiss) var dismiss
     @State private var isSwipe = false
     @Environment(\.modelContext) var context
@@ -97,7 +97,7 @@ struct FlashcardMainView: View {
             .onAppear(perform: {
                 loadArticle()
                 for i in 0..<(product.categories?.count ?? 0) {
-                    let filter = categories.filter{$0.name.lowercased() == product.categories?[i].name.lowercased() }
+                    let filter = categories.filter{$0.name?.lowercased() == product.categories?[i].name?.lowercased() }
                     if filter.count > 0 {
                         categoriesList.append(filter.first!)
                     } else {
@@ -138,18 +138,18 @@ struct FlashcardMainView: View {
                 arrDetails = arrDetails.filter{!($0.isEmpty)}
                 for i in arrDetails {
                     if i.count < 100 {
-                        list.append((i,""))
+                        list.append(ListType(str1: i, str2: ""))
                     } else {
                         if !list.isEmpty {
                             let obj = list.last
-                            let body = "\(obj?.1 ?? "")\n\(i)"
+                            let body = "\(obj?.str2 ?? "")\n\(i)"
                             list.removeLast()
-                            list.append((obj?.0 ?? "",body))
+                            list.append(ListType(str1: obj?.str1 ?? "",str2: body))
                         }
                     }
                     
                 }
-                list = list.filter{!($0.1.isEmpty)}
+                list = list.filter{!($0.str2.isEmpty)}
                 isLoading = false
             }
         }
@@ -296,4 +296,9 @@ extension View {
                 // if value.translation.height > 0 { down() }
             }))
     }
+}
+
+struct ListType: Codable, Equatable {
+    var str1: String
+    var str2: String
 }

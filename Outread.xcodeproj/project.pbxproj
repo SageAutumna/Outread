@@ -50,7 +50,6 @@
 		38BA35AD2C0205F9009BB640 /* SearchScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38BA35AC2C0205F9009BB640 /* SearchScreen.swift */; };
 		9231EB692BFF69D700959909 /* ArticlesVIew.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9231EB682BFF69D700959909 /* ArticlesVIew.swift */; };
 		9231EB6B2C008B3900959909 /* CategoriesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9231EB6A2C008B3900959909 /* CategoriesView.swift */; };
-		923C5F1B2C1856EB0033AC47 /* BlinkViewModifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = 923C5F192C1856EB0033AC47 /* BlinkViewModifier.swift */; };
 		923C5F1C2C1856EB0033AC47 /* TaskCancellable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 923C5F1A2C1856EB0033AC47 /* TaskCancellable.swift */; };
 		92B2A0FA2BFB4933005F91FB /* FeatureTopArticle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92B2A0F92BFB4933005F91FB /* FeatureTopArticle.swift */; };
 		92EA9F9B2C11821700014703 /* PlayListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92EA9F992C11821600014703 /* PlayListView.swift */; };
@@ -119,7 +118,6 @@
 		38BA35AC2C0205F9009BB640 /* SearchScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchScreen.swift; sourceTree = "<group>"; };
 		9231EB682BFF69D700959909 /* ArticlesVIew.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ArticlesVIew.swift; sourceTree = "<group>"; };
 		9231EB6A2C008B3900959909 /* CategoriesView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategoriesView.swift; sourceTree = "<group>"; };
-		923C5F192C1856EB0033AC47 /* BlinkViewModifier.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BlinkViewModifier.swift; sourceTree = "<group>"; };
 		923C5F1A2C1856EB0033AC47 /* TaskCancellable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TaskCancellable.swift; sourceTree = "<group>"; };
 		92B2A0F92BFB4933005F91FB /* FeatureTopArticle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeatureTopArticle.swift; sourceTree = "<group>"; };
 		92EA9F992C11821600014703 /* PlayListView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PlayListView.swift; sourceTree = "<group>"; };
@@ -233,7 +231,6 @@
 		381075E02C039D7B0074864C /* Classes */ = {
 			isa = PBXGroup;
 			children = (
-				923C5F192C1856EB0033AC47 /* BlinkViewModifier.swift */,
 				923C5F1A2C1856EB0033AC47 /* TaskCancellable.swift */,
 			);
 			path = Classes;
@@ -289,6 +286,7 @@
 		386A96CC2C141DA300A78CC6 /* Modules */ = {
 			isa = PBXGroup;
 			children = (
+				389251BC2C1A3101009510E9 /* FlashcardMain */,
 				3818CCB02C1559DD00C25436 /* Main */,
 				386A96D22C14241700A78CC6 /* Tab */,
 				386A96CD2C141DAE00A78CC6 /* Onboarding */,
@@ -326,6 +324,14 @@
 				386A96D32C14242400A78CC6 /* MainTabView.swift */,
 			);
 			path = View;
+			sourceTree = "<group>";
+		};
+		389251BC2C1A3101009510E9 /* FlashcardMain */ = {
+			isa = PBXGroup;
+			children = (
+				92EA9F9A2C11821700014703 /* FlashcardMainView.swift */,
+			);
+			path = FlashcardMain;
 			sourceTree = "<group>";
 		};
 		3898C5BE2C021233006A6C3C /* Resource */ = {
@@ -486,7 +492,6 @@
 				9231EB682BFF69D700959909 /* ArticlesVIew.swift */,
 				9231EB6A2C008B3900959909 /* CategoriesView.swift */,
 				92EA9F992C11821600014703 /* PlayListView.swift */,
-				92EA9F9A2C11821700014703 /* FlashcardMainView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -635,7 +640,6 @@
 				381075DF2C039D4E0074864C /* Ext+Bundle.swift in Sources */,
 				92EA9F9E2C12D65300014703 /* LocalStorage.swift in Sources */,
 				9C370DE12BBB197B001E9591 /* BookmarkView.swift in Sources */,
-				923C5F1B2C1856EB0033AC47 /* BlinkViewModifier.swift in Sources */,
 				9C9EFE402B579AA200B43B99 /* OutreadApp.swift in Sources */,
 				38BA35AD2C0205F9009BB640 /* SearchScreen.swift in Sources */,
 				381075CA2C0392240074864C /* APIService.swift in Sources */,

@@ -15,11 +15,11 @@ struct CategoryView: View {
     
     //MARK: - Body
     var body: some View {
-        Text(category.name)
-            .frame(width: category.name.lowercased() == "playlist" ? 0 : isViewAll ? (UIScreen.main.bounds.size.width - 120)/2 : 100 , height: 70)
+        Text(category.name ?? "")
+            .frame(width: category.name?.lowercased() == "playlist" ? 0 : isViewAll ? (UIScreen.main.bounds.size.width - 120)/2 : 100 , height: 70)
             .foregroundColor(.white)
-            .padding(.horizontal, category.name.lowercased() == "playlist" ? 0 : 20)
-            .background(Color(hex: category.colorCategory))
+            .padding(.horizontal, category.name?.lowercased() == "playlist" ? 0 : 20)
+            .background(Color(hex: category.colorCategory ?? ""))
             .clipShape(
                 RoundedRectangle(cornerRadius: 13, style: .continuous)
             )
@@ -44,14 +44,14 @@ struct CategoriesScrollView: View {
             HStack(spacing: 10) {
                 ForEach(categories, id: \.id) { category in
                     if isNeedFilter {
-                        if filterList(products, categoryName: category.name).count > 2 {
+                        if filterList(products, categoryName: category.name ?? "").count > 2 {
                             CategoryView(category: category) {
-                                didTap(category.id)
+                                didTap(category.id ?? 0)
                             }
                         }
                     } else {
                         CategoryView(category: category) {
-                            didTap(category.id)
+                            didTap(category.id ?? 0)
                         }
                     }
                 }
@@ -64,25 +64,24 @@ struct CategoriesScrollView: View {
     func filterList(_ list: [Product], categoryName: String) -> [Product] {
         return list
             .filter { $0.categories?.count ?? 0 > 0 }
-            .filter{ $0.categories?.contains { cat in cat.name.lowercased() == categoryName.lowercased() } ?? false }
+            .filter{ $0.categories?.contains { cat in cat.name?.lowercased() == categoryName.lowercased() } ?? false }
     }
 }
 
 struct Category: Identifiable, Codable, Equatable {
-    let id: Int
-    let name: String
-    let parent: Int?
-    var colorCategory : String
+    var id: Int?
+    var name: String?
+    var parent: Int?
+    var colorCategory : String?
     
     enum CodingKeys: String, CodingKey {
         case id
         case name
         case parent
         case colorCategory = "color_category"
-        
     }
     
-    init(from decoder: Decoder) throws {
+    /*init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         do {
             self.id = try container.decode(Int.self, forKey: .id)
@@ -104,7 +103,7 @@ struct Category: Identifiable, Codable, Equatable {
         } catch {
             self.colorCategory = ""
         }
-    }
+    }*/
     
     // A custom initializer isn't strictly necessary unless you are doing additional setup.
     // The synthesized initializer by conforming to Decodable should be sufficient.

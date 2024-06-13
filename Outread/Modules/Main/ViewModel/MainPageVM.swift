@@ -9,7 +9,7 @@ import SwiftUI
 
 @MainActor
 final class MainPageVM: ObservableObject {
-    //MARK: - Properties
+    // MARK: - Properties
     @Published var featuredProduct: Product?
     @Published var products = [Product]()
     @Published var playLists = [Product]()
@@ -20,46 +20,32 @@ final class MainPageVM: ObservableObject {
     private var taskDisposeBag = TaskBag()
     private let networkHandler: NetworkServices
     
-    //MARK: - Life-Cycle
+    // MARK: - Life-Cycle
     init(networkHandler: NetworkServices = NetworkHandler()) {
         self.networkHandler = networkHandler
     }
     
-    //MARK: - Functions
-    func filterProducts(for categoryName: String) -> [Product] {
-        products.filter { product in
-            product.categories?.contains(where: { $0.name.uppercased() == categoryName.uppercased() }) ?? false
-        }
-    }
-    
-    func handleOnAppear(for product: Product,categoryName:String) {
-       let productList = filterProducts(for: categoryName)
-        if isMoreProductAvailable && product.id == productList.last?.id {
-            productPage += 1
-            Task {
-                isMoreProductAvailable = getAllProduct(page: productPage)
-            }
-        }
-    }
-
-    func getAllData() {
+    // MARK: - Functions
+    func getAllData(complition: @escaping ([Product], [Category]) -> Void) {
         isLoading = true
         Task {
             do {
                 async let categories = try networkHandler.fetchCategories(excludingParentID: 59)
                 async let playList = try networkHandler.fetchPlayList()
                 async let isLoadMoreData = try fetchAllProduct(page: productPage)
+                
                 self.categories = try await categories
-                self.categories = self.categories.moveToFront { $0.name.uppercased() == "trending".uppercased() }
-                self.categories = self.categories.moveToFront { $0.name.uppercased() == "playlist".uppercased() }
                 self.playLists = try await playList.map { list in
                     Product(id: list.id, name: list.name, images: [list.image], count: list.count)
                 }
                 self.isMoreProductAvailable = try await isLoadMoreData
-            } catch let error as APIError {
-                UIApplication.keyWindow?.rootViewController?.showAlert(msg: error.description)
+                
+                // Move categories to front if necessary
+                self.categories = self.categories.moveToFront { $0.name?.uppercased() == "TRENDING" }
+                self.categories = self.categories.moveToFront { $0.name?.uppercased() == "PLAYLIST" }
+                complition(self.products, self.categories)
             } catch {
-                UIApplication.keyWindow?.rootViewController?.showAlert(msg: error.localizedDescription)
+                handleError(error)
             }
             isLoading = false
         }.store(in: &taskDisposeBag)
@@ -70,24 +56,29 @@ final class MainPageVM: ObservableObject {
         guard !fetchedProducts.isEmpty else { return false }
         if page == 1 { products.removeAll() }
         products.append(contentsOf: fetchedProducts)
-            featuredProduct = products.first { $0.categories?.contains { $0.name.uppercased() == "free".uppercased() } ?? false }
+        featuredProduct = products.first { $0.categories?.contains { $0.name?.uppercased() == "FREE" } ?? false }
         return true
     }
     
-    func getAllProduct(page: Int) -> Bool {
+    func getAllProduct(page: Int) async -> Bool {
         isLoading = true
         var isLoadMoreData = false
-        Task {
-            do {
-                isLoadMoreData = try await fetchAllProduct(page: page)
-                
-            } catch let error as APIError {
-                UIApplication.keyWindow?.rootViewController?.showAlert(msg: error.description)
-            } catch {
-                UIApplication.keyWindow?.rootViewController?.showAlert(msg: error.localizedDescription)
-            }
-            isLoading = false
-        }.store(in: &taskDisposeBag)
+        do {
+            isLoadMoreData = try await fetchAllProduct(page: page)
+        } catch {
+            handleError(error)
+        }
+        isLoading = false
         return isLoadMoreData
     }
+    
+    private func handleError(_ error: Error) {
+        if let apiError = error as? APIError {
+            UIApplication.keyWindow?.rootViewController?.showAlert(msg: apiError.description)
+        } else {
+            UIApplication.keyWindow?.rootViewController?.showAlert(msg: error.localizedDescription)
+        }
+    }
 }
+
+

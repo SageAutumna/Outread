@@ -5,7 +5,7 @@ struct FlashcardView: View {
     @State private var articleContent: String?
     @State private var isLoading = false
     @State private var currentSectionIndex = 0
-     var list : [(String,String)]
+     var list: [ListType]
     @Environment(\.dismiss) var dismiss
     
     private var contentSections: [String] {
@@ -32,7 +32,7 @@ struct FlashcardView: View {
                             
                         } else if !list.isEmpty {
                             VStack(alignment: .leading,spacing: 0) {
-                                Text(list[currentSectionIndex].0)
+                                Text(list[currentSectionIndex].str1)
                                     .foregroundColor(Color.white)
                                     .font(.poppins(weight: .medium, size: 30))
                                     .padding([.top,.bottom],10)
@@ -40,7 +40,7 @@ struct FlashcardView: View {
                                 
                                 
                                 ScrollView {
-                                    Text(list[currentSectionIndex].1)
+                                    Text(list[currentSectionIndex].str2)
                                         .foregroundColor(Color.white)
                                         .font(.poppins(weight: .regular, size: 20))
                                         .padding([.leading,.trailing],25)

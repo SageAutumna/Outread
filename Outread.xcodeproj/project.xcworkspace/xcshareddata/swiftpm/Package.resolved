@@ -1,4 +1,5 @@
 {
+  "originHash" : "47f518b8864097695529fddaa8e561de71aecb29a75ec634b9f4b473a81d95ab",
   "pins" : [
     {
       "identity" : "ihprogresshud",
@@ -19,5 +20,5 @@
       }
     }
   ],
-  "version" : 2
+  "version" : 3
 }

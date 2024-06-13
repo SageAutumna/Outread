@@ -1,13 +1,20 @@
 import SwiftUI
 import SwiftData
+import UIKit
 
 struct MainPageView: View {
     // MARK: - Properties
     @EnvironmentObject private var router: Router<AppRoutes>
     @ObservedObject private var viewModel = MainPageVM()
     @Query var bookmarksList: [LocalDataStorage]
+    @Query var products: [LocalProduct]
+    @Query var categories: [LocalCategory]
     @Environment(\.modelContext) var context
     @State private var selectedCategoryName = ""
+    @State private var isDataLoaded: Bool = false
+    
+    @State private var tempProducts: [Product] = []
+    @State private var tempCats: [Category] = []
     
     var grid: [GridItem] = [GridItem(.flexible())]
     
@@ -23,16 +30,13 @@ struct MainPageView: View {
                     categoriesSection
                     setProductHeader()
                 }
+                .redacted(reason: products.isEmpty ? .placeholder : [])
             }
             .padding(.top, 15)
             .padding(.bottom, ((UIApplication.keyWindow?.safeAreaInsets.bottom ?? 0) + 35))
-            
-            hud(isLoading: $viewModel.isLoading)
         }
-        .task {
-            if viewModel.categories.isEmpty {
-                viewModel.getAllData()
-            }
+        .onAppear {
+            loadData()
         }
     }
     
@@ -52,6 +56,7 @@ struct MainPageView: View {
                 Spacer()
                     .frame(maxWidth: .infinity)
             }
+            
             if let _ = viewModel.featuredProduct {
                 Text("Featured Read of the Day")
                     .font(.poppins(weight: .medium, size: 18))
@@ -78,33 +83,33 @@ struct MainPageView: View {
     
     var categoriesSection: some View {
         VStack(alignment: .leading) {
-            if !viewModel.categories.isEmpty {
+//            if !categories.isEmpty {
                 CategoryHeader(title: "Categories") {
-                    router.push(.categories(categories: viewModel.categories, products: viewModel.products, playlists: viewModel.playLists))
+                    router.push(.categories(categories: tempCats, products: tempProducts, playlists: viewModel.playLists))
                 }
                 
-                CategoriesScrollView(categories: viewModel.categories, products: viewModel.products) { id in
-                    if let selectedCategory = viewModel.categories.first(where: { $0.id == id }) {
+                CategoriesScrollView(categories: tempCats, products: tempProducts) { id in
+                    if let selectedCategory = categories.first(where: { $0.id == id }) {
                         selectedCategoryName = selectedCategory.name
-                        router.push(.articles(products: viewModel.products, categoryName: selectedCategoryName, playlists: viewModel.playLists, categories: viewModel.categories))
+                        router.push(.articles(products: tempProducts, categoryName: selectedCategoryName, playlists: viewModel.playLists, categories: tempCats))
                     }
                 }
-            }
+//            }
         }
     }
     
     func setProductHeader() -> some View {
         LazyVStack {
-            ForEach(viewModel.categories, id: \.id) { category in
-                if viewModel.filterProducts(for: category.name).count > 2 {
+            ForEach(categories, id: \.id) { category in
+//                if filterTempProducts(for: category.name).count > 2 {
                     CategoryHeader(title: category.name) {
                         selectedCategoryName = category.name
                     }
                     
-                    ScrollView(.horizontal) {
-                        showProductHGrid(category.name, products: viewModel.filterProducts(for: category.name))
+                    ScrollView(.horizontal, showsIndicators: false) {
+                        showProductHGrid(category.name, products: filterTempProducts(for: category.name))
                     }
-                }
+//                }
             }
         }
     }
@@ -112,10 +117,6 @@ struct MainPageView: View {
     func productNavigationLink(for product: Product, categoryName: String) -> some View {
         ProductRow(product: product, articleType: categoryName.lowercased() == "playlist" ? .playlist : .other, boormark: bookmarkProduct)
             .frame(width: categoryName.lowercased() == "playlist" ? ((UIScreen.main.bounds.size.width - 45) / 2) * 1.3 : ((UIScreen.main.bounds.size.width - 45) / 2))
-//            .padding(.leading, 8)
-            .onAppear {
-                viewModel.handleOnAppear(for: product, categoryName: categoryName)
-            }
             .onTapGesture {
                 router.push(.flashcardMain(product: product, categories: viewModel.categories))
             }
@@ -131,11 +132,72 @@ struct MainPageView: View {
     }
     
     // MARK: - Methods
+    func loadData() {
+        if !isDataLoaded {
+            viewModel.getAllData { products, categories in
+                for product in products {
+                    self.saveProduct(product)
+                }
+                for category in categories {
+                    self.saveCategory(category)
+                }
+                tempProducts = products
+                tempCats = categories
+                self.isDataLoaded = true
+            }
+        } else {
+            products.forEach { localProduct in
+                tempProducts.append(Product(id: localProduct.id, name: localProduct.name, permalink: localProduct.permalink, desc: localProduct.desc, shortDescription: localProduct.shortDescription, status: localProduct.status, price: localProduct.status, categories: localProduct.categories, images: localProduct.images, metaData: localProduct.metaData, count: localProduct.count))
+            }
+            categories.forEach { localCategory in
+                tempCats.append(Category(id: localCategory.id, name: localCategory.name, parent: localCategory.parent, colorCategory: localCategory.colorCategory))
+            }
+        }
+    }
+    
     func bookmarkProduct(_ product: Product) {
         let item = LocalDataStorage(id: product.id ?? 0, name: product.name ?? "", shortDescription: product.shortDescription ?? "", categories: product.categories ?? [], images: product.images ?? [], metaData: product.metaData ?? [], descData: product.desc ?? "")
         
         if let existingIndex = bookmarksList.firstIndex(where: { $0.id == item.id }) {
             context.delete(bookmarksList[existingIndex])
+        } else {
+            context.insert(item)
+        }
+        
+        do {
+            try context.save()
+        } catch {
+            UIApplication.keyWindow?.rootViewController?.showAlert(msg: error.localizedDescription)
+        }
+    }
+    
+    func filterTempProducts(for categoryName: String) -> [Product] {
+        tempProducts.filter { product in
+            product.categories?.contains(where: { $0.name?.uppercased() == categoryName.uppercased() }) ?? false
+        }
+    }
+    
+    func saveProduct(_ product: Product) {
+        let item = LocalProduct(id: product.id ?? 0, name: product.name ?? "", permalink: product.permalink ?? "", desc: product.desc ?? "", shortDescription: product.shortDescription ?? "", status: product.status ?? "", price: product.price ?? "", categories: product.categories ?? [], images: product.images ?? [], metaData: product.metaData ?? [], count: product.count ?? 0)
+        
+        if let existingIndex = products.firstIndex(where: { $0.id == item.id }) {
+            context.delete(products[existingIndex])
+        } else {
+            context.insert(item)
+        }
+        
+        do {
+            try context.save()
+        } catch {
+            UIApplication.keyWindow?.rootViewController?.showAlert(msg: error.localizedDescription)
+        }
+    }
+    
+    func saveCategory(_ cat: Category) {
+        let item = LocalCategory(id: cat.id ?? 0, name: cat.name ?? "", parent: cat.parent, colorCategory: cat.colorCategory ?? "")
+        
+        if let existingIndex = categories.firstIndex(where: { $0.id == item.id }) {
+            context.delete(categories[existingIndex])
         } else {
             context.insert(item)
         }
