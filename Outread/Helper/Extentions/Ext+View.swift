@@ -14,7 +14,13 @@ extension View {
         KFImage.url(url)
             .resizable()
             .placeholder {
-                ProgressView()
+                placeHolderImage
+                    .resizable()
+                    .aspectRatio(contentMode: .fill)
+                    .clipShape(
+                        RoundedRectangle(cornerRadius: 12)
+                    )
+                    .redacted(reason: .placeholder)
             }
             .loadDiskFileSynchronously()
             .cacheMemoryOnly()
@@ -26,8 +32,8 @@ extension View {
 extension View {
     func hud(isLoading: Binding<Bool>) -> some View {
         ZStack {
-           // self
-
+            // self
+            
             if isLoading.wrappedValue {
                 ZStack {
                     HUDView(showHUD: isLoading)
