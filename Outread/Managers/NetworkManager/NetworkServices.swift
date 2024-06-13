@@ -24,7 +24,7 @@ class NetworkHandler: NetworkServices {
     
     func fetchCategories(excludingParentID parentID: Int) async throws -> [Category] {
         let categories: [Category] = try await APIService.request(API.categories(perentID: nil))
-        return categories.filter { (($0.parent ?? -1) != parentID ) && !$0.colorCategory.isEmpty }
+        return categories.filter { (($0.parent ?? -1) != parentID ) && !($0.colorCategory?.isEmpty ?? false) }
     }
     
     func fetchPlayList() async throws -> [Playlist] {

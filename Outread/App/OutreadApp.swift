@@ -19,6 +19,8 @@ struct OutreadApp: App {
         let schema = Schema([
             LocalStorageData.self,
             LocalDataStorage.self,
+            LocalProduct.self,
+            LocalCategory.self
         ])
         let modelConfiguration = ModelConfiguration(schema: schema, isStoredInMemoryOnly: false)
         
@@ -34,7 +36,8 @@ struct OutreadApp: App {
     // MARK: - Body
     var body: some Scene {
         WindowGroup {
-            RouterHost(Router(initial: hasCompletedOnboarding ? AppRoutes.tab : AppRoutes.onboarding)) { route in
+//            Router(initial: hasCompletedOnboarding ? AppRoutes.tab : AppRoutes.onboarding)
+            RouterHost(Router(initial: AppRoutes.tab)) { route in
                 switch route {
                 case .onboarding: 
                     OnboardingView()
@@ -48,6 +51,8 @@ struct OutreadApp: App {
                     CategoriesView(categories: categories, products: products, playLists: playlists)
                 case let .flashcardMain(product, categories):
                     FlashcardMainView(product: product, categories: categories)
+                case let .flashcard(productName, list):
+                    FlashcardView(productName: productName, list: list)
                 }
             }
         }

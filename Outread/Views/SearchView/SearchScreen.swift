@@ -10,6 +10,7 @@ import SwiftUI
 struct SearchScreen: View {
     //MARK: - Properties
     @ObservedObject private var searchViewModel = SearchScreenViewModel()
+    @State var isLoading: Bool = true
     
     private var data  = ["AI techniques", "Mind over mute", "Human Centromeres", "Machine learining", "Surgery anxiety", "Nature's network in computing"]
     private let adaptiveColumn = [
@@ -61,6 +62,12 @@ struct SearchScreen: View {
                             LazyVStack(spacing: 16) {
                                 ForEach(arrProduct, id: \.id) { product in
                                     ProductView(product: product)
+                                        .redacted(reason: (searchViewModel.isLoading || isLoading) ? .placeholder : [])
+                                        .onAppear(perform: {
+                                            DispatchQueue.main.asyncAfter(deadline: .now() + 3) {
+                                                isLoading = false
+                                            }
+                                        })
                                 }
                             }
                         } else {

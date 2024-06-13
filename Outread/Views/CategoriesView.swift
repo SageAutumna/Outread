@@ -32,7 +32,7 @@ struct CategoriesView: View {
         self.pressViewAll = pressViewAll
         self.showNavigation = showNavigation
         self.categories.removeAll { cat in
-            cat.name.lowercased() == "playlist"
+            cat.name?.lowercased() == "playlist"
         }
     }
     

@@ -80,7 +80,7 @@ struct ArticlesVIew: View {
     
     func filterList(_ list:[Product],categoryName:String) -> [Product]{
         return list.filter{$0.categories?.count ?? 0 > 0}.filter{$0.categories?.contains { cat in
-            cat.name.lowercased() == categoryName.lowercased()
+            cat.name?.lowercased() == categoryName.lowercased()
         } ?? false }
     }
 }

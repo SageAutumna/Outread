@@ -18,9 +18,9 @@ struct FeatureTopArticle: View {
                 .clipped()
                 .cornerRadius(15)
             
-            VStack(alignment: .leading,spacing: 5) {
+            VStack(alignment: .leading, spacing: 5) {
                 
-                HStack(alignment: .top,spacing: 0) {
+                HStack(alignment: .top, spacing: 0) {
                     Text(title)
                         .font(.custom("Poppins-Medium", size: 18))
                         .foregroundColor(.white)
