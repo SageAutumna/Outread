@@ -15,6 +15,8 @@ protocol NetworkServices {
     func fetchPlayList() async throws -> [Playlist]
     
     func searchProduct(search: String) async throws -> [Product]
+    
+    func fetchArticleByTitle(name: String) async throws -> String?
 }
 
 class NetworkHandler: NetworkServices {
@@ -33,5 +35,10 @@ class NetworkHandler: NetworkServices {
     
     func searchProduct(search: String) async throws -> [Product] {
         try await APIService.request(API.searchProduct(search: search))
+    }
+    
+    func fetchArticleByTitle(name: String) async throws -> String? {
+        let model: [Article] = try await APIService.request(API.article(name: name))
+        return model.first?.content.rendered
     }
 }

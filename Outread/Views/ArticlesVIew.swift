@@ -9,7 +9,7 @@ struct ArticlesVIew: View {
     var categories : [Category]
     @Query var bookmarksList: [LocalDataStorage]
     @Environment(\.modelContext) var context
-   @State var hGridColumns = [
+    @State var hGridColumns = [
         GridItem(.fixed((UIScreen.main.bounds.size.width - 30)/2)),
         GridItem(.fixed((UIScreen.main.bounds.size.width - 30)/2))
     ]
@@ -18,38 +18,38 @@ struct ArticlesVIew: View {
     
     
     var body: some View {
+        ZStack {
+            backgroundColor.edgesIgnoringSafeArea(.all)
             ZStack {
-                backgroundColor.edgesIgnoringSafeArea(.all)
-                ZStack {
-                    ScrollView {
-                        VStack(alignment: .leading) {
-                            showArticles()
-                        }
-                    }.padding(.top,15)
-                }
-            }.onAppear {
-                if categoryName.lowercased() == "playlist" {
-                    hGridColumns = [
-                         GridItem(.fixed((UIScreen.main.bounds.size.width - 30))),
-                     ]
-                } else {
-                    hGridColumns = [
-                         GridItem(.fixed((UIScreen.main.bounds.size.width - 30)/2)),
-                         GridItem(.fixed((UIScreen.main.bounds.size.width - 30)/2))
-                     ]
-                }
+                ScrollView {
+                    VStack(alignment: .leading) {
+                        showArticles()
+                    }
+                }.padding(.top,15)
             }
+        }.onAppear {
+            if categoryName.lowercased() == "playlist" {
+                hGridColumns = [
+                    GridItem(.fixed((UIScreen.main.bounds.size.width - 30))),
+                ]
+            } else {
+                hGridColumns = [
+                    GridItem(.fixed((UIScreen.main.bounds.size.width - 30)/2)),
+                    GridItem(.fixed((UIScreen.main.bounds.size.width - 30)/2))
+                ]
+            }
+        }
     }
     
     
     private func showArticles() -> some View{
         VStack() {
-            LazyVGrid(columns: hGridColumns,spacing: 10){
+            LazyVGrid(columns: hGridColumns, spacing: 10) {
                 ForEach(categoryName.lowercased() == "playlist" ? playlists : filterList(products, categoryName: categoryName)) { product in
                     NavigationLink(destination: FlashcardMainView(product: product, categories: categories).navigationBarHidden(true)) {
-                        ProductRow(product: product, articleType: categoryName.lowercased() == "playlist" ? .playlist : .other,isArticlesList: true,playlistWidth: categoryName.lowercased() == "playlist" ? (UIScreen.main.bounds.size.width - 30) : .zero, playlistHeight:categoryName.lowercased() == "playlist" ? (UIScreen.main.bounds.size.width - 30) / 1.3 : .zero, boormark: {bookProduct in
+                        ProductRow(product: product) { bookProduct in
                             let item = LocalDataStorage.init(id: bookProduct.id ?? 0, name: bookProduct.name ?? "", shortDescription: bookProduct.shortDescription ?? "", categories: bookProduct.categories ?? [], images: bookProduct.images ?? [], metaData: bookProduct.metaData ?? [],descData:bookProduct.desc ?? "")
-
+                            
                             let filter = bookmarksList.filter{$0.id == item.id}
                             
                             if filter.count > 0 {
@@ -62,13 +62,11 @@ struct ArticlesVIew: View {
                             do {
                                 try context.save()
                                 print("saved successfully")
-                                    } catch {
-                                        print("save error----\(error)")
-                                    }
-                            
-                        })
-                            .padding(.trailing,15)
-                        // .frame(width: (UIScreen.main.bounds.size.width/2))
+                            } catch {
+                                print("save error----\(error)")
+                            }
+                        }
+                        .padding(.trailing,15)
                     }
                 }
             }

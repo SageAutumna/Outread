@@ -12,28 +12,36 @@ enum API {
     case products(page: Int)
     case categories(perentID: Int?)
     case searchProduct(search: String)
+    case article(name: String)
 }
 
 // MARK: - APIProtocol
 extension API: APIProtocol {
     var baseURL: String {
-        "https://out-read.com/wp-json/wc/v3/"
+        switch self {
+        case .article:
+            return "https://out-read.com/wp-json/wp/"
+        default:
+            return "https://out-read.com/wp-json/wc/"
+        }
     }
     
     var path: String {
         switch self {
         case .products:
-            return "products"
+            return "v3/products"
         case .categories:
-            return "products/categories"
+            return "v3/products/categories"
         case .searchProduct:
-            return "products"
+            return "v3/products"
+        case .article:
+            return "v2/article"
         }
     }
     
     var method: APIMethod {
         switch self {
-        case .products, .categories, .searchProduct:
+        case .products, .categories, .searchProduct, .article:
             return .get
         }
     }
@@ -64,12 +72,15 @@ extension API: APIProtocol {
                                          "consumer_secret": Globals.CONUMER_SECRET,
                                          "search": search]
             return .queryString(params)
+        case let .article(name):
+            let params: [String: Any] = ["search": name]
+            return .queryString(params)
         }
     }
     
     var header: [String: String] {
         switch self {
-        case .products, .categories, .searchProduct:
+        case .products, .categories, .searchProduct, .article:
             return ["Content-Type": "application/json"]
         }
     }

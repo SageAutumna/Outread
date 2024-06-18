@@ -11,7 +11,6 @@ struct MainPageView: View {
     @Query var categories: [LocalCategory]
     @Environment(\.modelContext) var context
     @State private var selectedCategoryName = ""
-    @State private var isDataLoaded: Bool = false
     
     @State private var tempProducts: [Product] = []
     @State private var tempCats: [Category] = []
@@ -23,7 +22,7 @@ struct MainPageView: View {
         ZStack {
             Color.COLOR_141_D_2_A.edgesIgnoringSafeArea(.all)
             
-            ScrollView {
+            ScrollView(showsIndicators: false) {
                 VStack(alignment: .leading) {
                     headerView
                     featuredArticleSection
@@ -112,7 +111,7 @@ struct MainPageView: View {
     }
     
     func productNavigationLink(for product: Product, categoryName: String) -> some View {
-        ProductRow(product: product, articleType: categoryName.lowercased() == "playlist" ? .playlist : .other, boormark: bookmarkProduct)
+        ProductRow(product: product, boormark: bookmarkProduct)
             .frame(width: categoryName.lowercased() == "playlist" ? ((UIScreen.main.bounds.size.width - 45) / 2) * 1.3 : ((UIScreen.main.bounds.size.width - 45) / 2))
             .onTapGesture {
                 router.push(.flashcardMain(product: product, categories: tempCats))
@@ -130,7 +129,7 @@ struct MainPageView: View {
     
     // MARK: - Methods
     func getRemoteData() {
-        if !isDataLoaded {
+        if products.isEmpty {
             self.viewModel.getAllData { products, categories in
                 for product in products {
                     self.saveProduct(product)
@@ -140,7 +139,6 @@ struct MainPageView: View {
                 }
                 self.tempProducts = products
                 self.tempCats = categories
-                self.isDataLoaded = true
             }
         }
     }

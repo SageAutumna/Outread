@@ -8,28 +8,12 @@
 import SwiftUI
 import SwiftData
 
-//struct BookmarkView: View {
-//    @EnvironmentObject var bookmarkManager: BookmarkManager
-//    var products: [Product] // This should be passed from the main content view
-//
-//    var body: some View {
-//        List(filteredProducts(), id: \.id) { product in
-//            ProductRow(product: product, articleType: .other, boormark: {bookProduct in})
-//        }
-//        .navigationTitle("Bookmarks")
-//    }
-//    
-//    private func filteredProducts() -> [Product] {
-//        products.filter { bookmarkManager.isBookmarked($0) }
-//    }
-//}
-
 
 struct BookmarkView : View{
     
     @Query var bookmarksList: [LocalDataStorage]
     @Environment(\.modelContext) var context
-   @State var hGridColumns = [
+    @State var hGridColumns = [
         GridItem(.fixed((UIScreen.main.bounds.size.width - 30)/2)),
         GridItem(.fixed((UIScreen.main.bounds.size.width - 30)/2))
     ]
@@ -45,15 +29,15 @@ struct BookmarkView : View{
                     ScrollView {
                         VStack(alignment: .center) {
                             headerView
-                                showArticles()
+                            showArticles()
                             ZStack(alignment: .center) {
-                                    if bookmarksList.isEmpty {
-                                        VStack(alignment: .center) {
-                                            Text("").frame(height: 300)
-                                            noProductFound
-                                        }
+                                if bookmarksList.isEmpty {
+                                    VStack(alignment: .center) {
+                                        Text("").frame(height: 300)
+                                        noProductFound
                                     }
                                 }
+                            }
                         }
                     }.padding(.top,15)
                 }
@@ -74,15 +58,14 @@ struct BookmarkView : View{
                     let cat = [Category]()
                     let newProduct = Product(id: product.id, name: product.name, permalink: "", desc: product.descData, shortDescription: product.shortDescription, status: "", price: "", categories: product.categories, images: product.images, metaData: product.metaData)
                     NavigationLink(destination: FlashcardMainView(product: newProduct, categories: cat).navigationBarTitle("Article Detail", displayMode: .inline)) {
-                        ProductRow(product: newProduct, articleType: .other,isArticlesList: true,playlistWidth: .zero, playlistHeight:.zero, boormark: {bookProduct in
-                            
+                        ProductRow(product: newProduct) { bookProduct in
                             let item = LocalDataStorage.init(id: bookProduct.id ?? 0, name: bookProduct.name ?? "", shortDescription: bookProduct.shortDescription ?? "", categories: bookProduct.categories ?? [], images: bookProduct.images ?? [], metaData: bookProduct.metaData ?? [],descData:bookProduct.desc ?? "")
-
+                            
                             let filter = bookmarksList.filter{$0.id == item.id}
                             
                             if filter.count > 0 {
-
-
+                                
+                                
                                 let index = bookmarksList.firstIndex{$0.id == item.id}
                                 context.delete(bookmarksList[index ?? -1])
                             } else {
@@ -91,12 +74,11 @@ struct BookmarkView : View{
                             do {
                                 try context.save()
                                 print("saved successfully")
-                                    } catch {
-                                        print("save error----\(error)")
-                                    }
-                            
-                        })
-                            .padding(.trailing,15)
+                            } catch {
+                                print("save error----\(error)")
+                            }
+                        }
+                        .padding(.trailing,15)
                         // .frame(width: (UIScreen.main.bounds.size.width/2))
                     }
                 }
@@ -123,11 +105,11 @@ struct BookmarkView : View{
     
     var noProductFound: some View {
         VStack(alignment: .center) {
-                Text("No Product Found")
+            Text("No Product Found")
                 .frame(alignment: .center)
                 .multilineTextAlignment(.center)
-                    .font(.custom("Poppins-Medium", size: 20))
-                    .foregroundColor(.white)
+                .font(.custom("Poppins-Medium", size: 20))
+                .foregroundColor(.white)
         }.padding([.leading,.trailing],15)
     }
     
