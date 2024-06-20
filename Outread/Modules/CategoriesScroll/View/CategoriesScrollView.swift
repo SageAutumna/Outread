@@ -7,30 +7,6 @@
 
 import SwiftUI
 
-struct CategoryView: View {
-    //MARK: - Properties
-    let category: Category
-    var isViewAll = false
-    var didTap: (() -> Void)
-    
-    //MARK: - Body
-    var body: some View {
-        Text(category.name ?? "")
-            .frame(width: category.name?.lowercased() == "playlist" ? 0 : isViewAll ? (UIScreen.main.bounds.size.width - 120)/2 : 100 , height: 70)
-            .foregroundColor(.white)
-            .padding(.horizontal, category.name?.lowercased() == "playlist" ? 0 : 20)
-            .background(Color(hex: category.colorCategory ?? ""))
-            .clipShape(
-                RoundedRectangle(cornerRadius: 13, style: .continuous)
-            )
-            .onTapGesture {
-                didTap()
-            }
-    }
-    
-    //MARK: - Functions
-}
-
 struct CategoriesScrollView: View {
     //MARK: - Properties
     let categories: [Category]
@@ -68,16 +44,26 @@ struct CategoriesScrollView: View {
     }
 }
 
-struct Category: Identifiable, Codable, Equatable {
-    var id: Int?
-    var name: String?
-    var parent: Int?
-    var colorCategory : String?
+struct CategoryView: View {
+    //MARK: - Properties
+    let category: Category
+    var isViewAll = false
+    var didTap: (() -> Void)
     
-    enum CodingKeys: String, CodingKey {
-        case id
-        case name
-        case parent
-        case colorCategory = "color_category"
+    //MARK: - Body
+    var body: some View {
+        Text(category.name ?? "")
+            .foregroundColor(.black)
+            .multilineTextAlignment(.center)
+            .font(.poppins(weight: .medium, size: 19))
+            .padding(.horizontal, category.name?.lowercased() == "playlist" ? 0 : 24)
+            .padding(.vertical, 20)
+            .background(Color(hex: category.colorCategory ?? ""))
+            .clipShape(RoundedRectangle(cornerRadius: 13))
+            .onTapGesture {
+                didTap()
+            }
     }
+    
+    //MARK: - Functions
 }

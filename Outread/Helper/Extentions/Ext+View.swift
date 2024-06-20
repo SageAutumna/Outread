@@ -32,7 +32,7 @@ extension View {
 extension View {
     func hud(isLoading: Binding<Bool>) -> some View {
         ZStack {
-            // self
+             self
             
             if isLoading.wrappedValue {
                 ZStack {

@@ -11,7 +11,6 @@ import SwiftData
 struct FlashcardMainView: View {
     //MARK: - Properties
     @EnvironmentObject private var router: Router<AppRoutes>
-    @ObservedObject private var viewModel = FlashcardMainVm()
     
     @Environment(\.dismiss) var dismiss
     @Environment(\.modelContext) var context
@@ -81,7 +80,7 @@ struct FlashcardMainView: View {
                                     .foregroundColor(.white)
                                     .padding(.horizontal, 15)
                                 
-                                CategoriesScrollView(categories: categoriesList.filter{ $0.colorCategory != "" },
+                                CategoriesScrollView(categories: uniqueCategories(categoriesList.filter{ $0.colorCategory != "" }),
                                                      products: [product],
                                                      isNeedFilter: false) { id in }
                                     .padding(.bottom, 15)
@@ -173,7 +172,7 @@ struct FlashcardMainView: View {
             .onEnded { value in
                 switch (value.translation.width, value.translation.height) {
                 case (...0, -30...30):
-                    router.push(.flashcard(productName: product.name ?? "", list: viewModel.list))
+                    router.push(.flashcard(productName: product.name ?? ""))
                 case (0..., -30...30):
                     dismiss()
                 default:
@@ -184,7 +183,6 @@ struct FlashcardMainView: View {
     
     //MARK: - Functions
     private func setUI() {
-        viewModel.loadArticle(name: product.name ?? "")
         showCategery()
     }
     
@@ -225,6 +223,14 @@ struct FlashcardMainView: View {
             try context.save()
         } catch {
             UIApplication.keyWindow?.rootViewController?.showAlert(msg: error.localizedDescription)
+        }
+    }
+    
+    func uniqueCategories(_ categories: [Category]) -> [Category] {
+        var seen = Set<Int>()
+        return categories.filter { category in
+            guard let id = category.id else { return false }
+            return seen.insert(id).inserted
         }
     }
 }

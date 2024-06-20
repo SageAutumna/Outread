@@ -5,13 +5,14 @@
 //  Created by AKASH BOGHANI on 17/06/24.
 //
 
-import UIKit
+import SwiftUI
+import Combine
 
 @MainActor
 final class FlashcardMainVm: ObservableObject {
     //MARK: - Properties
-    @Published var articleContent: String?
     @Published var list = [ListType]()
+    @Published var isLoading = true
     private var taskDisposeBag = TaskBag()
     private let networkHandler: NetworkServices
     
@@ -26,15 +27,21 @@ final class FlashcardMainVm: ObservableObject {
             do {
                 let str = try await networkHandler.fetchArticleByTitle(name: name)
                 if let content = str {
-                    articleContent = content.htmlToString
                     list = content.extractParagraphs()
                 }
             } catch let error as APIError {
-                UIApplication.keyWindow?.rootViewController?.showAlert(msg: error.description)
+                DispatchQueue.main.async {
+                    UIApplication.keyWindow?.rootViewController?.showAlert(msg: error.description)
+                }
             } catch {
-                UIApplication.keyWindow?.rootViewController?.showAlert(msg: error.localizedDescription)
+                DispatchQueue.main.async {
+                    UIApplication.keyWindow?.rootViewController?.showAlert(msg: error.localizedDescription)
+                }
             }
-        }
+            DispatchQueue.main.async {
+                self.isLoading = false
+            }
+        }.store(in: &taskDisposeBag)
     }
 }
 

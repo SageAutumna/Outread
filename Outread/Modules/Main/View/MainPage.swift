@@ -29,9 +29,9 @@ struct MainPageView: View {
                     categoriesSection
                     setProductHeader()
                 }
+                .padding(.bottom, ((UIApplication.keyWindow?.safeAreaInsets.bottom ?? 0) + 35))
             }
             .padding(.top, 15)
-            .padding(.bottom, ((UIApplication.keyWindow?.safeAreaInsets.bottom ?? 0) + 35))
         }
         .onAppear {
             getLocalData {
@@ -52,9 +52,7 @@ struct MainPageView: View {
                         .frame(height: 4)
                         .foregroundColor(Color.COLOR_9178_A_8)
                 }
-                
-                Spacer()
-                    .frame(maxWidth: .infinity)
+                .frame(width: 110.asDeviceWidth)
             }
             
             if let _ = viewModel.featuredProduct {

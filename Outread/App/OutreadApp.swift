@@ -51,8 +51,12 @@ struct OutreadApp: App {
                     CategoriesView(categories: categories, products: products, playLists: playlists)
                 case let .flashcardMain(product, categories):
                     FlashcardMainView(product: product, categories: categories)
-                case let .flashcard(productName, list):
-                    FlashcardView(productName: productName, list: list)
+                case let .flashcard(productName):
+                    FlashcardView(productName: productName)
+                case .updateEmail:
+                    UpdateEmailView()
+                case .privacyPolicy:
+                    PrivacyPolicyView()
                 }
             }
         }
