@@ -14,7 +14,7 @@ struct FeatureTopArticle: View {
         VStack(spacing: 0) {
             kfImage(from: URL(string: image))
                 .frame(height: 200)
-                .padding(.leading,0)
+                .padding(.leading, 0)
                 .clipped()
                 .cornerRadius(15)
             
@@ -22,10 +22,10 @@ struct FeatureTopArticle: View {
                 
                 HStack(alignment: .top, spacing: 0) {
                     Text(title)
-                        .font(.custom("Poppins-Medium", size: 18))
+                        .font(.poppins(weight: .medium, size: 18))
                         .foregroundColor(.white)
                         .padding([.trailing, .bottom], 0)
-                        .padding(.top,4)
+                        .padding(.top, 4)
                     
                     Spacer()
                     
@@ -37,10 +37,10 @@ struct FeatureTopArticle: View {
                             .frame(width:16, height: 22)
                             .foregroundColor(.white)
                             .padding(.trailing, 0)
-                            .padding(.top,4)
+                            .padding(.top, 4)
                         
                     }
-                    .padding(.top,4)
+                    .padding(.top, 4)
                 }
                 
                 HStack {
@@ -48,7 +48,7 @@ struct FeatureTopArticle: View {
                         .font(.poppins(weight: .regular, size: 16))
                         .foregroundColor(.white)
                         .padding(.leading, 0)
-                        .frame(width: 72,height: 25)
+                        .frame(width: 72, height: 25)
                         .background(Color.COLOR_4_B_7_E_68)
                         .cornerRadius(3)
                         .multilineTextAlignment(.center)
@@ -59,7 +59,7 @@ struct FeatureTopArticle: View {
                             .frame(width:12, height: 12)
                             .foregroundColor(.white)
                     }
-                    .frame(width: 25,height: 25)
+                    .frame(width: 25, height: 25)
                     .background(Color.COLOR_4_B_7_E_68)
                     .cornerRadius(3)
                     
@@ -72,7 +72,7 @@ struct FeatureTopArticle: View {
             .padding(.top,0)
             .background(Color.clear)
         }
-        .padding([.leading,.trailing], 15)
+        .padding(.horizontal, 15)
     }
     
     //MARK: - Functions

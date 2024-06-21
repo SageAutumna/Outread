@@ -9,7 +9,6 @@ import SwiftUI
 
 struct OnboardingView: View {
     //MARK: - Properties
-    @AppStorage("hasCompletedOnboarding") private var hasCompletedOnboarding: Bool = false
     @State private var currentPage = 0
     
     //MARK: - Body
@@ -38,12 +37,8 @@ struct OnboardingView: View {
                 }
                 .tag(1)
                 
-                LoginView {
-                    withAnimation {
-                        hasCompletedOnboarding = true
-                    }
-                }
-                .tag(2)
+                LoginView ()
+                    .tag(2)
                 
             }
             .tabViewStyle(PageTabViewStyle(indexDisplayMode: .never))

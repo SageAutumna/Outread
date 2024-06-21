@@ -36,8 +36,7 @@ struct OutreadApp: App {
     // MARK: - Body
     var body: some Scene {
         WindowGroup {
-//            Router(initial: hasCompletedOnboarding ? AppRoutes.tab : AppRoutes.onboarding)
-            RouterHost(Router(initial: AppRoutes.tab)) { route in
+            RouterHost(Router(initial: hasCompletedOnboarding ? AppRoutes.tab : AppRoutes.onboarding)) { route in
                 switch route {
                 case .onboarding: 
                     OnboardingView()

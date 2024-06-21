@@ -5,48 +5,6 @@ class NetworkManager {
     static let shared = NetworkManager()
     let baseURL = "https://out-read.com/wp-json/wc/v3/"
     
-    // Fetching articles using WordPress API
-    func fetchArticles() -> AnyPublisher<[Article], Error> {
-        let urlString = "https://out-read.com/wp-json/wp/v2/article?_embed&per_page=30"
-        guard let url = URL(string: urlString) else {
-            return Fail(error: URLError(.badURL)).eraseToAnyPublisher()
-        }
-        
-        return URLSession.shared.dataTaskPublisher(for: url)
-            .map(\.data)
-            .decode(type: [Article].self, decoder: JSONDecoder())
-            .receive(on: DispatchQueue.main)
-            .eraseToAnyPublisher()
-    }
-    
-    func fetchArticleContent(from url: String, completion: @escaping (Article?) -> Void) {
-        guard let url = URL(string: url) else {
-            print("Invalid URL")
-            completion(nil)
-            return
-        }
-        
-        URLSession.shared.dataTask(with: url) { data, response, error in
-            guard let data = data, error == nil else {
-                print("Network error: \(error?.localizedDescription ?? "Unknown error")")
-                completion(nil)
-                return
-            }
-            do {
-                let article = try JSONDecoder().decode(Article.self, from: data)
-                DispatchQueue.main.async {
-                    completion(article)
-                }
-            } catch {
-                print("Decoding error: \(error)")
-                completion(nil)
-            }
-        }.resume()
-    }
-    
-    // Fetching categories using WooCommerce API
-    
-    
     func updateEmail(newEmail: String, completion: @escaping (Bool, Error?) -> Void) {
         // Replace with your actual API URL and request setup
         let url = URL(string: "https://yourapi.com/update-email")!

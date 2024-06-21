@@ -9,6 +9,7 @@ import Foundation
 
 // MARK: - API
 enum API {
+    case login(userName: String, password: String)
     case products(page: Int)
     case categories(perentID: Int?)
     case searchProduct(search: String)
@@ -18,24 +19,21 @@ enum API {
 // MARK: - APIProtocol
 extension API: APIProtocol {
     var baseURL: String {
-        switch self {
-        case .article:
-            return "https://out-read.com/wp-json/wp/"
-        default:
-            return "https://out-read.com/wp-json/wc/"
-        }
+        return "https://out-read.com/wp-json/"
     }
     
     var path: String {
         switch self {
+        case .login:
+            return "jwt-auth/v1/token"
         case .products:
-            return "v3/products"
+            return "wc/v3/products"
         case .categories:
-            return "v3/products/categories"
+            return "wc/v3/products/categories"
         case .searchProduct:
-            return "v3/products"
+            return "wc/v3/products"
         case .article:
-            return "v2/article"
+            return "wp/v2/article"
         }
     }
     
@@ -43,11 +41,17 @@ extension API: APIProtocol {
         switch self {
         case .products, .categories, .searchProduct, .article:
             return .get
+        case .login:
+            return .post
         }
     }
     
     var task: Request {
         switch self {
+        case let .login(userName, password):
+            let params: [String: Any] = ["username": userName,
+                                         "password": password]
+            return .jsonEncoding(params)
         case let .products(page):
             let params: [String: Any] = ["consumer_key": Globals.CONUMER_KEY,
                                          "consumer_secret": Globals.CONUMER_SECRET,
@@ -80,7 +84,7 @@ extension API: APIProtocol {
     
     var header: [String: String] {
         switch self {
-        case .products, .categories, .searchProduct, .article:
+        case .login, .products, .categories, .searchProduct, .article:
             return ["Content-Type": "application/json"]
         }
     }

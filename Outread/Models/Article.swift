@@ -73,3 +73,7 @@ struct MetaData : Codable {
         }
     }
 }
+
+struct LoginResponse: Codable {
+    var token: String
+}

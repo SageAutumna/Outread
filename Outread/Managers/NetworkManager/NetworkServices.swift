@@ -17,6 +17,8 @@ protocol NetworkServices {
     func searchProduct(search: String) async throws -> [Product]
     
     func fetchArticleByTitle(name: String) async throws -> String?
+    
+    func authenticate(username: String, password: String) async throws -> LoginResponse
 }
 
 class NetworkHandler: NetworkServices {
@@ -40,5 +42,9 @@ class NetworkHandler: NetworkServices {
     func fetchArticleByTitle(name: String) async throws -> String? {
         let model: [Article] = try await APIService.request(API.article(name: name))
         return model.first?.content.rendered
+    }
+    
+    func authenticate(username: String, password: String) async throws -> LoginResponse {
+        try await APIService.request(API.login(userName: username, password: password))
     }
 }
