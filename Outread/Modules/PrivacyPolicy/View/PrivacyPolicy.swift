@@ -1,16 +1,39 @@
 import SwiftUI
 
 struct PrivacyPolicyView: View {
+    //MARK: - Properties
+    @EnvironmentObject private var router: Router<AppRoutes>
+    
+    //MARK: - Body
     var body: some View {
         VStack {
-            Text("Privacy Policy")
-                .font(.custom("Poppins-Regular", size: 24))
-                .foregroundColor(.white)
-                .padding()
-
+            HStack {
+                Button {
+                    router.pop()
+                } label: {
+                    HStack(spacing: 4) {
+                        Image(systemName: "chevron.backward")
+                            .tint(.white)
+                        
+                        Text("Back")
+                            .font(.poppins(weight: .regular, size: 18))
+                            .foregroundColor(.white)
+                    }
+                }
+                
+                Spacer()
+                
+                Text("Privacy Policy")
+                    .font(.poppins(weight: .regular, size: 24))
+                    .foregroundColor(.white)
+                
+                Spacer()
+            }
+            .padding(.horizontal, 15)
+            .frame(height: 60.asDeviceHeight)
+            
             ScrollView {
                 Text("""
-                
                 Your rights as a user of our services
 
                 You have the right to information, correction, blocking or deletion of your data at any time. Any given consent can be revoked at any time and you may partially object to the processing of your data, even if no consent was required from you for the processing. You can contact our data protection officer at any time for further information on privacy issues. Our data protection officer Rebecca Santios can be reached by email [outread2000@gmail.com].
@@ -323,15 +346,16 @@ struct PrivacyPolicyView: View {
 
                 For more information about data protection related to YouTube, please see the Google Privacy Policy Google. We have entered into a so-called “Data Processing Agreement” with Google, in which we commit Google to protect the data of our customers, to not disclose them to third parties and to comply with the provisions of the standard contractual clauses according to Art. 46 GDPR in the case of a transfer of personal data to the USA.
                 """)
-                .font(.custom("Poppins-Regular", size: 16))
+                .font(.poppins(weight: .regular, size: 16))
                 .foregroundColor(.white)
-                .padding()
+                .padding(.horizontal, 15)
             }
         }
-        .background(Color(red: 0x11 / 255.0, green: 0x1E / 255.0, blue: 0x2B / 255.0))
-        .edgesIgnoringSafeArea(.all)
-        .navigationBarTitle("Privacy Policy", displayMode: .inline)
+        .background(Color.COLOR_141_D_2_A)
+        .navigationBarBackButtonHidden()
     }
+    
+    //MARK: - Functions
 }
 
 struct PrivacyPolicyView_Previews: PreviewProvider {

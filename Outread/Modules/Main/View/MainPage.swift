@@ -11,7 +11,6 @@ struct MainPageView: View {
     @Query var categories: [LocalCategory]
     @Environment(\.modelContext) var context
     @State private var selectedCategoryName = ""
-    @State private var isDataLoaded: Bool = false
     
     @State private var tempProducts: [Product] = []
     @State private var tempCats: [Category] = []
@@ -23,20 +22,21 @@ struct MainPageView: View {
         ZStack {
             Color.COLOR_141_D_2_A.edgesIgnoringSafeArea(.all)
             
-            ScrollView {
+            ScrollView(showsIndicators: false) {
                 VStack(alignment: .leading) {
                     headerView
                     featuredArticleSection
                     categoriesSection
                     setProductHeader()
                 }
-                .redacted(reason: products.isEmpty ? .placeholder : [])
+                .padding(.bottom, ((UIApplication.keyWindow?.safeAreaInsets.bottom ?? 0) + 35))
             }
             .padding(.top, 15)
-            .padding(.bottom, ((UIApplication.keyWindow?.safeAreaInsets.bottom ?? 0) + 35))
         }
         .onAppear {
-            loadData()
+            getLocalData {
+                self.getRemoteData()
+            }
         }
     }
     
@@ -52,9 +52,7 @@ struct MainPageView: View {
                         .frame(height: 4)
                         .foregroundColor(Color.COLOR_9178_A_8)
                 }
-                
-                Spacer()
-                    .frame(maxWidth: .infinity)
+                .frame(width: 110.asDeviceWidth)
             }
             
             if let _ = viewModel.featuredProduct {
@@ -74,7 +72,7 @@ struct MainPageView: View {
                 
                 FeatureTopArticle(image: imageURL, title: featuredProduct.name ?? "", duration: "\(readingTime) mins", product: featuredProduct, didBookmark: bookmarkProduct)
                     .onTapGesture {
-                        router.push(.flashcardMain(product: featuredProduct, categories: viewModel.categories))
+                        router.push(.flashcardMain(product: featuredProduct, categories: tempCats))
                     }
                     .padding(.bottom, 10)
             }
@@ -83,42 +81,38 @@ struct MainPageView: View {
     
     var categoriesSection: some View {
         VStack(alignment: .leading) {
-//            if !categories.isEmpty {
-                CategoryHeader(title: "Categories") {
-                    router.push(.categories(categories: tempCats, products: tempProducts, playlists: viewModel.playLists))
+            CategoryHeader(title: "Categories") {
+                router.push(.categories(categories: tempCats, products: tempProducts, playlists: viewModel.playLists))
+            }
+            
+            CategoriesScrollView(categories: tempCats, products: tempProducts) { id in
+                if let selectedCategory = tempCats.first(where: { $0.id == id }) {
+                    selectedCategoryName = selectedCategory.name ?? ""
+                    router.push(.articles(products: tempProducts, categoryName: selectedCategoryName, playlists: viewModel.playLists, categories: tempCats))
                 }
-                
-                CategoriesScrollView(categories: tempCats, products: tempProducts) { id in
-                    if let selectedCategory = categories.first(where: { $0.id == id }) {
-                        selectedCategoryName = selectedCategory.name
-                        router.push(.articles(products: tempProducts, categoryName: selectedCategoryName, playlists: viewModel.playLists, categories: tempCats))
-                    }
-                }
-//            }
+            }
         }
     }
     
     func setProductHeader() -> some View {
-        LazyVStack {
-            ForEach(categories, id: \.id) { category in
-//                if filterTempProducts(for: category.name).count > 2 {
-                    CategoryHeader(title: category.name) {
-                        selectedCategoryName = category.name
-                    }
-                    
-                    ScrollView(.horizontal, showsIndicators: false) {
-                        showProductHGrid(category.name, products: filterTempProducts(for: category.name))
-                    }
-//                }
+        VStack {
+            ForEach(tempCats, id: \.id) { category in
+                CategoryHeader(title: category.name ?? "") {
+                    selectedCategoryName = category.name ?? ""
+                }
+                
+                ScrollView(.horizontal, showsIndicators: false) {
+                    showProductHGrid(category.name ?? "", products: filterTempProducts(for: category.name ?? ""))
+                }
             }
         }
     }
     
     func productNavigationLink(for product: Product, categoryName: String) -> some View {
-        ProductRow(product: product, articleType: categoryName.lowercased() == "playlist" ? .playlist : .other, boormark: bookmarkProduct)
+        ProductRow(product: product, boormark: bookmarkProduct)
             .frame(width: categoryName.lowercased() == "playlist" ? ((UIScreen.main.bounds.size.width - 45) / 2) * 1.3 : ((UIScreen.main.bounds.size.width - 45) / 2))
             .onTapGesture {
-                router.push(.flashcardMain(product: product, categories: viewModel.categories))
+                router.push(.flashcardMain(product: product, categories: tempCats))
             }
     }
     
@@ -132,26 +126,38 @@ struct MainPageView: View {
     }
     
     // MARK: - Methods
-    func loadData() {
-        if !isDataLoaded {
-            viewModel.getAllData { products, categories in
+    func getRemoteData() {
+        if products.isEmpty {
+            self.viewModel.getAllData { products, categories in
                 for product in products {
                     self.saveProduct(product)
                 }
                 for category in categories {
                     self.saveCategory(category)
                 }
-                tempProducts = products
-                tempCats = categories
-                self.isDataLoaded = true
+                self.tempProducts = products
+                self.tempCats = categories
             }
-        } else {
-            products.forEach { localProduct in
-                tempProducts.append(Product(id: localProduct.id, name: localProduct.name, permalink: localProduct.permalink, desc: localProduct.desc, shortDescription: localProduct.shortDescription, status: localProduct.status, price: localProduct.status, categories: localProduct.categories, images: localProduct.images, metaData: localProduct.metaData, count: localProduct.count))
-            }
-            categories.forEach { localCategory in
-                tempCats.append(Category(id: localCategory.id, name: localCategory.name, parent: localCategory.parent, colorCategory: localCategory.colorCategory))
-            }
+        }
+    }
+    
+    func getLocalData(completion: @escaping () -> Void) {
+        let dispatchGroup = DispatchGroup()
+        
+        dispatchGroup.enter()
+        tempProducts = products.map { localProduct in
+            Product(id: localProduct.id, name: localProduct.name, permalink: localProduct.permalink, desc: localProduct.desc, shortDescription: localProduct.shortDescription, status: localProduct.status, price: localProduct.status, categories: localProduct.categories, images: localProduct.images, metaData: localProduct.metaData, count: localProduct.count)
+        }
+        dispatchGroup.leave()
+        
+        dispatchGroup.enter()
+        tempCats = categories.map { localCategory in
+            Category(id: localCategory.id, name: localCategory.name, parent: localCategory.parent, colorCategory: localCategory.colorCategory)
+        }
+        dispatchGroup.leave()
+        
+        dispatchGroup.notify(queue: .main) {
+            completion()
         }
     }
     

@@ -36,8 +36,7 @@ struct OutreadApp: App {
     // MARK: - Body
     var body: some Scene {
         WindowGroup {
-//            Router(initial: hasCompletedOnboarding ? AppRoutes.tab : AppRoutes.onboarding)
-            RouterHost(Router(initial: AppRoutes.tab)) { route in
+            RouterHost(Router(initial: hasCompletedOnboarding ? AppRoutes.tab : AppRoutes.onboarding)) { route in
                 switch route {
                 case .onboarding: 
                     OnboardingView()
@@ -51,8 +50,12 @@ struct OutreadApp: App {
                     CategoriesView(categories: categories, products: products, playLists: playlists)
                 case let .flashcardMain(product, categories):
                     FlashcardMainView(product: product, categories: categories)
-                case let .flashcard(productName, list):
-                    FlashcardView(productName: productName, list: list)
+                case let .flashcard(productName):
+                    FlashcardView(productName: productName)
+                case .updateEmail:
+                    UpdateEmailView()
+                case .privacyPolicy:
+                    PrivacyPolicyView()
                 }
             }
         }

@@ -14,7 +14,6 @@ final class MainPageVM: ObservableObject {
     @Published var products = [Product]()
     @Published var playLists = [Product]()
     @Published var categories = [Category]()
-    @Published var isLoading: Bool = false
     private var isMoreProductAvailable = true
     private var productPage = 1
     private var taskDisposeBag = TaskBag()
@@ -27,7 +26,6 @@ final class MainPageVM: ObservableObject {
     
     // MARK: - Functions
     func getAllData(complition: @escaping ([Product], [Category]) -> Void) {
-        isLoading = true
         Task {
             do {
                 async let categories = try networkHandler.fetchCategories(excludingParentID: 59)
@@ -47,7 +45,6 @@ final class MainPageVM: ObservableObject {
             } catch {
                 handleError(error)
             }
-            isLoading = false
         }.store(in: &taskDisposeBag)
     }
     
@@ -61,14 +58,12 @@ final class MainPageVM: ObservableObject {
     }
     
     func getAllProduct(page: Int) async -> Bool {
-        isLoading = true
         var isLoadMoreData = false
         do {
             isLoadMoreData = try await fetchAllProduct(page: page)
         } catch {
             handleError(error)
         }
-        isLoading = false
         return isLoadMoreData
     }
     
