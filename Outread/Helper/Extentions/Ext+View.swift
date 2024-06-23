@@ -57,7 +57,7 @@ extension View {
                                 .tint(.white)
                             
                             Text("Back")
-                                .font(.poppins(weight: .regular, size: 18))
+                                .font(.poppins(weight: .regular, size: 16))
                                 .foregroundColor(.white)
                         }
                     }
@@ -67,7 +67,7 @@ extension View {
             }
             
             Text(title)
-                .font(.poppins(weight: .regular, size: 24))
+                .font(.poppins(weight: .regular, size: 20))
                 .foregroundColor(.white)
         }
         .padding(.horizontal, 15)

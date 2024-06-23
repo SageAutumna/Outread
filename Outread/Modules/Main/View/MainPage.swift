@@ -94,8 +94,10 @@ struct MainPageView: View {
     func setProductHeader() -> some View {
         VStack {
             ForEach(tempCats, id: \.id) { category in
-                CategoryHeader(title: category.name ?? "") {
-                    selectedCategoryName = category.name ?? ""
+                if filterTempProducts(for: category.name ?? "").count > 0 {
+                    CategoryHeader(title: category.name ?? "") {
+                        selectedCategoryName = category.name ?? ""
+                    }
                 }
                 
                 ScrollView(.horizontal, showsIndicators: false) {
