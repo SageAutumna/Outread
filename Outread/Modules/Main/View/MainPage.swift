@@ -42,18 +42,15 @@ struct MainPageView: View {
     
     var headerView: some View {
         VStack(alignment: .leading, spacing: 6) {
-            HStack {
-                VStack(alignment: .leading, spacing: 2) {
-                    Text("Home")
-                        .foregroundColor(.white)
-                        .font(.poppins(weight: .medium, size: 36))
-                    
-                    Rectangle()
+            Text("Home")
+                .foregroundColor(.white)
+                .font(.poppins(weight: .medium, size: 36))
+                .overlay(alignment: .bottom) {
+                    RoundedRectangle(cornerRadius: 2)
                         .frame(height: 4)
                         .foregroundColor(Color.COLOR_9178_A_8)
+                        .offset(y: 10)
                 }
-                .frame(width: 110.asDeviceWidth)
-            }
             
             if let _ = viewModel.featuredProduct {
                 Text("Featured Read of the Day")

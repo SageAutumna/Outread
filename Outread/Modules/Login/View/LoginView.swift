@@ -47,7 +47,7 @@ struct LoginView: View {
                         VStack(alignment: .leading, spacing: 4) {
                             Text("Welcome to \(Text("OutRead").foregroundStyle(Color.COLOR_9178_A_8))")
                                 .foregroundStyle(.white)
-                                .font(.poppins(weight: .bold, size: 30))
+                                .font(.poppins(weight: .semibold, size: 30))
                             
                             Text("Signin to continue")
                                 .foregroundStyle(.white)

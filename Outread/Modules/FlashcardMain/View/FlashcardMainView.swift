@@ -34,9 +34,15 @@ struct FlashcardMainView: View {
         ZStack {
             Color.COLOR_141_D_2_A.edgesIgnoringSafeArea(.all)
             
-            content
-                .gesture(dragGesture)
-                .onAppear(perform: setUI)
+            VStack {
+                makeNavBar(title: "Product Detail") {
+                    router.pop()
+                }
+                
+                content
+                    .gesture(dragGesture)
+                    .onAppear(perform: setUI)
+            }
         }
     }
     
@@ -161,7 +167,7 @@ struct FlashcardMainView: View {
                 .padding(.top, -2)
             
             Text(readingTime)
-                .font(.custom("Poppins-Regular", size: 17))
+                .font(.poppins(weight: .regular, size: 17))
                 .foregroundColor(.white)
         }
         .padding(.horizontal, 15)

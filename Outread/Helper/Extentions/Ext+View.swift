@@ -43,3 +43,34 @@ extension View {
         }
     }
 }
+
+extension View {
+    func makeNavBar(title: String, isBackButtonHidden: Bool = false, didTapBack: @escaping () -> Void) -> some View {
+        ZStack {
+            if !isBackButtonHidden {
+                HStack {
+                    Button {
+                        didTapBack()
+                    } label: {
+                        HStack(spacing: 4) {
+                            Image(systemName: "chevron.backward")
+                                .tint(.white)
+                            
+                            Text("Back")
+                                .font(.poppins(weight: .regular, size: 18))
+                                .foregroundColor(.white)
+                        }
+                    }
+                    
+                    Spacer()
+                }
+            }
+            
+            Text(title)
+                .font(.poppins(weight: .regular, size: 24))
+                .foregroundColor(.white)
+        }
+        .padding(.horizontal, 15)
+        .frame(height: 55.asDeviceHeight)
+    }
+}

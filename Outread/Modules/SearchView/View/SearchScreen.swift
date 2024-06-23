@@ -23,71 +23,91 @@ struct SearchScreen: View {
             Color.COLOR_141_D_2_A
                 .ignoresSafeArea()
             
-            VStack(spacing: 16) {
-                searchSection
+            VStack(alignment: .leading) {
+                headerView
                 
-                ScrollView(.vertical, showsIndicators: false) {
-                    VStack(spacing: 24) {
-                        if searchViewModel.searchText.isEmpty {
-                            LazyVGrid(columns: adaptiveColumn, spacing: 20) {
-                                ForEach(data, id: \.self) { item in
-                                    VStack(spacing: 10) {
-                                        Button {
-                                            searchViewModel.searchText = item
-                                        } label: {
-                                            HStack(spacing: 10) {
-                                                Image(.icSearch)
-                                                    .resizable()
-                                                    .frame(width: 16, height: 16)
-                                                    .foregroundStyle(.white.opacity(0.7))
-                                                
-                                                Text(item)
-                                                    .foregroundStyle(.white.opacity(0.7))
-                                                    .font(.poppins(weight: .medium, size: 15))
-                                                    .multilineTextAlignment(.leading)
-                                                
-                                                Spacer()
-                                            }
-                                        }
-                                        
-                                        Divider()
-                                            .frame(height: 2)
-                                            .foregroundStyle(.white)
-                                    }
-                                }
-                            }
-                        }
-                        
-                        if let arrProduct = searchViewModel.product, !arrProduct.isEmpty {
-                            LazyVStack(spacing: 16) {
-                                ForEach(arrProduct, id: \.id) { product in
-                                    ProductView(product: product)
-                                        .redacted(reason: (searchViewModel.isLoading || isLoading) ? .placeholder : [])
-                                        .onAppear(perform: {
-                                            DispatchQueue.main.asyncAfter(deadline: .now() + 3) {
-                                                isLoading = false
-                                            }
-                                        })
-                                }
-                            }
-                        } else {
-                            Text("Couldn't find anything relevant")
-                                .foregroundStyle(.white.opacity(0.7))
-                                .font(.poppins(weight: .medium, size: 15))
-                                .multilineTextAlignment(.leading)
-                        }
-                    }
-                    .padding(.vertical, 10)
-                    .padding(.bottom, ((UIApplication.keyWindow?.safeAreaInsets.bottom ?? 0) + 35))
-                }
+                contentView
+                    .padding(15)
             }
-            .padding(.horizontal, 20)
-            .padding(.vertical, 20)
+            .padding(.top, 15)
         }
         .onAppear {
             searchViewModel.setupDebounce()
         }
-//        .hud(isLoading: $searchViewModel.isLoading)
+    }
+    
+    private var contentView: some View {
+        VStack(spacing: 16) {
+            searchSection
+            
+            ScrollView(.vertical, showsIndicators: false) {
+                VStack(spacing: 24) {
+                    if searchViewModel.searchText.isEmpty {
+                        LazyVGrid(columns: adaptiveColumn, spacing: 20) {
+                            ForEach(data, id: \.self) { item in
+                                VStack(spacing: 10) {
+                                    Button {
+                                        searchViewModel.searchText = item
+                                    } label: {
+                                        HStack(spacing: 10) {
+                                            Image(.icSearch)
+                                                .resizable()
+                                                .frame(width: 16, height: 16)
+                                                .foregroundStyle(.white.opacity(0.7))
+                                            
+                                            Text(item)
+                                                .foregroundStyle(.white.opacity(0.7))
+                                                .font(.poppins(weight: .medium, size: 15))
+                                                .multilineTextAlignment(.leading)
+                                            
+                                            Spacer()
+                                        }
+                                    }
+                                    
+                                    Divider()
+                                        .frame(height: 2)
+                                        .foregroundStyle(.white)
+                                }
+                            }
+                        }
+                    }
+                    
+                    if let arrProduct = searchViewModel.product, !arrProduct.isEmpty {
+                        LazyVStack(spacing: 16) {
+                            ForEach(arrProduct, id: \.id) { product in
+                                ProductView(product: product)
+                                    .redacted(reason: (searchViewModel.isLoading || isLoading) ? .placeholder : [])
+                                    .onAppear(perform: {
+                                        DispatchQueue.main.asyncAfter(deadline: .now() + 3) {
+                                            isLoading = false
+                                        }
+                                    })
+                            }
+                        }
+                    } else {
+                        Text("Couldn't find anything relevant")
+                            .foregroundStyle(.white.opacity(0.7))
+                            .font(.poppins(weight: .medium, size: 15))
+                            .multilineTextAlignment(.leading)
+                    }
+                }
+                .padding(.vertical, 10)
+                .padding(.bottom, ((UIApplication.keyWindow?.safeAreaInsets.bottom ?? 0) + 35))
+            }
+        }
+    }
+    
+    var headerView: some View {
+        Text("Search")
+            .foregroundColor(.white)
+            .font(.poppins(weight: .medium, size: 36))
+            .overlay(alignment: .bottom) {
+                RoundedRectangle(cornerRadius: 2)
+                    .frame(height: 4)
+                    .foregroundColor(Color.COLOR_9178_A_8)
+                    .offset(y: 10)
+            }
+            .padding(.horizontal, 15)
     }
     
     var searchSection: some View {
@@ -105,7 +125,7 @@ struct SearchScreen: View {
                 Image(.icSearch)
                     .resizable()
                     .frame(width: 24, height: 24)
-                    .padding(.trailing, 16)
+                    .padding(.trailing, 15)
             }
         }
         .frame(maxWidth: .infinity)

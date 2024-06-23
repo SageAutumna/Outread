@@ -19,6 +19,8 @@ protocol NetworkServices {
     func fetchArticleByTitle(name: String) async throws -> String?
     
     func authenticate(username: String, password: String) async throws -> LoginResponse
+    
+    func updateEmail(email: String) async throws -> Bool
 }
 
 class NetworkHandler: NetworkServices {
@@ -46,5 +48,9 @@ class NetworkHandler: NetworkServices {
     
     func authenticate(username: String, password: String) async throws -> LoginResponse {
         try await APIService.request(API.login(userName: username, password: password))
+    }
+    
+    func updateEmail(email: String) async throws -> Bool {
+        try await APIService.request(API.updateEmail(email: email))
     }
 }

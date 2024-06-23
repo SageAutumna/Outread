@@ -30,13 +30,16 @@ struct CategoriesView: View {
         ZStack {
             Color.COLOR_141_D_2_A.edgesIgnoringSafeArea(.all)
             
-            ZStack {
+            VStack {
+                makeNavBar(title: "Categories") {
+                    router.pop()
+                }
+                
                 ScrollView {
                     VStack(alignment: .leading) {
                         showCategories
                     }
                 }
-                .padding(.top, 5)
             }
         }
     }

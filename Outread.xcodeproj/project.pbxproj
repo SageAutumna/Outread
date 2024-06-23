@@ -52,6 +52,7 @@
 		3898C5D12C021296006A6C3C /* Poppins-Thin.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 3898C5C72C021296006A6C3C /* Poppins-Thin.ttf */; };
 		3898C5D72C02134D006A6C3C /* Ext+Fonts.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3898C5D62C02134D006A6C3C /* Ext+Fonts.swift */; };
 		38BA35AD2C0205F9009BB640 /* SearchScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38BA35AC2C0205F9009BB640 /* SearchScreen.swift */; };
+		38BAD9902C27E95500FF651D /* UpdateEmailVm.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38BAD98F2C27E95500FF651D /* UpdateEmailVm.swift */; };
 		38E3C9602C25F00C00D1AA17 /* LoginVm.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38E3C95F2C25F00C00D1AA17 /* LoginVm.swift */; };
 		9231EB692BFF69D700959909 /* ArticlesVIew.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9231EB682BFF69D700959909 /* ArticlesVIew.swift */; };
 		9231EB6B2C008B3900959909 /* CategoriesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9231EB6A2C008B3900959909 /* CategoriesView.swift */; };
@@ -72,7 +73,6 @@
 		9C9EFE722B591C2200B43B99 /* LoginView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C9EFE712B591C2200B43B99 /* LoginView.swift */; };
 		9C9EFE742B5958C400B43B99 /* MainPage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C9EFE732B5958C400B43B99 /* MainPage.swift */; };
 		9C9EFE792B67674E00B43B99 /* Article.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C9EFE782B67674E00B43B99 /* Article.swift */; };
-		9C9EFE7D2B6767A200B43B99 /* NetworkManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C9EFE7C2B6767A200B43B99 /* NetworkManager.swift */; };
 		9CCA795B2BA015F10098DF6E /* ArticleRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9CCA795A2BA015F10098DF6E /* ArticleRow.swift */; };
 		9CE203862BFA799D0064AEAE /* UpdateEmailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9CE203852BFA799D0064AEAE /* UpdateEmailView.swift */; };
 		9CE203882BFA79DA0064AEAE /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9CE203872BFA79DA0064AEAE /* SettingsView.swift */; };
@@ -122,6 +122,7 @@
 		3898C5C72C021296006A6C3C /* Poppins-Thin.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Poppins-Thin.ttf"; sourceTree = "<group>"; };
 		3898C5D62C02134D006A6C3C /* Ext+Fonts.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Ext+Fonts.swift"; sourceTree = "<group>"; };
 		38BA35AC2C0205F9009BB640 /* SearchScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchScreen.swift; sourceTree = "<group>"; };
+		38BAD98F2C27E95500FF651D /* UpdateEmailVm.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UpdateEmailVm.swift; sourceTree = "<group>"; };
 		38E3C95F2C25F00C00D1AA17 /* LoginVm.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginVm.swift; sourceTree = "<group>"; };
 		9231EB682BFF69D700959909 /* ArticlesVIew.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ArticlesVIew.swift; sourceTree = "<group>"; };
 		9231EB6A2C008B3900959909 /* CategoriesView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategoriesView.swift; sourceTree = "<group>"; };
@@ -145,7 +146,6 @@
 		9C9EFE712B591C2200B43B99 /* LoginView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginView.swift; sourceTree = "<group>"; };
 		9C9EFE732B5958C400B43B99 /* MainPage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainPage.swift; sourceTree = "<group>"; };
 		9C9EFE782B67674E00B43B99 /* Article.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Article.swift; sourceTree = "<group>"; };
-		9C9EFE7C2B6767A200B43B99 /* NetworkManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkManager.swift; sourceTree = "<group>"; };
 		9CCA795A2BA015F10098DF6E /* ArticleRow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ArticleRow.swift; sourceTree = "<group>"; };
 		9CE203852BFA799D0064AEAE /* UpdateEmailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UpdateEmailView.swift; sourceTree = "<group>"; };
 		9CE203872BFA79DA0064AEAE /* SettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
@@ -338,6 +338,8 @@
 		386A96CC2C141DA300A78CC6 /* Modules */ = {
 			isa = PBXGroup;
 			children = (
+				38BAD9912C27FA3D00FF651D /* Explainer */,
+				388439292C27D99800986FFD /* UpdateEmail */,
 				38E3C9612C25F8A100D1AA17 /* PrivacyPolicy */,
 				38E3C95C2C25E10300D1AA17 /* Login */,
 				38E3C9592C25E07A00D1AA17 /* FeatureTopArticle */,
@@ -385,6 +387,23 @@
 			isa = PBXGroup;
 			children = (
 				386A96D32C14242400A78CC6 /* MainTabView.swift */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
+		388439292C27D99800986FFD /* UpdateEmail */ = {
+			isa = PBXGroup;
+			children = (
+				38BAD98E2C27E94600FF651D /* ViewModel */,
+				3884392A2C27D99D00986FFD /* View */,
+			);
+			path = UpdateEmail;
+			sourceTree = "<group>";
+		};
+		3884392A2C27D99D00986FFD /* View */ = {
+			isa = PBXGroup;
+			children = (
+				9CE203852BFA799D0064AEAE /* UpdateEmailView.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -576,6 +595,31 @@
 			path = SearchView;
 			sourceTree = "<group>";
 		};
+		38BAD98E2C27E94600FF651D /* ViewModel */ = {
+			isa = PBXGroup;
+			children = (
+				38BAD98F2C27E95500FF651D /* UpdateEmailVm.swift */,
+			);
+			path = ViewModel;
+			sourceTree = "<group>";
+		};
+		38BAD9912C27FA3D00FF651D /* Explainer */ = {
+			isa = PBXGroup;
+			children = (
+				38BAD9922C27FA4200FF651D /* View */,
+			);
+			path = Explainer;
+			sourceTree = "<group>";
+		};
+		38BAD9922C27FA4200FF651D /* View */ = {
+			isa = PBXGroup;
+			children = (
+				9C9EFE6D2B58FE0200B43B99 /* ExplainerView1.swift */,
+				9C9EFE6F2B59002B00B43B99 /* ExplainerView2.swift */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
 		38E3C9592C25E07A00D1AA17 /* FeatureTopArticle */ = {
 			isa = PBXGroup;
 			children = (
@@ -656,7 +700,6 @@
 				3898C5D22C0212EB006A6C3C /* App */,
 				3898C5BE2C021233006A6C3C /* Resource */,
 				386A96CC2C141DA300A78CC6 /* Modules */,
-				9C9EFE772B67671100B43B99 /* Views */,
 				381075D52C03969C0074864C /* Components */,
 				9C9EFE752B67670300B43B99 /* Models */,
 				38A8C6CF2C1368EB004E1692 /* Managers */,
@@ -688,28 +731,9 @@
 		9C9EFE762B67670A00B43B99 /* NetworkManager */ = {
 			isa = PBXGroup;
 			children = (
-				9C9EFE7C2B6767A200B43B99 /* NetworkManager.swift */,
 				381075D32C0394F40074864C /* NetworkServices.swift */,
 			);
 			path = NetworkManager;
-			sourceTree = "<group>";
-		};
-		9C9EFE772B67671100B43B99 /* Views */ = {
-			isa = PBXGroup;
-			children = (
-				9CE203842BFA797A0064AEAE /* Settings */,
-				9C9EFE6D2B58FE0200B43B99 /* ExplainerView1.swift */,
-				9C9EFE6F2B59002B00B43B99 /* ExplainerView2.swift */,
-			);
-			path = Views;
-			sourceTree = "<group>";
-		};
-		9CE203842BFA797A0064AEAE /* Settings */ = {
-			isa = PBXGroup;
-			children = (
-				9CE203852BFA799D0064AEAE /* UpdateEmailView.swift */,
-			);
-			path = Settings;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -823,8 +847,8 @@
 				9C246A462C13523600537906 /* PrivacyPolicy.swift in Sources */,
 				3898C5D72C02134D006A6C3C /* Ext+Fonts.swift in Sources */,
 				3818CCCC2C156DE300C25436 /* Route.swift in Sources */,
-				9C9EFE7D2B6767A200B43B99 /* NetworkManager.swift in Sources */,
 				381075C72C0392240074864C /* Enums.swift in Sources */,
+				38BAD9902C27E95500FF651D /* UpdateEmailVm.swift in Sources */,
 				9231EB6B2C008B3900959909 /* CategoriesView.swift in Sources */,
 				381075DB2C039C350074864C /* SearchScreenViewModel.swift in Sources */,
 				9CE203862BFA799D0064AEAE /* UpdateEmailView.swift in Sources */,

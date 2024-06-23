@@ -14,12 +14,18 @@ enum API {
     case categories(perentID: Int?)
     case searchProduct(search: String)
     case article(name: String)
+    case updateEmail(email: String)
 }
 
 // MARK: - APIProtocol
 extension API: APIProtocol {
     var baseURL: String {
-        return "https://out-read.com/wp-json/"
+        switch self {
+        case .updateEmail:
+            return "https://yourapi.com/"
+        default:
+            return "https://out-read.com/wp-json/"
+        }
     }
     
     var path: String {
@@ -34,6 +40,8 @@ extension API: APIProtocol {
             return "wc/v3/products"
         case .article:
             return "wp/v2/article"
+        case .updateEmail:
+            return "update-email"
         }
     }
     
@@ -41,7 +49,7 @@ extension API: APIProtocol {
         switch self {
         case .products, .categories, .searchProduct, .article:
             return .get
-        case .login:
+        case .login, .updateEmail:
             return .post
         }
     }
@@ -79,12 +87,15 @@ extension API: APIProtocol {
         case let .article(name):
             let params: [String: Any] = ["search": name]
             return .queryString(params)
+        case let .updateEmail(email):
+            let params: [String: Any] = ["email": email]
+            return .jsonEncoding(params)
         }
     }
     
     var header: [String: String] {
         switch self {
-        case .login, .products, .categories, .searchProduct, .article:
+        case .login, .products, .categories, .searchProduct, .article, .updateEmail:
             return ["Content-Type": "application/json"]
         }
     }

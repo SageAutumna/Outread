@@ -7,30 +7,9 @@ struct PrivacyPolicyView: View {
     //MARK: - Body
     var body: some View {
         VStack {
-            HStack {
-                Button {
-                    router.pop()
-                } label: {
-                    HStack(spacing: 4) {
-                        Image(systemName: "chevron.backward")
-                            .tint(.white)
-                        
-                        Text("Back")
-                            .font(.poppins(weight: .regular, size: 18))
-                            .foregroundColor(.white)
-                    }
-                }
-                
-                Spacer()
-                
-                Text("Privacy Policy")
-                    .font(.poppins(weight: .regular, size: 24))
-                    .foregroundColor(.white)
-                
-                Spacer()
+            makeNavBar(title: "Privacy Policy") {
+                router.pop()
             }
-            .padding(.horizontal, 15)
-            .frame(height: 60.asDeviceHeight)
             
             ScrollView {
                 Text("""

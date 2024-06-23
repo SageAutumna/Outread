@@ -16,7 +16,7 @@ struct BookmarkView : View{
     @Query var bookmarksList: [LocalDataStorage]
     
     @State var hGridColumns = [GridItem(.flexible()), GridItem(.flexible())]
-        
+    
     //MARK: - Body
     var body: some View {
         ZStack {
@@ -74,21 +74,16 @@ struct BookmarkView : View{
     }
     
     var headerView: some View {
-        VStack(alignment: .leading, spacing: 6) {
-            HStack {
-                VStack(alignment: .leading, spacing: 2) {
-                    Text("Bookmarks")
-                        .foregroundColor(.white)
-                        .font(.poppins(weight: .medium, size: 36))
-                    
-                    Rectangle()
-                        .frame(height: 4)
-                        .foregroundColor(Color.COLOR_9178_A_8)
-                }
-                .frame(width: 210.asDeviceWidth)
+        Text("Bookmarks")
+            .foregroundColor(.white)
+            .font(.poppins(weight: .medium, size: 36))
+            .overlay(alignment: .bottom) {
+                RoundedRectangle(cornerRadius: 2)
+                    .frame(height: 4)
+                    .foregroundColor(Color.COLOR_9178_A_8)
+                    .offset(y: 10)
             }
-        }
-        .padding(.horizontal, 15)
+            .padding(.horizontal, 15)
     }
     
     //MARK: - Functions

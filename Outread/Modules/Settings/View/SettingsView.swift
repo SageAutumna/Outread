@@ -26,21 +26,16 @@ struct SettingsView: View {
     }
     
     var headerView: some View {
-        VStack(alignment: .leading, spacing: 6) {
-            HStack {
-                VStack(alignment: .leading, spacing: 2) {
-                    Text("Settings")
-                        .foregroundColor(.white)
-                        .font(.poppins(weight: .medium, size: 36))
-                    
-                    Rectangle()
-                        .frame(height: 4)
-                        .foregroundColor(Color.COLOR_9178_A_8)
-                }
-                .frame(width: 150.asDeviceWidth)
+        Text("Settings")
+            .foregroundColor(.white)
+            .font(.poppins(weight: .medium, size: 36))
+            .overlay(alignment: .bottom) {
+                RoundedRectangle(cornerRadius: 2)
+                    .frame(height: 4)
+                    .foregroundColor(Color.COLOR_9178_A_8)
+                    .offset(y: 10)
             }
-        }
-        .padding(.horizontal, 15)
+            .padding(.horizontal, 15)
     }
     
     var settingsList: some View {
@@ -67,7 +62,7 @@ struct SettingsView: View {
             
             settingsItem(title: "Delete Account", color: .red)
         }
-        .padding(.top, 15)
+        .padding(.top, 5)
         .padding(.horizontal, 15)
     }
     
