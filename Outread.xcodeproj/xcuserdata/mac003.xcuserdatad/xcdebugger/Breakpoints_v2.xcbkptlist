@@ -7,80 +7,64 @@
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
-            uuid = "769451FA-FCCF-4CDB-AB9E-8F205CCCE717"
+            uuid = "33DEA92A-3405-4037-82F1-47D568B639CC"
             shouldBeEnabled = "Yes"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "Outread/Modules/Main/ViewModel/MainPageVM.swift"
+            filePath = "Outread/Views/FlashcardMainView.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "36"
-            endingLineNumber = "36"
-            landmarkName = "handleOnAppear(for:categoryName:)"
-            landmarkType = "7">
+            startingLineNumber = "73"
+            endingLineNumber = "73"
+            landmarkName = "body"
+            landmarkType = "24">
             <Locations>
                <Location
-                  uuid = "769451FA-FCCF-4CDB-AB9E-8F205CCCE717 - 9c7baa691d8d9bd"
+                  uuid = "33DEA92A-3405-4037-82F1-47D568B639CC - da5b0f5e599d37b1"
                   shouldBeEnabled = "Yes"
                   ignoreCount = "0"
                   continueAfterRunningActions = "No"
-                  symbolName = "Outread.MainPageVM.handleOnAppear(for: Outread.Product) -&gt; ()"
+                  symbolName = "closure #2 (SwiftUI.DragGesture.Value) -&gt; () in closure #1 () -&gt; SwiftUI.TupleView&lt;(&lt;&lt;opaque return type of SwiftUI.View.coordinateSpace&lt;&#x3c4;_0_0 where &#x3c4;_1_0: Swift.Hashable&gt;(name: &#x3c4;_1_0) -&gt; some&gt;&gt;.0, Swift.Optional&lt;&lt;&lt;opaque return type of Outread.FlashcardMainView.showAnimation : some&gt;&gt;.0&gt;)&gt; in closure #1 () -&gt; SwiftUI.TupleView&lt;(&lt;&lt;opaque return type of SwiftUI.View.padding(SwiftUI.Edge.Set, Swift.Optional&lt;CoreGraphics.CGFloat&gt;) -&gt; some&gt;&gt;.0, SwiftUI.ZStack&lt;SwiftUI.TupleView&lt;(&lt;&lt;opaque return type of SwiftUI.View.coordinateSpace&lt;&#x3c4;_0_0 where &#x3c4;_1_0: Swift.Hashable&gt;(name: &#x3c4;_1_0) -&gt; some&gt;&gt;.0, Swift.Optional&lt;&lt;&lt;opaque return type of Outread.FlashcardMainView.showAnimation : some&gt;&gt;.0&gt;)&gt;&gt;)&gt; in closure #1 () -&gt; SwiftUI.TupleView&lt;(&lt;&lt;opaque return type of SwiftUI.View.edgesIgnoringSafeArea(SwiftUI.Edge.Set) -&gt; some&gt;&gt;.0, &lt;&lt;opaque return type of SwiftUI.View.onTapGesture(count: Swift.Int, perform: () -&gt; ()) -&gt; some&gt;&gt;.0)&gt; in Outread.FlashcardMainView.body.getter : some"
                   moduleName = "Outread"
                   usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/mac003/Downloads/Outread-main/Outread/Modules/Main/ViewModel/MainPageVM.swift"
+                  urlString = "file:///Users/mac003/Desktop/kk/Outread/Outread/Views/FlashcardMainView.swift"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "36"
-                  endingLineNumber = "36"
-                  offsetFromSymbolStart = "168">
+                  startingLineNumber = "82"
+                  endingLineNumber = "82"
+                  offsetFromSymbolStart = "1500">
                </Location>
                <Location
-                  uuid = "769451FA-FCCF-4CDB-AB9E-8F205CCCE717 - 9c7baa691d8d99a"
+                  uuid = "33DEA92A-3405-4037-82F1-47D568B639CC - da5b0f5e599d37b1"
                   shouldBeEnabled = "Yes"
                   ignoreCount = "0"
                   continueAfterRunningActions = "No"
-                  symbolName = "Outread.MainPageVM.handleOnAppear(for: Outread.Product) -&gt; ()"
+                  symbolName = "closure #2 (SwiftUI.DragGesture.Value) -&gt; () in closure #1 () -&gt; SwiftUI.TupleView&lt;(&lt;&lt;opaque return type of SwiftUI.View.coordinateSpace&lt;&#x3c4;_0_0 where &#x3c4;_1_0: Swift.Hashable&gt;(name: &#x3c4;_1_0) -&gt; some&gt;&gt;.0, Swift.Optional&lt;&lt;&lt;opaque return type of Outread.FlashcardMainView.showAnimation : some&gt;&gt;.0&gt;)&gt; in closure #1 () -&gt; SwiftUI.TupleView&lt;(&lt;&lt;opaque return type of SwiftUI.View.padding(SwiftUI.Edge.Set, Swift.Optional&lt;CoreGraphics.CGFloat&gt;) -&gt; some&gt;&gt;.0, SwiftUI.ZStack&lt;SwiftUI.TupleView&lt;(&lt;&lt;opaque return type of SwiftUI.View.coordinateSpace&lt;&#x3c4;_0_0 where &#x3c4;_1_0: Swift.Hashable&gt;(name: &#x3c4;_1_0) -&gt; some&gt;&gt;.0, Swift.Optional&lt;&lt;&lt;opaque return type of Outread.FlashcardMainView.showAnimation : some&gt;&gt;.0&gt;)&gt;&gt;)&gt; in closure #1 () -&gt; SwiftUI.TupleView&lt;(&lt;&lt;opaque return type of SwiftUI.View.edgesIgnoringSafeArea(SwiftUI.Edge.Set) -&gt; some&gt;&gt;.0, &lt;&lt;opaque return type of SwiftUI.View.onTapGesture(count: Swift.Int, perform: () -&gt; ()) -&gt; some&gt;&gt;.0)&gt; in Outread.FlashcardMainView.body.getter : some"
                   moduleName = "Outread"
                   usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/mac003/Downloads/Outread-main/Outread/Modules/Main/ViewModel/MainPageVM.swift"
+                  urlString = "file:///Users/mac003/Desktop/kk/Outread/Outread/Views/FlashcardMainView.swift"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "37"
-                  endingLineNumber = "37"
-                  offsetFromSymbolStart = "884">
+                  startingLineNumber = "82"
+                  endingLineNumber = "82"
+                  offsetFromSymbolStart = "1668">
                </Location>
                <Location
-                  uuid = "769451FA-FCCF-4CDB-AB9E-8F205CCCE717 - fe326821c0fcc60"
+                  uuid = "33DEA92A-3405-4037-82F1-47D568B639CC - da5b0f5e599d37b1"
                   shouldBeEnabled = "Yes"
                   ignoreCount = "0"
                   continueAfterRunningActions = "No"
-                  symbolName = "Outread.MainPageVM.handleOnAppear(for: Outread.Product, categoryName: Swift.String) -&gt; ()"
+                  symbolName = "closure #2 (SwiftUI.DragGesture.Value) -&gt; () in closure #1 () -&gt; SwiftUI.TupleView&lt;(&lt;&lt;opaque return type of SwiftUI.View.coordinateSpace&lt;&#x3c4;_0_0 where &#x3c4;_1_0: Swift.Hashable&gt;(name: &#x3c4;_1_0) -&gt; some&gt;&gt;.0, Swift.Optional&lt;&lt;&lt;opaque return type of Outread.FlashcardMainView.showAnimation : some&gt;&gt;.0&gt;)&gt; in closure #1 () -&gt; SwiftUI.TupleView&lt;(&lt;&lt;opaque return type of SwiftUI.View.padding(SwiftUI.Edge.Set, Swift.Optional&lt;CoreGraphics.CGFloat&gt;) -&gt; some&gt;&gt;.0, SwiftUI.ZStack&lt;SwiftUI.TupleView&lt;(&lt;&lt;opaque return type of SwiftUI.View.coordinateSpace&lt;&#x3c4;_0_0 where &#x3c4;_1_0: Swift.Hashable&gt;(name: &#x3c4;_1_0) -&gt; some&gt;&gt;.0, Swift.Optional&lt;&lt;&lt;opaque return type of Outread.FlashcardMainView.showAnimation : some&gt;&gt;.0&gt;)&gt;&gt;)&gt; in closure #1 () -&gt; SwiftUI.TupleView&lt;(&lt;&lt;opaque return type of SwiftUI.View.edgesIgnoringSafeArea(SwiftUI.Edge.Set) -&gt; some&gt;&gt;.0, &lt;&lt;opaque return type of SwiftUI.View.onTapGesture(count: Swift.Int, perform: () -&gt; ()) -&gt; some&gt;&gt;.0)&gt; in Outread.FlashcardMainView.body.getter : some"
                   moduleName = "Outread"
                   usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/mac003/Downloads/Outread-main/Outread/Modules/Main/ViewModel/MainPageVM.swift"
+                  urlString = "file:///Users/mac003/Desktop/kk/Outread/Outread/Views/FlashcardMainView.swift"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "36"
-                  endingLineNumber = "36"
-                  offsetFromSymbolStart = "160">
+                  startingLineNumber = "82"
+                  endingLineNumber = "82"
+                  offsetFromSymbolStart = "1448">
                </Location>
             </Locations>
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            uuid = "4FFEC6B6-7AB4-4E0D-BD82-ACEF8FE54905"
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "Outread/Modules/Main/ViewModel/MainPageVM.swift"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "40"
-            endingLineNumber = "40"
-            landmarkName = "handleOnAppear(for:categoryName:)"
-            landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
    </Breakpoints>

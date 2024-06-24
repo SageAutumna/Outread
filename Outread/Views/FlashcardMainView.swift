@@ -21,9 +21,12 @@ struct FlashcardMainView: View {
     @Query var bookmarksList: [LocalDataStorage]
     var categories : [Category]
     @State var isShowCategory = false
+    @State var isSwipeUpActive = false
+    @State var isSwipeDownActive = false
     @State var categoriesList = [Category]()
-    
-    
+    @State var scrollViewSize: CGSize = .zero
+    let spaceName = "scroll"
+    @State var wholeSize: CGSize = .zero
     var body: some View {
         ZStack {
             backgroundColor
@@ -33,53 +36,97 @@ struct FlashcardMainView: View {
                     .cornerRadius(20)
                     .padding([.leading,.trailing], 15)
                     .padding(.bottom, 10)
-                
                 ZStack {
-                    ScrollView {
-                        ZStack {
-                            VStack(alignment: .leading,spacing: 8) {
-                                if isShowCategory {
-                                    showTopView
-                                    headerTitle
-                                    subHeader
-                                    addLine
-                                    readingTime
-                                    addLine
-                                    descriptionView
-                                    CategoriesScrollView(categories: categoriesList.filter{ $0.colorCategory != "" },
-                                                         products: [product],
-                                                         isNeedFilter: false) { id in }
-                                        .padding(.bottom,15)
+                    ChildSizeReader(size: $wholeSize) {
+                    ScrollView{
+                        ChildSizeReader(size: $scrollViewSize) {
+                            ZStack {
+                                VStack(alignment: .leading,spacing: 8) {
+                                    if isShowCategory {
+                                        showTopView
+                                        headerTitle
+                                        subHeader
+                                        addLine
+                                        readingTime
+                                        addLine
+                                        descriptionView
+                                        CategoriesScrollView(categories: categoriesList.filter{ $0.colorCategory != "" },
+                                                             products: [product],
+                                                             isNeedFilter: false) { id in }
+                                            .padding(.bottom,15)
+                                    }
+                                    
                                 }
-                                
+                                .padding([.leading,.trailing],15)
+                                  if isLoading {
+                                    HUDView(showHUD: $isLoading)
+                                  }
                             }
-                            .padding([.leading,.trailing],15)
-                            
-                            if isLoading {
-                                HUDView(showHUD: $isLoading)
-                            }
+                            .background(
+                                GeometryReader { proxy in
+                                    Color.clear.preference(
+                                        key: ViewOffsetKey.self,
+                                        value: -1 * proxy.frame(in: .named(spaceName)).origin.y
+                                    )
+                                }
+                            )
+                            .onPreferenceChange(
+                                ViewOffsetKey.self,
+                                perform: { value in
+                                    print("offset: \(value)") // offset: 1270.3333333333333 when User has reached the bottom
+                                    print("height: \(scrollViewSize.height)") // height: 2033.3333333333333
+                                    if value >= scrollViewSize.height - wholeSize.height  && value != 0.0 && scrollViewSize.height != 0.0{
+                                        isSwipeDownActive = true
+                                        isSwipeUpActive = false
+                                        print("User has reached the bottom of the ScrollView.")
+                                    } else if value == 0.0 && scrollViewSize.height != 0.0 || value == 0.0 && scrollViewSize.height == 0.0{
+                                        isSwipeUpActive = true
+                                        isSwipeDownActive = false
+                                        print("User has reached the up of the ScrollView.")
+                                    }else{
+                                        isSwipeUpActive = false
+                                        isSwipeDownActive = false
+                                        print("not reached.")
+                                    }
+                                    
+                                    if scrollViewSize.height < wholeSize.height{
+                                        isSwipeDownActive = true
+                                    }
+                                }
+                            )
                         }
-                    }.padding([.top,.bottom],10)
+                    }
+                    .coordinateSpace(name: spaceName)
+                    .onChange(
+                        of: scrollViewSize,
+                        perform: { value in
+                            print(value)
+                        }
+                    )
+                   }.padding([.top,.bottom],10)
+                        .opacity(!isLoading ? 1 : 0.2)
+                        .onAppear(perform: {
+                            UIScrollView.appearance().bounces = false
+                        })
                 }
             }
+            .gesture(DragGesture(minimumDistance: 3, coordinateSpace: .global)
+                .onChanged{ value in
+                    if value.translation.height <= 0 && isSwipeDownActive{
+                            isSwipe = true
+                       // up
+                    }else if value.translation.height > 0 && isSwipeUpActive{
+                            dismiss()
+                    }else{
+                        print("no clue")
+                    }
+                print(value.translation)
+            }
+            )
             .onTapGesture {
                 bookmarkProduct(product)
             }
-        }
-            .gesture(DragGesture(minimumDistance: 3.0, coordinateSpace: .local)
-                .onEnded { value in
-                    print(value.translation)
-                    switch(value.translation.width, value.translation.height) {
-                    case (...0, -30...30):  if !isLoading {
-                        isSwipe = true
-                    }
-                    case (0..., -30...30):
-                        dismiss()
-                    default:  print("no clue")
-                    }
-                }
-            )
-            .onAppear(perform: {
+        }.onAppear(perform: {
                 loadArticle()
                 for i in 0..<(product.categories?.count ?? 0) {
                     let filter = categories.filter{$0.name.lowercased() == product.categories?[i].name.lowercased() }
@@ -93,12 +140,11 @@ struct FlashcardMainView: View {
                     if i == (product.categories?.count ?? 0)-1 {
                         isShowCategory = true
                     }
-                    
                 }
             })
-        
-        
     }
+    
+    
     
     private var showTopView : some View {
         HStack(alignment: .top){
@@ -147,13 +193,11 @@ struct FlashcardMainView: View {
     
     func bookmarkProduct(_ product: Product) {
         let item = LocalDataStorage(id: product.id ?? 0, name: product.name ?? "", shortDescription: product.shortDescription ?? "", categories: product.categories ?? [], images: product.images ?? [], metaData: product.metaData ?? [], descData: product.desc ?? "")
-        
         if let existingIndex = bookmarksList.firstIndex(where: { $0.id == item.id }) {
             context.delete(bookmarksList[existingIndex])
         } else {
             context.insert(item)
         }
-        
         do {
             try context.save()
         } catch {
@@ -188,8 +232,6 @@ struct FlashcardMainView: View {
     private var bookmarks : some View {
         VStack {
             ZStack {
-                
-                
                 if isBookmarkAdded {
                     Image(uiImage: UIImage(resource: .icBookmarked))
                         .resizable()
@@ -212,8 +254,7 @@ struct FlashcardMainView: View {
     
     
     var isBookmarkAdded : Bool {
-        let item = LocalDataStorage.init(id: product.id ?? 0, name: product.name ?? "", shortDescription: product.shortDescription ?? "", categories: product.categories ?? [], images: product.images ?? [], metaData: product.metaData ?? [],descData:product.desc ?? "")
-        return bookmarksList.filter{$0.id == item.id}.count > .zero
+         bookmarksList.filter{$0.id == product.id ?? 0}.count > .zero
     }
     
     var headerTitle : some View {
@@ -279,4 +320,41 @@ extension View {
                 // if value.translation.height > 0 { down() }
             }))
     }
+}
+
+struct ViewOffsetKey: PreferenceKey {
+    typealias Value = CGFloat
+    static var defaultValue = CGFloat.zero
+    static func reduce(value: inout Value, nextValue: () -> Value) {
+        value += nextValue()
+    }
+}
+struct ChildSizeReader<Content: View>: View {
+  @Binding var size: CGSize
+
+  let content: () -> Content
+  var body: some View {
+    ZStack {
+      content().background(
+        GeometryReader { proxy in
+          Color.clear.preference(
+            key: SizePreferenceKey.self,
+            value: proxy.size
+          )
+        }
+      )
+    }
+    .onPreferenceChange(SizePreferenceKey.self) { preferences in
+      self.size = preferences
+    }
+  }
+}
+
+struct SizePreferenceKey: PreferenceKey {
+  typealias Value = CGSize
+  static var defaultValue: Value = .zero
+
+  static func reduce(value _: inout Value, nextValue: () -> Value) {
+    _ = nextValue()
+  }
 }
