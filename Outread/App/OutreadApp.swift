@@ -13,7 +13,6 @@ import SwiftData
 struct OutreadApp: App {
     // MARK: - Properties
     @AppStorage("hasCompletedOnboarding") private var hasCompletedOnboarding: Bool = false
-    @State private var products: [Product] = []
     
     var sharedModelContainer: ModelContainer = {
         let schema = Schema([
@@ -61,6 +60,4 @@ struct OutreadApp: App {
         }
         .modelContainer(sharedModelContainer)
     }
-    
-    // MARK: - Functions
 }
