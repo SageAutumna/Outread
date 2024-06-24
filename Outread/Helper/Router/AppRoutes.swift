@@ -15,4 +15,7 @@ enum AppRoutes: Equatable {
     case articles(products: [Product], categoryName: String, playlists: [Product], categories: [Category])
     case categories(categories: [Category], products: [Product], playlists: [Product])
     case flashcardMain(product: Product, categories: [Category])
+    case flashcard(productName: String)
+    case updateEmail
+    case privacyPolicy
 }

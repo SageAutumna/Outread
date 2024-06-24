@@ -9,7 +9,6 @@ import SwiftUI
 
 struct OnboardingView: View {
     //MARK: - Properties
-    @AppStorage("hasCompletedOnboarding") private var hasCompletedOnboarding: Bool = false
     @State private var currentPage = 0
     
     //MARK: - Body
@@ -20,30 +19,14 @@ struct OnboardingView: View {
             
             TabView(selection: $currentPage) {
                 
-                ExplainerView1 {
-                    withAnimation {
-                        currentPage = 2
-                    }
-                } goToNext: {
-                    withAnimation {
-                        currentPage = 1
-                    }
-                }
-                .tag(0)
+                ExplainerView1(currentPage: $currentPage)
+                    .tag(0)
                 
-                ExplainerView2 {
-                    withAnimation {
-                        goToNextPage()
-                    }
-                }
-                .tag(1)
+                ExplainerView2(currentPage: $currentPage)
+                    .tag(1)
                 
-                LoginView {
-                    withAnimation {
-                        hasCompletedOnboarding = true
-                    }
-                }
-                .tag(2)
+                LoginView ()
+                    .tag(2)
                 
             }
             .tabViewStyle(PageTabViewStyle(indexDisplayMode: .never))
@@ -51,11 +34,6 @@ struct OnboardingView: View {
     }
     
     //MARK: - Functions
-    private func goToNextPage() {
-        if currentPage < 2 {
-            currentPage += 1
-        }
-    }
 }
 
 #Preview {

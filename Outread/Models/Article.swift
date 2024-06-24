@@ -73,16 +73,7 @@ struct MetaData : Codable {
         }
     }
 }
-struct LocalProduct {
-    var id: Int
-    var name: String
-    var permalink: String
-    var desc: String
-    var shortDescription: String
-    var status: String
-    var price: String
-    var categories: [Category]
-    var images: [ProductImage]
-    var metaData : [MetaData]
-    var count : Int = 0
+
+struct LoginResponse: Codable {
+    var token: String
 }

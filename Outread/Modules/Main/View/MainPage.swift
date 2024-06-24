@@ -1,13 +1,19 @@
 import SwiftUI
 import SwiftData
+import UIKit
 
 struct MainPageView: View {
     // MARK: - Properties
     @EnvironmentObject private var router: Router<AppRoutes>
     @ObservedObject private var viewModel = MainPageVM()
     @Query var bookmarksList: [LocalDataStorage]
+    @Query var products: [LocalProduct]
+    @Query var categories: [LocalCategory]
     @Environment(\.modelContext) var context
     @State private var selectedCategoryName = ""
+    
+    @State private var tempProducts: [Product] = []
+    @State private var tempCats: [Category] = []
     
     var grid: [GridItem] = [GridItem(.flexible())]
     
@@ -16,42 +22,36 @@ struct MainPageView: View {
         ZStack {
             Color.COLOR_141_D_2_A.edgesIgnoringSafeArea(.all)
             
-            ScrollView {
+            ScrollView(showsIndicators: false) {
                 VStack(alignment: .leading) {
                     headerView
                     featuredArticleSection
                     categoriesSection
                     setProductHeader()
                 }
+                .padding(.bottom, ((UIApplication.keyWindow?.safeAreaInsets.bottom ?? 0) + 35))
             }
             .padding(.top, 15)
-            .padding(.bottom, ((UIApplication.keyWindow?.safeAreaInsets.bottom ?? 0) + 35))
-            
-            hud(isLoading: $viewModel.isLoading)
         }
-        .task {
-            if viewModel.categories.isEmpty {
-                viewModel.getAllData()
+        .onAppear {
+            getLocalData {
+                self.getRemoteData()
             }
         }
     }
     
     var headerView: some View {
         VStack(alignment: .leading, spacing: 6) {
-            HStack {
-                VStack(alignment: .leading, spacing: 2) {
-                    Text("Home")
-                        .foregroundColor(.white)
-                        .font(.poppins(weight: .medium, size: 36))
-                    
-                    Rectangle()
+            Text("Home")
+                .foregroundColor(.white)
+                .font(.poppins(weight: .medium, size: 36))
+                .overlay(alignment: .bottom) {
+                    RoundedRectangle(cornerRadius: 2)
                         .frame(height: 4)
                         .foregroundColor(Color.COLOR_9178_A_8)
+                        .offset(y: 10)
                 }
-                
-                Spacer()
-                    .frame(maxWidth: .infinity)
-            }
+            
             if let _ = viewModel.featuredProduct {
                 Text("Featured Read of the Day")
                     .font(.poppins(weight: .medium, size: 18))
@@ -69,7 +69,7 @@ struct MainPageView: View {
                 
                 FeatureTopArticle(image: imageURL, title: featuredProduct.name ?? "", duration: "\(readingTime) mins", product: featuredProduct, didBookmark: bookmarkProduct)
                     .onTapGesture {
-                        router.push(.flashcardMain(product: featuredProduct, categories: viewModel.categories))
+                        router.push(.flashcardMain(product: featuredProduct, categories: tempCats))
                     }
                     .padding(.bottom, 10)
             }
@@ -78,46 +78,40 @@ struct MainPageView: View {
     
     var categoriesSection: some View {
         VStack(alignment: .leading) {
-            if !viewModel.categories.isEmpty {
-                CategoryHeader(title: "Categories") {
-                    router.push(.categories(categories: viewModel.categories, products: viewModel.products, playlists: viewModel.playLists))
-                }
-                
-                CategoriesScrollView(categories: viewModel.categories, products: viewModel.products) { id in
-                    if let selectedCategory = viewModel.categories.first(where: { $0.id == id }) {
-                        selectedCategoryName = selectedCategory.name
-                        router.push(.articles(products: viewModel.products, categoryName: selectedCategoryName, playlists: viewModel.playLists, categories: viewModel.categories))
-                    }
+            CategoryHeader(title: "Categories") {
+                router.push(.categories(categories: tempCats, products: tempProducts, playlists: viewModel.playLists))
+            }
+            
+            CategoriesScrollView(categories: tempCats, products: tempProducts) { id in
+                if let selectedCategory = tempCats.first(where: { $0.id == id }) {
+                    selectedCategoryName = selectedCategory.name ?? ""
+                    router.push(.articles(products: tempProducts, categoryName: selectedCategoryName, playlists: viewModel.playLists, categories: tempCats))
                 }
             }
         }
     }
     
     func setProductHeader() -> some View {
-        LazyVStack {
-            ForEach(viewModel.categories, id: \.id) { category in
-                if viewModel.filterProducts(for: category.name).count > 2 {
-                    CategoryHeader(title: category.name) {
-                        selectedCategoryName = category.name
+        VStack {
+            ForEach(tempCats, id: \.id) { category in
+                if filterTempProducts(for: category.name ?? "").count > 0 {
+                    CategoryHeader(title: category.name ?? "") {
+                        selectedCategoryName = category.name ?? ""
                     }
-                    
-                    ScrollView(.horizontal) {
-                        showProductHGrid(category.name, products: viewModel.filterProducts(for: category.name))
-                    }
+                }
+                
+                ScrollView(.horizontal, showsIndicators: false) {
+                    showProductHGrid(category.name ?? "", products: filterTempProducts(for: category.name ?? ""))
                 }
             }
         }
     }
     
     func productNavigationLink(for product: Product, categoryName: String) -> some View {
-        ProductRow(product: product, articleType: categoryName.lowercased() == "playlist" ? .playlist : .other, boormark: bookmarkProduct)
+        ProductRow(product: product, boormark: bookmarkProduct)
             .frame(width: categoryName.lowercased() == "playlist" ? ((UIScreen.main.bounds.size.width - 45) / 2) * 1.3 : ((UIScreen.main.bounds.size.width - 45) / 2))
-//            .padding(.leading, 8)
-            .onAppear {
-                viewModel.handleOnAppear(for: product, categoryName: categoryName)
-            }
             .onTapGesture {
-                router.push(.flashcardMain(product: product, categories: viewModel.categories))
+                router.push(.flashcardMain(product: product, categories: tempCats))
             }
     }
     
@@ -131,11 +125,84 @@ struct MainPageView: View {
     }
     
     // MARK: - Methods
+    func getRemoteData() {
+        if products.isEmpty {
+            self.viewModel.getAllData { products, categories in
+                for product in products {
+                    self.saveProduct(product)
+                }
+                for category in categories {
+                    self.saveCategory(category)
+                }
+                self.tempProducts = products
+                self.tempCats = categories
+            }
+        }
+    }
+    
+    func getLocalData(completion: @escaping () -> Void) {
+        let dispatchGroup = DispatchGroup()
+        
+        dispatchGroup.enter()
+        tempProducts = products.map { localProduct in
+            Product(id: localProduct.id, name: localProduct.name, permalink: localProduct.permalink, desc: localProduct.desc, shortDescription: localProduct.shortDescription, status: localProduct.status, price: localProduct.status, categories: localProduct.categories, images: localProduct.images, metaData: localProduct.metaData, count: localProduct.count)
+        }
+        dispatchGroup.leave()
+        
+        dispatchGroup.enter()
+        tempCats = categories.map { localCategory in
+            Category(id: localCategory.id, name: localCategory.name, parent: localCategory.parent, colorCategory: localCategory.colorCategory)
+        }
+        dispatchGroup.leave()
+        
+        dispatchGroup.notify(queue: .main) {
+            completion()
+        }
+    }
+    
     func bookmarkProduct(_ product: Product) {
         let item = LocalDataStorage(id: product.id ?? 0, name: product.name ?? "", shortDescription: product.shortDescription ?? "", categories: product.categories ?? [], images: product.images ?? [], metaData: product.metaData ?? [], descData: product.desc ?? "")
         
         if let existingIndex = bookmarksList.firstIndex(where: { $0.id == item.id }) {
             context.delete(bookmarksList[existingIndex])
+        } else {
+            context.insert(item)
+        }
+        
+        do {
+            try context.save()
+        } catch {
+            UIApplication.keyWindow?.rootViewController?.showAlert(msg: error.localizedDescription)
+        }
+    }
+    
+    func filterTempProducts(for categoryName: String) -> [Product] {
+        tempProducts.filter { product in
+            product.categories?.contains(where: { $0.name?.uppercased() == categoryName.uppercased() }) ?? false
+        }
+    }
+    
+    func saveProduct(_ product: Product) {
+        let item = LocalProduct(id: product.id ?? 0, name: product.name ?? "", permalink: product.permalink ?? "", desc: product.desc ?? "", shortDescription: product.shortDescription ?? "", status: product.status ?? "", price: product.price ?? "", categories: product.categories ?? [], images: product.images ?? [], metaData: product.metaData ?? [], count: product.count ?? 0)
+        
+        if let existingIndex = products.firstIndex(where: { $0.id == item.id }) {
+            context.delete(products[existingIndex])
+        } else {
+            context.insert(item)
+        }
+        
+        do {
+            try context.save()
+        } catch {
+            UIApplication.keyWindow?.rootViewController?.showAlert(msg: error.localizedDescription)
+        }
+    }
+    
+    func saveCategory(_ cat: Category) {
+        let item = LocalCategory(id: cat.id ?? 0, name: cat.name ?? "", parent: cat.parent, colorCategory: cat.colorCategory ?? "")
+        
+        if let existingIndex = categories.firstIndex(where: { $0.id == item.id }) {
+            context.delete(categories[existingIndex])
         } else {
             context.insert(item)
         }

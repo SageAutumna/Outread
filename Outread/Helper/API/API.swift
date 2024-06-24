@@ -9,37 +9,57 @@ import Foundation
 
 // MARK: - API
 enum API {
+    case login(userName: String, password: String)
     case products(page: Int)
     case categories(perentID: Int?)
     case searchProduct(search: String)
+    case article(name: String)
+    case updateEmail(email: String)
 }
 
 // MARK: - APIProtocol
 extension API: APIProtocol {
     var baseURL: String {
-        "https://out-read.com/wp-json/wc/v3/"
+        switch self {
+        case .updateEmail:
+            return "https://yourapi.com/"
+        default:
+            return "https://out-read.com/wp-json/"
+        }
     }
     
     var path: String {
         switch self {
+        case .login:
+            return "jwt-auth/v1/token"
         case .products:
-            return "products"
+            return "wc/v3/products"
         case .categories:
-            return "products/categories"
+            return "wc/v3/products/categories"
         case .searchProduct:
-            return "products"
+            return "wc/v3/products"
+        case .article:
+            return "wp/v2/article"
+        case .updateEmail:
+            return "update-email"
         }
     }
     
     var method: APIMethod {
         switch self {
-        case .products, .categories, .searchProduct:
+        case .products, .categories, .searchProduct, .article:
             return .get
+        case .login, .updateEmail:
+            return .post
         }
     }
     
     var task: Request {
         switch self {
+        case let .login(userName, password):
+            let params: [String: Any] = ["username": userName,
+                                         "password": password]
+            return .jsonEncoding(params)
         case let .products(page):
             let params: [String: Any] = ["consumer_key": Globals.CONUMER_KEY,
                                          "consumer_secret": Globals.CONUMER_SECRET,
@@ -64,12 +84,18 @@ extension API: APIProtocol {
                                          "consumer_secret": Globals.CONUMER_SECRET,
                                          "search": search]
             return .queryString(params)
+        case let .article(name):
+            let params: [String: Any] = ["search": name]
+            return .queryString(params)
+        case let .updateEmail(email):
+            let params: [String: Any] = ["email": email]
+            return .jsonEncoding(params)
         }
     }
     
     var header: [String: String] {
         switch self {
-        case .products, .categories, .searchProduct:
+        case .login, .products, .categories, .searchProduct, .article, .updateEmail:
             return ["Content-Type": "application/json"]
         }
     }
