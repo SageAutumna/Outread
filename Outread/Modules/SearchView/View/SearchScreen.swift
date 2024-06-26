@@ -6,48 +6,59 @@
 //
 
 import SwiftUI
+import SwiftData
+import Combine
 
 struct SearchScreen: View {
-    //MARK: - Properties
+    // MARK: - Properties
+    @State private var searchText: String = ""
+    @State private var isLoading: Bool = true
+    
+    private let searchTextPublisher = PassthroughSubject<String, Never>()
+    private let adaptiveColumn = [GridItem(.adaptive(minimum: 150))]
+
+    @EnvironmentObject private var router: Router<AppRoutes>
     @ObservedObject private var searchViewModel = SearchScreenViewModel()
-    @State var isLoading: Bool = true
-    
-    private var data  = ["AI techniques", "Mind over mute", "Human Centromeres", "Machine learining", "Surgery anxiety", "Nature's network in computing"]
-    private let adaptiveColumn = [
-        GridItem(.adaptive(minimum: 150))
-    ]
-    
-    //MARK: - Body
+    @Environment(\.modelContext) private var context
+    @Query private var bookmarksList: [LocalDataStorage]
+
+    private let data = ["AI techniques", "Mind over mute", "Human Centromeres", "Machine learning", "Surgery anxiety", "Nature's network in computing"]
+
+    // MARK: - Body
     var body: some View {
-        ZStack {
-            Color.COLOR_141_D_2_A
-                .ignoresSafeArea()
+        VStack(alignment: .leading) {
+            headerView
             
-            VStack(alignment: .leading) {
-                headerView
-                
-                contentView
-                    .padding(15)
-            }
-            .padding(.top, 15)
+            contentView
+                .padding([.bottom, .leading, .trailing], 15)
         }
+        .hideKeyboardWhenTappedAround()
+        .frame(maxWidth: .infinity, maxHeight: .infinity)
+        .background(Color.COLOR_141_D_2_A)
         .onAppear {
-            searchViewModel.setupDebounce()
+            searchViewModel.fetchProduct(query: "")
+        }
+        .onChange(of: searchText) { newText in
+            searchTextPublisher.send(newText)
+        }
+        .onReceive(searchTextPublisher.debounce(for: .milliseconds(1500), scheduler: DispatchQueue.main)) { debouncedText in
+            searchViewModel.fetchProduct(query: debouncedText)
         }
     }
-    
+
     private var contentView: some View {
         VStack(spacing: 16) {
             searchSection
             
             ScrollView(.vertical, showsIndicators: false) {
                 VStack(spacing: 24) {
-                    if searchViewModel.searchText.isEmpty {
+                    if searchText.isEmpty {
                         LazyVGrid(columns: adaptiveColumn, spacing: 20) {
                             ForEach(data, id: \.self) { item in
                                 VStack(spacing: 10) {
                                     Button {
-                                        searchViewModel.searchText = item
+                                        HapticManager.generateHapticFeedback(for: .impact(feedbackStyle: .light))
+                                        searchText = item
                                     } label: {
                                         HStack(spacing: 10) {
                                             Image(.icSearch)
@@ -71,17 +82,22 @@ struct SearchScreen: View {
                             }
                         }
                     }
-                    
+
                     if let arrProduct = searchViewModel.product, !arrProduct.isEmpty {
                         LazyVStack(spacing: 16) {
                             ForEach(arrProduct, id: \.id) { product in
-                                ProductView(product: product)
-                                    .redacted(reason: (searchViewModel.isLoading || isLoading) ? .placeholder : [])
-                                    .onAppear(perform: {
-                                        DispatchQueue.main.asyncAfter(deadline: .now() + 3) {
-                                            isLoading = false
-                                        }
-                                    })
+                                ProductView(product: product) {
+                                    bookmarkProduct(product)
+                                }
+                                .redacted(reason: (searchViewModel.isLoading || isLoading) ? .placeholder : [])
+                                .onAppear {
+                                    DispatchQueue.main.asyncAfter(deadline: .now() + 3) {
+                                        isLoading = false
+                                    }
+                                }
+                                .onTapGesture {
+                                    router.push(.flashcardMain(product: product, categories: []))
+                                }
                             }
                         }
                     } else {
@@ -96,8 +112,8 @@ struct SearchScreen: View {
             }
         }
     }
-    
-    var headerView: some View {
+
+    private var headerView: some View {
         Text("Search")
             .foregroundColor(.white)
             .font(.poppins(weight: .medium, size: 36))
@@ -109,17 +125,14 @@ struct SearchScreen: View {
             }
             .padding(.horizontal, 15)
     }
-    
-    var searchSection: some View {
+
+    private var searchSection: some View {
         HStack(spacing: 10) {
-            TextField(text: $searchViewModel.searchText) {
-                Text("Search")
-                    .foregroundStyle(.white.opacity(0.7))
-                    .font(.poppins(weight: .medium, size: 18))
-            }
-            .foregroundStyle(.white.opacity(0.7))
-            .font(.poppins(weight: .medium, size: 18))
-            .padding(.leading, 16)
+            TextField("Search", text: $searchText)
+                .foregroundStyle(.white.opacity(0.7))
+                .font(.poppins(weight: .medium, size: 18))
+                .padding(.leading, 16)
+                .disabled(searchViewModel.isLoading)
             
             Button {} label: {
                 Image(.icSearch)
@@ -131,12 +144,25 @@ struct SearchScreen: View {
         .frame(maxWidth: .infinity)
         .frame(height: 50)
         .background(Color.white.opacity(0.3))
-        .clipShape(
-            RoundedRectangle(cornerRadius: 12)
-        )
+        .clipShape(RoundedRectangle(cornerRadius: 12))
     }
-    
-    //MARK: - Functions
+
+    // MARK: - Functions
+    private func bookmarkProduct(_ product: Product) {
+        let item = LocalDataStorage(id: product.id ?? 0, name: product.name ?? "", shortDescription: product.shortDescription ?? "", categories: product.categories ?? [], images: product.images ?? [], metaData: product.metaData ?? [], descData: product.desc ?? "")
+        
+        if let existingIndex = bookmarksList.firstIndex(where: { $0.id == item.id }) {
+            context.delete(bookmarksList[existingIndex])
+        } else {
+            context.insert(item)
+        }
+        
+        do {
+            try context.save()
+        } catch {
+            UIApplication.keyWindow?.rootViewController?.showAlert(msg: error.localizedDescription)
+        }
+    }
 }
 
 #Preview {

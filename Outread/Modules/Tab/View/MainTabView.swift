@@ -37,6 +37,7 @@ struct MainTabView: View {
                 ForEach(TabItem.allCases, id: \.self) { tab in
                     Button {
                         withAnimation(.spring()) {
+                            HapticManager.generateHapticFeedback(for: .impact(feedbackStyle: .light))
                             selectedTab = tab
                         }
                     } label: {
@@ -64,8 +65,4 @@ struct MainTabView: View {
     }
     
     // MARK: - Functions
-}
-
-#Preview {
-    MainTabView()
 }

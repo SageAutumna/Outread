@@ -28,6 +28,7 @@ public struct RouterHost<T: Equatable, Screen: View>: View {
         NavigationView {
             content
         }
+        .accentColor(.white)
         #if !os(macOS)
         .navigationViewStyle(.stack)
         #endif

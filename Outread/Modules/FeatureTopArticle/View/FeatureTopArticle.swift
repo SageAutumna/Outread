@@ -30,6 +30,7 @@ struct FeatureTopArticle: View {
                     Spacer()
                     
                     Button(action: {
+                        HapticManager.generateHapticFeedback(for: .impact(feedbackStyle: .light))
                         didBookmark(product)
                     }) {
                         Image(systemName: "bookmark")
@@ -96,6 +97,7 @@ struct CategoryHeader: View {
             Spacer()
             
             Button {
+                HapticManager.generateHapticFeedback(for: .impact(feedbackStyle: .light))
                 didTapButton()
             } label: {
                 Text(ButtonTitle)

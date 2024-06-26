@@ -31,19 +31,13 @@ struct FlashcardMainView: View {
     
     //MARK: - Body
     var body: some View {
-        ZStack {
-            Color.COLOR_141_D_2_A.edgesIgnoringSafeArea(.all)
-            
-            VStack {
-                makeNavBar(title: "Product Detail") {
-                    router.pop()
-                }
-                
-                content
-                    .gesture(dragGesture)
-                    .onAppear(perform: setUI)
-            }
-        }
+        content
+            .padding(.top, 16)
+            .background(Color.COLOR_141_D_2_A)
+            .gesture(dragGesture)
+            .onAppear(perform: setUI)
+            .navigationTitle("Product Detail")
+            .navigationBarColor(backgroundColor: .COLOR_141_D_2_A, titleColor: .white)
     }
     
     private var content: some View {
@@ -178,8 +172,10 @@ struct FlashcardMainView: View {
             .onEnded { value in
                 switch (value.translation.width, value.translation.height) {
                 case (...0, -30...30):
+                    HapticManager.generateHapticFeedback(for: .impact(feedbackStyle: .light))
                     router.push(.flashcard(productName: product.name ?? ""))
                 case (0..., -30...30):
+                    HapticManager.generateHapticFeedback(for: .impact(feedbackStyle: .light))
                     dismiss()
                 default:
                     break

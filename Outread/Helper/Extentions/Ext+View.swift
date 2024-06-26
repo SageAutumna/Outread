@@ -28,22 +28,6 @@ extension View {
     }
 }
 
-// MARK: - HUD Hide & Show
-extension View {
-    func hud(isLoading: Binding<Bool>) -> some View {
-        ZStack {
-             self
-            
-            if isLoading.wrappedValue {
-                ZStack {
-                    HUDView(showHUD: isLoading)
-                }
-                .ignoresSafeArea()
-            }
-        }
-    }
-}
-
 extension View {
     func makeNavBar(title: String, isBackButtonHidden: Bool = false, didTapBack: @escaping () -> Void) -> some View {
         ZStack {

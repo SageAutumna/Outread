@@ -25,6 +25,7 @@ struct ExplainerView1: View {
             Spacer()
             
             Button {
+                HapticManager.generateHapticFeedback(for: .impact(feedbackStyle: .light))
                 withAnimation {
                     currentPage = 1
                 }
@@ -40,6 +41,7 @@ struct ExplainerView1: View {
             .padding(.bottom, 10)
             
             Button {
+                HapticManager.generateHapticFeedback(for: .impact(feedbackStyle: .light))
                 withAnimation {
                     currentPage = 2
                 }

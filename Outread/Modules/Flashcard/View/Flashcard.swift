@@ -15,13 +15,12 @@ struct FlashcardView: View {
         ZStack {
             Color.COLOR_141_D_2_A.edgesIgnoringSafeArea(.all)
             
-            VStack {
-                makeNavBar(title: "Article", isBackButtonHidden: true) {}
-                
-                contentView
-                    .redacted(reason: viewModel.isLoading ? .placeholder : [])
-            }
+            contentView
+                .redacted(reason: viewModel.isLoading ? .placeholder : [])
+                .padding(.top, 16)
         }
+        .navigationTitle("Article")
+        .navigationBarColor(backgroundColor: .COLOR_141_D_2_A, titleColor: .white)
         .gesture(dragGesture)
         .task {
             viewModel.loadArticle(name: productName)

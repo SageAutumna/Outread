@@ -8,10 +8,6 @@ struct UpdateEmailView: View {
     //MARK: - Body
     var body: some View {
         VStack {
-            makeNavBar(title: "Update Email") {
-                router.pop()
-            }
-            
             VStack(alignment: .leading, spacing: 16) {
                 TextField("New Email", text: $viewModel.email)
                     .padding()
@@ -41,10 +37,14 @@ struct UpdateEmailView: View {
                 .padding(.horizontal, 15)
                 .disabled(viewModel.isLoading)
             }
+            .padding(.top, 16)
             
             Spacer()
         }
+        .hideKeyboardWhenTappedAround()
         .background(Color.COLOR_141_D_2_A)
+        .navigationTitle("Update Email")
+        .navigationBarColor(backgroundColor: .COLOR_141_D_2_A, titleColor: .white)
     }
     
     //MARK: - Functions

@@ -6,10 +6,14 @@
 //
 
 import SwiftUI
+import SwiftData
 
 struct ProductView: View {
     //MARK: - Properties
     @State var product: Product
+    @Query private var bookmarksList : [LocalDataStorage]
+    
+    var didTapButtonBookMark: () -> Void
     
     //MARK: - Body
     var body: some View {
@@ -33,10 +37,22 @@ struct ProductView: View {
                     
                     Spacer()
                     
-                    Button {} label: {
-                        Image(.icBookmark)
-                            .resizable()
-                            .frame(width: 20, height: 30)
+                    Button {
+                        HapticManager.generateHapticFeedback(for: .impact(feedbackStyle: .light))
+                        didTapButtonBookMark()
+                    } label: {
+                        let filter = bookmarksList.filter{ $0.id == product.id }
+                        if !filter.isEmpty {
+                            Image(systemName: "bookmark.fill")
+                                .resizable()
+                                .frame(width: 20, height: 30)
+                                .tint(.white)
+                        } else {
+                            Image(.icBookmark)
+                                .resizable()
+                                .frame(width: 20, height: 30)
+                                .tint(.white)
+                        }
                     }
                 }
                 
@@ -89,7 +105,7 @@ struct ProductView: View {
                                  price: "",
                                  categories: [],
                                  images: [],
-                                 metaData: []))
+                                 metaData: []), didTapButtonBookMark: {})
     .frame(height: 150)
     .padding(.horizontal, 20)
 }

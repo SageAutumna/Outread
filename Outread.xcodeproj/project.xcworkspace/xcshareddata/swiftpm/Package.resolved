@@ -1,13 +1,13 @@
 {
-  "originHash" : "47f518b8864097695529fddaa8e561de71aecb29a75ec634b9f4b473a81d95ab",
+  "originHash" : "6892ea0836a28eee458b51ec45ad36a8f574f205e9ba8a31982bf2678ec9a075",
   "pins" : [
     {
-      "identity" : "ihprogresshud",
+      "identity" : "iqkeyboardmanager",
       "kind" : "remoteSourceControl",
-      "location" : "https://github.com/Swiftify-Corp/IHProgressHUD.git",
+      "location" : "https://github.com/hackiftekhar/IQKeyboardManager.git",
       "state" : {
-        "revision" : "c3e0cf90ba1b310073e841de7dc6ef0a2d4899e2",
-        "version" : "0.1.8"
+        "revision" : "19e111f9246b3407fe0c334dc78fa890c40d8c67",
+        "version" : "7.0.3"
       }
     },
     {

@@ -62,6 +62,7 @@ struct LoginView: View {
                     footerSec
                 }
             }
+            .hideKeyboardWhenTappedAround()
         }
     }
     
@@ -84,6 +85,7 @@ struct LoginView: View {
                 .padding(.horizontal)
             
             Button {
+                HapticManager.generateHapticFeedback(for: .impact(feedbackStyle: .light))
                 viewModel.authenticateUser(username: username, password: password) {
                     hasCompletedOnboarding = true
                 }

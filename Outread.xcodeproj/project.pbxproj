@@ -7,8 +7,6 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		380E86892C03B5880069CE1B /* IHProgressHUD in Frameworks */ = {isa = PBXBuildFile; productRef = 380E86882C03B5880069CE1B /* IHProgressHUD */; };
-		380E868F2C03B5A30069CE1B /* HUDView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 380E868A2C03B5A30069CE1B /* HUDView.swift */; };
 		381075C72C0392240074864C /* Enums.swift in Sources */ = {isa = PBXBuildFile; fileRef = 381075BF2C0392240074864C /* Enums.swift */; };
 		381075C82C0392240074864C /* Ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 381075C12C0392240074864C /* Ext.swift */; };
 		381075C92C0392240074864C /* APIProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 381075C32C0392240074864C /* APIProtocol.swift */; };
@@ -41,6 +39,10 @@
 		386A96D42C14242400A78CC6 /* MainTabView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 386A96D32C14242400A78CC6 /* MainTabView.swift */; };
 		388C4C982C248AC400CECAD1 /* Ext+Numbers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 388C4C972C248AC400CECAD1 /* Ext+Numbers.swift */; };
 		388C4C9E2C249B1D00CECAD1 /* Category.swift in Sources */ = {isa = PBXBuildFile; fileRef = 388C4C9D2C249B1D00CECAD1 /* Category.swift */; };
+		388FFD5F2C2B13A100E28A80 /* NavigationConfigurator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 388FFD5E2C2B13A100E28A80 /* NavigationConfigurator.swift */; };
+		3897EBF02C29F4170004365D /* Haptic.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3897EBEF2C29F4170004365D /* Haptic.swift */; };
+		3897EBF22C29FB080004365D /* HideKeyboardModifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3897EBF12C29FB080004365D /* HideKeyboardModifier.swift */; };
+		3897EBF52C29FFE30004365D /* IQKeyboardManagerSwift in Frameworks */ = {isa = PBXBuildFile; productRef = 3897EBF42C29FFE30004365D /* IQKeyboardManagerSwift */; };
 		3898C5C92C021296006A6C3C /* Poppins-Black.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 3898C5BF2C021296006A6C3C /* Poppins-Black.ttf */; };
 		3898C5CA2C021296006A6C3C /* Poppins-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 3898C5C02C021296006A6C3C /* Poppins-Bold.ttf */; };
 		3898C5CB2C021296006A6C3C /* Poppins-ExtraBold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 3898C5C12C021296006A6C3C /* Poppins-ExtraBold.ttf */; };
@@ -65,7 +67,6 @@
 		9C370DE12BBB197B001E9591 /* BookmarkView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C370DE02BBB197B001E9591 /* BookmarkView.swift */; };
 		9C57C2012B832926005A1225 /* Flashcard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C57C2002B832926005A1225 /* Flashcard.swift */; };
 		9C9EFE402B579AA200B43B99 /* OutreadApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C9EFE3F2B579AA200B43B99 /* OutreadApp.swift */; };
-		9C9EFE422B579AA200B43B99 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C9EFE412B579AA200B43B99 /* ContentView.swift */; };
 		9C9EFE462B579AA300B43B99 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 9C9EFE452B579AA300B43B99 /* Assets.xcassets */; };
 		9C9EFE4A2B579AA300B43B99 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 9C9EFE492B579AA300B43B99 /* Preview Assets.xcassets */; };
 		9C9EFE6E2B58FE0200B43B99 /* ExplainerView1.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C9EFE6D2B58FE0200B43B99 /* ExplainerView1.swift */; };
@@ -79,7 +80,6 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		380E868A2C03B5A30069CE1B /* HUDView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HUDView.swift; sourceTree = "<group>"; };
 		381075BF2C0392240074864C /* Enums.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Enums.swift; sourceTree = "<group>"; };
 		381075C12C0392240074864C /* Ext.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Ext.swift; sourceTree = "<group>"; };
 		381075C32C0392240074864C /* APIProtocol.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = APIProtocol.swift; sourceTree = "<group>"; };
@@ -111,6 +111,9 @@
 		386A96D32C14242400A78CC6 /* MainTabView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainTabView.swift; sourceTree = "<group>"; };
 		388C4C972C248AC400CECAD1 /* Ext+Numbers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Ext+Numbers.swift"; sourceTree = "<group>"; };
 		388C4C9D2C249B1D00CECAD1 /* Category.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Category.swift; sourceTree = "<group>"; };
+		388FFD5E2C2B13A100E28A80 /* NavigationConfigurator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NavigationConfigurator.swift; sourceTree = "<group>"; };
+		3897EBEF2C29F4170004365D /* Haptic.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Haptic.swift; sourceTree = "<group>"; };
+		3897EBF12C29FB080004365D /* HideKeyboardModifier.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HideKeyboardModifier.swift; sourceTree = "<group>"; };
 		3898C5BF2C021296006A6C3C /* Poppins-Black.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Poppins-Black.ttf"; sourceTree = "<group>"; };
 		3898C5C02C021296006A6C3C /* Poppins-Bold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Poppins-Bold.ttf"; sourceTree = "<group>"; };
 		3898C5C12C021296006A6C3C /* Poppins-ExtraBold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Poppins-ExtraBold.ttf"; sourceTree = "<group>"; };
@@ -136,7 +139,6 @@
 		9C57C2002B832926005A1225 /* Flashcard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Flashcard.swift; sourceTree = "<group>"; };
 		9C9EFE3C2B579AA200B43B99 /* Outread.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Outread.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		9C9EFE3F2B579AA200B43B99 /* OutreadApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OutreadApp.swift; sourceTree = "<group>"; };
-		9C9EFE412B579AA200B43B99 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
 		9C9EFE452B579AA300B43B99 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		9C9EFE472B579AA300B43B99 /* Outread.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = Outread.entitlements; sourceTree = "<group>"; };
 		9C9EFE492B579AA300B43B99 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
@@ -156,26 +158,18 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				380E86892C03B5880069CE1B /* IHProgressHUD in Frameworks */,
 				381075E72C03AE5A0074864C /* Kingfisher in Frameworks */,
+				3897EBF52C29FFE30004365D /* IQKeyboardManagerSwift in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		380E868B2C03B5A30069CE1B /* HUDView */ = {
-			isa = PBXGroup;
-			children = (
-				380E868A2C03B5A30069CE1B /* HUDView.swift */,
-			);
-			path = HUDView;
-			sourceTree = "<group>";
-		};
 		380E868E2C03B5A30069CE1B /* RepresentableViews */ = {
 			isa = PBXGroup;
 			children = (
-				380E868B2C03B5A30069CE1B /* HUDView */,
+				388FFD5E2C2B13A100E28A80 /* NavigationConfigurator.swift */,
 			);
 			path = RepresentableViews;
 			sourceTree = "<group>";
@@ -236,6 +230,8 @@
 			isa = PBXGroup;
 			children = (
 				923C5F1A2C1856EB0033AC47 /* TaskCancellable.swift */,
+				3897EBEF2C29F4170004365D /* Haptic.swift */,
+				3897EBF12C29FB080004365D /* HideKeyboardModifier.swift */,
 			);
 			path = Classes;
 			sourceTree = "<group>";
@@ -542,7 +538,6 @@
 			isa = PBXGroup;
 			children = (
 				9C9EFE3F2B579AA200B43B99 /* OutreadApp.swift */,
-				9C9EFE412B579AA200B43B99 /* ContentView.swift */,
 			);
 			path = App;
 			sourceTree = "<group>";
@@ -754,7 +749,7 @@
 			name = Outread;
 			packageProductDependencies = (
 				381075E62C03AE5A0074864C /* Kingfisher */,
-				380E86882C03B5880069CE1B /* IHProgressHUD */,
+				3897EBF42C29FFE30004365D /* IQKeyboardManagerSwift */,
 			);
 			productName = Outread;
 			productReference = 9C9EFE3C2B579AA200B43B99 /* Outread.app */;
@@ -786,7 +781,7 @@
 			mainGroup = 9C9EFE332B579AA200B43B99;
 			packageReferences = (
 				381075E52C03AE5A0074864C /* XCRemoteSwiftPackageReference "Kingfisher" */,
-				380E86872C03B5880069CE1B /* XCRemoteSwiftPackageReference "IHProgressHUD" */,
+				3897EBF32C29FFE20004365D /* XCRemoteSwiftPackageReference "IQKeyboardManager" */,
 			);
 			productRefGroup = 9C9EFE3D2B579AA200B43B99 /* Products */;
 			projectDirPath = "";
@@ -830,9 +825,9 @@
 				384BF9C22C20A47A00E6B11C /* FlashcardMainVm.swift in Sources */,
 				381075D12C0393170074864C /* Globals.swift in Sources */,
 				9C57C2012B832926005A1225 /* Flashcard.swift in Sources */,
+				388FFD5F2C2B13A100E28A80 /* NavigationConfigurator.swift in Sources */,
 				9C9EFE722B591C2200B43B99 /* LoginView.swift in Sources */,
 				9CE203882BFA79DA0064AEAE /* SettingsView.swift in Sources */,
-				380E868F2C03B5A30069CE1B /* HUDView.swift in Sources */,
 				92B2A0FA2BFB4933005F91FB /* FeatureTopArticle.swift in Sources */,
 				3818CCCB2C156DE300C25436 /* AppRoutes.swift in Sources */,
 				38330F122C15B0C500B61A2F /* Ext+Array.swift in Sources */,
@@ -858,7 +853,6 @@
 				386A96D42C14242400A78CC6 /* MainTabView.swift in Sources */,
 				381075C92C0392240074864C /* APIProtocol.swift in Sources */,
 				3818CCAF2C15593D00C25436 /* TabItem.swift in Sources */,
-				9C9EFE422B579AA200B43B99 /* ContentView.swift in Sources */,
 				9231EB692BFF69D700959909 /* ArticlesVIew.swift in Sources */,
 				9C370DDF2BBAFED6001E9591 /* CategoriesScrollView.swift in Sources */,
 				381075D72C0396C90074864C /* ProductView.swift in Sources */,
@@ -869,9 +863,11 @@
 				3818CCCE2C156DE300C25436 /* RouterHost.swift in Sources */,
 				38E3C9602C25F00C00D1AA17 /* LoginVm.swift in Sources */,
 				3818CCCD2C156DE300C25436 /* Router.swift in Sources */,
+				3897EBF22C29FB080004365D /* HideKeyboardModifier.swift in Sources */,
 				381075DF2C039D4E0074864C /* Ext+Bundle.swift in Sources */,
 				92EA9F9E2C12D65300014703 /* LocalStorage.swift in Sources */,
 				9C370DE12BBB197B001E9591 /* BookmarkView.swift in Sources */,
+				3897EBF02C29F4170004365D /* Haptic.swift in Sources */,
 				9C9EFE402B579AA200B43B99 /* OutreadApp.swift in Sources */,
 				38BA35AD2C0205F9009BB640 /* SearchScreen.swift in Sources */,
 				381075CA2C0392240074864C /* APIService.swift in Sources */,
@@ -1009,7 +1005,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"Outread/Preview Content\"";
-				DEVELOPMENT_TEAM = BSBMX4U453;
+				DEVELOPMENT_TEAM = 868LB83X8N;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = Outread/Info.plist;
@@ -1021,8 +1017,8 @@
 				"INFOPLIST_KEY_UILaunchScreen_Generation[sdk=iphonesimulator*]" = YES;
 				"INFOPLIST_KEY_UIStatusBarStyle[sdk=iphoneos*]" = UIStatusBarStyleDefault;
 				"INFOPLIST_KEY_UIStatusBarStyle[sdk=iphonesimulator*]" = UIStatusBarStyleDefault;
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
 				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
 				LD_RUNPATH_SEARCH_PATHS = "@executable_path/Frameworks";
 				"LD_RUNPATH_SEARCH_PATHS[sdk=macosx*]" = "@executable_path/../Frameworks";
@@ -1031,10 +1027,11 @@
 				PRODUCT_BUNDLE_IDENTIFIER = outread.outread.com;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = auto;
-				SUPPORTED_PLATFORMS = "iphonesimulator iphoneos";
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
+				SUPPORTS_MACCATALYST = NO;
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
+				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Debug;
 		};
@@ -1048,7 +1045,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"Outread/Preview Content\"";
-				DEVELOPMENT_TEAM = BSBMX4U453;
+				DEVELOPMENT_TEAM = 868LB83X8N;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = Outread/Info.plist;
@@ -1060,8 +1057,8 @@
 				"INFOPLIST_KEY_UILaunchScreen_Generation[sdk=iphonesimulator*]" = YES;
 				"INFOPLIST_KEY_UIStatusBarStyle[sdk=iphoneos*]" = UIStatusBarStyleDefault;
 				"INFOPLIST_KEY_UIStatusBarStyle[sdk=iphonesimulator*]" = UIStatusBarStyleDefault;
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
 				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
 				LD_RUNPATH_SEARCH_PATHS = "@executable_path/Frameworks";
 				"LD_RUNPATH_SEARCH_PATHS[sdk=macosx*]" = "@executable_path/../Frameworks";
@@ -1070,10 +1067,11 @@
 				PRODUCT_BUNDLE_IDENTIFIER = outread.outread.com;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = auto;
-				SUPPORTED_PLATFORMS = "iphonesimulator iphoneos";
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
+				SUPPORTS_MACCATALYST = NO;
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
+				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Release;
 		};
@@ -1101,14 +1099,6 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
-		380E86872C03B5880069CE1B /* XCRemoteSwiftPackageReference "IHProgressHUD" */ = {
-			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/Swiftify-Corp/IHProgressHUD.git";
-			requirement = {
-				kind = upToNextMajorVersion;
-				minimumVersion = 0.1.8;
-			};
-		};
 		381075E52C03AE5A0074864C /* XCRemoteSwiftPackageReference "Kingfisher" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/onevcat/Kingfisher.git";
@@ -1117,18 +1107,26 @@
 				minimumVersion = 7.11.0;
 			};
 		};
+		3897EBF32C29FFE20004365D /* XCRemoteSwiftPackageReference "IQKeyboardManager" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/hackiftekhar/IQKeyboardManager.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 7.0.3;
+			};
+		};
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
-		380E86882C03B5880069CE1B /* IHProgressHUD */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = 380E86872C03B5880069CE1B /* XCRemoteSwiftPackageReference "IHProgressHUD" */;
-			productName = IHProgressHUD;
-		};
 		381075E62C03AE5A0074864C /* Kingfisher */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = 381075E52C03AE5A0074864C /* XCRemoteSwiftPackageReference "Kingfisher" */;
 			productName = Kingfisher;
+		};
+		3897EBF42C29FFE30004365D /* IQKeyboardManagerSwift */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 3897EBF32C29FFE20004365D /* XCRemoteSwiftPackageReference "IQKeyboardManager" */;
+			productName = IQKeyboardManagerSwift;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};

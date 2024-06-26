@@ -25,6 +25,7 @@ struct ExplainerView2: View {
             Spacer()
             
             Button {
+                HapticManager.generateHapticFeedback(for: .impact(feedbackStyle: .light))
                 withAnimation {
                     if currentPage < 2 {
                         currentPage += 1

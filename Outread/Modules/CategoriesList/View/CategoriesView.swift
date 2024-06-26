@@ -27,21 +27,13 @@ struct CategoriesView: View {
     
     //MARK: - Body
     var body: some View {
-        ZStack {
-            Color.COLOR_141_D_2_A.edgesIgnoringSafeArea(.all)
-            
-            VStack {
-                makeNavBar(title: "Categories") {
-                    router.pop()
-                }
-                
-                ScrollView {
-                    VStack(alignment: .leading) {
-                        showCategories
-                    }
-                }
-            }
+        ScrollView {
+            showCategories
+                .padding(.top, 16)
         }
+        .background(Color.COLOR_141_D_2_A)
+        .navigationTitle("Categories")
+        .navigationBarColor(backgroundColor: .COLOR_141_D_2_A, titleColor: .white)
     }
     
     private var showCategories: some View{
@@ -56,6 +48,7 @@ struct CategoriesView: View {
                         .background(Color(hex: category.colorCategory ?? ""))
                         .clipShape(RoundedRectangle(cornerRadius: 13))
                         .onTapGesture {
+                            HapticManager.generateHapticFeedback(for: .impact(feedbackStyle: .light))
                             let filterData = categories.filter { $0.id == category.id }
                             selectedCategoryName = !filterData.isEmpty ? filterData.first?.name ?? "" : ""
                             router.push(.articles(products: products, categoryName: selectedCategoryName, playlists: playLists, categories: categories))

@@ -6,34 +6,6 @@
 //
 
 import UIKit
-import IHProgressHUD
-
-// MARK: - Hide/Show Huds
-extension UIViewController {
-    func showHUD(progressLabel: String = "Loading...", hudColor: UIColor = .white) {
-        queue.async {
-            IHProgressHUD.set(backgroundColor: .clear)
-            IHProgressHUD.setHapticsEnabled(hapticsEnabled: true)
-            IHProgressHUD.set(containerView: UIApplication.keyWindow?.rootViewController?.view)
-            IHProgressHUD.set(defaultAnimationType: .flat)
-            IHProgressHUD.set(defaultMaskType: .clear)
-            IHProgressHUD.set(foregroundColor: hudColor)
-            IHProgressHUD.set(ringThickness: 4)
-            IHProgressHUD.set(font: .boldSystemFont(ofSize: 17))
-            IHProgressHUD.set(ringRadius: 20)
-            IHProgressHUD.show(withStatus: progressLabel)
-            UIApplication.keyWindow?.rootViewController?.view.isUserInteractionEnabled = false
-        }
-    }
-
-    func hideHUD() {
-        queue.async {
-            IHProgressHUD.dismissWithCompletion {
-                UIApplication.keyWindow?.rootViewController?.view.isUserInteractionEnabled = true
-            }
-        }
-    }
-}
 
 // MARK: - Show Alerts
 extension UIViewController {

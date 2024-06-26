@@ -97,6 +97,7 @@ struct MainPageView: View {
                 if filterTempProducts(for: category.name ?? "").count > 0 {
                     CategoryHeader(title: category.name ?? "") {
                         selectedCategoryName = category.name ?? ""
+                        router.push(.articles(products: tempProducts, categoryName: selectedCategoryName, playlists: viewModel.playLists, categories: tempCats))
                     }
                 }
                 

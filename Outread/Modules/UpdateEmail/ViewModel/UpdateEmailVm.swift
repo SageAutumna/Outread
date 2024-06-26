@@ -23,6 +23,7 @@ final class UpdateEmailVm: ObservableObject {
     
     //MARK: - Functions
     func updateEmail() {
+        HapticManager.generateHapticFeedback(for: .impact(feedbackStyle: .light))
         guard !email.isEmpty else {
             UIApplication.keyWindow?.rootViewController?.showAlert(msg: "Email cannot be empty.")
             return

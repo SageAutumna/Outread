@@ -7,11 +7,12 @@
 
 import SwiftUI
 import SwiftData
-
+import IQKeyboardManagerSwift
 
 @main
 struct OutreadApp: App {
     // MARK: - Properties
+    @UIApplicationDelegateAdaptor(AppDelegate.self) var delegate
     @AppStorage("hasCompletedOnboarding") private var hasCompletedOnboarding: Bool = false
     @State private var products: [Product] = []
     
@@ -63,4 +64,10 @@ struct OutreadApp: App {
     }
     
     // MARK: - Functions
+}
+
+class AppDelegate: NSObject, UIApplicationDelegate {
+    func applicationDidFinishLaunching(_ application: UIApplication) {
+        IQKeyboardManager.shared.enable = true
+    }
 }

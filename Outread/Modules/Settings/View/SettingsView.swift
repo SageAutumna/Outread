@@ -82,6 +82,7 @@ struct SettingsView: View {
     
     func settingsItem(title: String, color: Color = .white, route: AppRoutes? = nil) -> some View {
         Button {
+            HapticManager.generateHapticFeedback(for: .impact(feedbackStyle: .light))
             guard let route = route else { return }
             router.push(route)
         } label: {

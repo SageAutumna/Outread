@@ -58,9 +58,10 @@ struct CategoryView: View {
             .font(.poppins(weight: .medium, size: 19))
             .padding(.horizontal, category.name?.lowercased() == "playlist" ? 0 : 24)
             .padding(.vertical, 20)
-            .background(Color(hex: category.colorCategory ?? ""))
+            .background(Color(hex: category.colorCategory ?? "#ffffff"))
             .clipShape(RoundedRectangle(cornerRadius: 13))
             .onTapGesture {
+                HapticManager.generateHapticFeedback(for: .impact(feedbackStyle: .light))
                 didTap()
             }
     }

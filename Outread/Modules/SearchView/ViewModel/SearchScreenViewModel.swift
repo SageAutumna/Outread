@@ -11,7 +11,6 @@ import Combine
 @MainActor
 class SearchScreenViewModel: ObservableObject {
     //MARK: - Properties
-    @Published var searchText: String = ""
     var product: [Product]?
     @Published var isLoading: Bool = false
     private var taskDisposeBag = TaskBag()
@@ -24,17 +23,7 @@ class SearchScreenViewModel: ObservableObject {
     }
     
     //MARK: - Functions
-    func setupDebounce() {
-        $searchText
-            .debounce(for: .milliseconds(300), scheduler: RunLoop.main)
-            .removeDuplicates()
-            .sink { [weak self] (searchText) in
-                self?.fetchProduct(query: searchText)
-            }
-            .store(in: &cancellables)
-    }
-    
-    private func fetchProduct(query: String) {
+    func fetchProduct(query: String) {
         isLoading = true
         Task {
             do {

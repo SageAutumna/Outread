@@ -33,6 +33,7 @@ struct ProductRow: View {
                     Spacer()
                     
                     Button {
+                        HapticManager.generateHapticFeedback(for: .impact(feedbackStyle: .light))
                         boormark(product)
                     } label: {
                         bookmarks

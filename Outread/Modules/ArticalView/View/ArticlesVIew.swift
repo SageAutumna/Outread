@@ -18,21 +18,13 @@ struct ArticlesVIew: View {
     
     //MARK: - Body
     var body: some View {
-        ZStack {
-            Color.COLOR_141_D_2_A.edgesIgnoringSafeArea(.all)
-            
-            VStack {
-                makeNavBar(title: categoryName) {
-                    router.pop()
-                }
-                
-                ScrollView {
-                    VStack(alignment: .leading) {
-                        showArticles
-                    }
-                }
-            }
+        ScrollView {
+            showArticles
+                .padding(.top, 16)
         }
+        .background(Color.COLOR_141_D_2_A)
+        .navigationTitle(categoryName)
+        .navigationBarColor(backgroundColor: .COLOR_141_D_2_A, titleColor: .white)
     }
     
     private var showArticles: some View{

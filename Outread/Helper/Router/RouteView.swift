@@ -30,7 +30,7 @@ struct RouteView<Screen: View>: View {
             #endif
 
             content
-                .hideNavigationBar() // MARK: - hide navigation bar for all over app
+                //.hideNavigationBar() // MARK: - hide navigation bar for all over app
         }
     }
 }
