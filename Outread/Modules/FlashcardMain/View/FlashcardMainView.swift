@@ -224,7 +224,7 @@ struct FlashcardMainView: View {
         do {
             try context.save()
         } catch {
-            UIApplication.keyWindow?.rootViewController?.showAlert(msg: error.localizedDescription)
+            Alert.shared.showAlert(msg: error.localizedDescription)
         }
     }
     

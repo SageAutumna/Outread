@@ -1,14 +1,20 @@
 //
-//  Ext+UIViewController.swift
+//  Alert.swift
 //  Outread
 //
-//  Created by AKASH BOGHANI on 26/05/24.
+//  Created by AKASH BOGHANI on 28/06/24.
 //
 
 import UIKit
 
-// MARK: - Show Alerts
-extension UIViewController {
+final class Alert {
+    //MARK: - Properties
+    static let shared = Alert()
+    
+    //MARK: - Life-Cycle
+    private init() {}
+    
+    //MARK: - Functions
     func showAlert(title: String = Bundle.main.appName,
                    msg: String,
                    options: String...,
@@ -37,11 +43,12 @@ extension UIViewController {
         }
     }
 
-    func showAlert(title: String = Bundle.main.appName, msg: String, buttonText: String? = "OK") {
-        showAlert(title: title,
-                  msg: msg,
-                  options: buttonText ?? "OK",
-                  btnStyle: .default) { option in
+    func showAlert(
+        title: String = Bundle.main.appName,
+        msg: String,
+        buttonText: String? = "Ok"
+    ) {
+        showAlert(title: title, msg: msg, options: buttonText ?? "Ok", btnStyle: .default) { option in
             switch option {
             case 0: break
             default: break

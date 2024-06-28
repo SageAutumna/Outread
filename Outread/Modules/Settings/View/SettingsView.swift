@@ -2,6 +2,7 @@ import SwiftUI
 
 struct SettingsView: View {
     //MARK: - Properties
+    @AppStorage("hasCompletedOnboarding") private var hasCompletedOnboarding: Bool = false
     @EnvironmentObject private var router: Router<AppRoutes>
     
     //MARK: - Body
@@ -40,7 +41,9 @@ struct SettingsView: View {
     
     var settingsList: some View {
         VStack(alignment: .leading, spacing: 15) {
-            settingsItem(title: "My Account", route: .updateEmail)
+            settingsItem(title: "My Account") {
+                router.push(.updateEmail)
+            }
             
             settingsItem(title: "Membership")
             
@@ -50,7 +53,9 @@ struct SettingsView: View {
                 .background(Color.white)
                 .padding(.bottom, 10)
             
-            settingsItem(title: "Privacy Policy", route: .privacyPolicy)
+            settingsItem(title: "Privacy Policy") {
+                router.push(.privacyPolicy)
+            }
             
             settingsItem(title: "Terms of use")
             
@@ -58,9 +63,27 @@ struct SettingsView: View {
             
             settingsItem(title: "Help Center")
             
-            settingsItem(title: "Log out")
+            settingsItem(title: "Log out") {
+                Alert.shared.showAlert(msg: "Are you sure you want to logout?", options: "Cancel", "Logout", btnStyle: .default, .destructive, completion: { option in
+                    switch option {
+                    case 0: break
+                    case 1:
+                        hasCompletedOnboarding = false
+                        router.popTo(.onboarding, inclusive: true)
+                    default: break
+                    }
+                })
+            }
             
-            settingsItem(title: "Delete Account", color: .red)
+            settingsItem(title: "Delete Account", color: .red) {
+                Alert.shared.showAlert(msg: "Are you sure you want to delete account?", options: "Cancel", "Delete", btnStyle: .default, .destructive, completion: { option in
+                    switch option {
+                    case 0: break
+                    case 1: break
+                    default: break
+                    }
+                })
+            }
         }
         .padding(.top, 5)
         .padding(.horizontal, 15)
@@ -80,11 +103,10 @@ struct SettingsView: View {
         .padding(.bottom, 15)
     }
     
-    func settingsItem(title: String, color: Color = .white, route: AppRoutes? = nil) -> some View {
+    func settingsItem(title: String, color: Color = .white, complition: (() -> Void)? = nil) -> some View {
         Button {
             HapticManager.generateHapticFeedback(for: .impact(feedbackStyle: .light))
-            guard let route = route else { return }
-            router.push(route)
+            complition?()
         } label: {
             HStack {
                 Text(title)

@@ -18,7 +18,6 @@
 		381075D72C0396C90074864C /* ProductView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 381075D62C0396C90074864C /* ProductView.swift */; };
 		381075D92C039AF70074864C /* Ext+String.swift in Sources */ = {isa = PBXBuildFile; fileRef = 381075D82C039AF70074864C /* Ext+String.swift */; };
 		381075DB2C039C350074864C /* SearchScreenViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 381075DA2C039C350074864C /* SearchScreenViewModel.swift */; };
-		381075DD2C039D1A0074864C /* Ext+UIViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 381075DC2C039D1A0074864C /* Ext+UIViewController.swift */; };
 		381075DF2C039D4E0074864C /* Ext+Bundle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 381075DE2C039D4E0074864C /* Ext+Bundle.swift */; };
 		381075E42C039DFC0074864C /* Ext+UIApplication.swift in Sources */ = {isa = PBXBuildFile; fileRef = 381075E32C039DFC0074864C /* Ext+UIApplication.swift */; };
 		381075E72C03AE5A0074864C /* Kingfisher in Frameworks */ = {isa = PBXBuildFile; productRef = 381075E62C03AE5A0074864C /* Kingfisher */; };
@@ -39,6 +38,7 @@
 		386A96D42C14242400A78CC6 /* MainTabView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 386A96D32C14242400A78CC6 /* MainTabView.swift */; };
 		388C4C982C248AC400CECAD1 /* Ext+Numbers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 388C4C972C248AC400CECAD1 /* Ext+Numbers.swift */; };
 		388C4C9E2C249B1D00CECAD1 /* Category.swift in Sources */ = {isa = PBXBuildFile; fileRef = 388C4C9D2C249B1D00CECAD1 /* Category.swift */; };
+		388E47242C2F04EE00526592 /* Alert.swift in Sources */ = {isa = PBXBuildFile; fileRef = 388E47232C2F04EE00526592 /* Alert.swift */; };
 		388FFD5F2C2B13A100E28A80 /* NavigationConfigurator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 388FFD5E2C2B13A100E28A80 /* NavigationConfigurator.swift */; };
 		3897EBF02C29F4170004365D /* Haptic.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3897EBEF2C29F4170004365D /* Haptic.swift */; };
 		3897EBF22C29FB080004365D /* HideKeyboardModifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3897EBF12C29FB080004365D /* HideKeyboardModifier.swift */; };
@@ -91,7 +91,6 @@
 		381075D62C0396C90074864C /* ProductView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProductView.swift; sourceTree = "<group>"; };
 		381075D82C039AF70074864C /* Ext+String.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Ext+String.swift"; sourceTree = "<group>"; };
 		381075DA2C039C350074864C /* SearchScreenViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchScreenViewModel.swift; sourceTree = "<group>"; };
-		381075DC2C039D1A0074864C /* Ext+UIViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Ext+UIViewController.swift"; sourceTree = "<group>"; };
 		381075DE2C039D4E0074864C /* Ext+Bundle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Ext+Bundle.swift"; sourceTree = "<group>"; };
 		381075E32C039DFC0074864C /* Ext+UIApplication.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Ext+UIApplication.swift"; sourceTree = "<group>"; };
 		381075E82C03AE810074864C /* Ext+View.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Ext+View.swift"; sourceTree = "<group>"; };
@@ -111,6 +110,7 @@
 		386A96D32C14242400A78CC6 /* MainTabView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainTabView.swift; sourceTree = "<group>"; };
 		388C4C972C248AC400CECAD1 /* Ext+Numbers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Ext+Numbers.swift"; sourceTree = "<group>"; };
 		388C4C9D2C249B1D00CECAD1 /* Category.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Category.swift; sourceTree = "<group>"; };
+		388E47232C2F04EE00526592 /* Alert.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Alert.swift; sourceTree = "<group>"; };
 		388FFD5E2C2B13A100E28A80 /* NavigationConfigurator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NavigationConfigurator.swift; sourceTree = "<group>"; };
 		3897EBEF2C29F4170004365D /* Haptic.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Haptic.swift; sourceTree = "<group>"; };
 		3897EBF12C29FB080004365D /* HideKeyboardModifier.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HideKeyboardModifier.swift; sourceTree = "<group>"; };
@@ -232,6 +232,7 @@
 				923C5F1A2C1856EB0033AC47 /* TaskCancellable.swift */,
 				3897EBEF2C29F4170004365D /* Haptic.swift */,
 				3897EBF12C29FB080004365D /* HideKeyboardModifier.swift */,
+				388E47232C2F04EE00526592 /* Alert.swift */,
 			);
 			path = Classes;
 			sourceTree = "<group>";
@@ -562,7 +563,6 @@
 			children = (
 				3898C5D62C02134D006A6C3C /* Ext+Fonts.swift */,
 				381075D82C039AF70074864C /* Ext+String.swift */,
-				381075DC2C039D1A0074864C /* Ext+UIViewController.swift */,
 				381075DE2C039D4E0074864C /* Ext+Bundle.swift */,
 				381075E32C039DFC0074864C /* Ext+UIApplication.swift */,
 				381075E82C03AE810074864C /* Ext+View.swift */,
@@ -818,7 +818,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				381075DD2C039D1A0074864C /* Ext+UIViewController.swift in Sources */,
 				38330F152C15B82E00B61A2F /* MainPageVM.swift in Sources */,
 				388C4C9E2C249B1D00CECAD1 /* Category.swift in Sources */,
 				381075E42C039DFC0074864C /* Ext+UIApplication.swift in Sources */,
@@ -870,6 +869,7 @@
 				3897EBF02C29F4170004365D /* Haptic.swift in Sources */,
 				9C9EFE402B579AA200B43B99 /* OutreadApp.swift in Sources */,
 				38BA35AD2C0205F9009BB640 /* SearchScreen.swift in Sources */,
+				388E47242C2F04EE00526592 /* Alert.swift in Sources */,
 				381075CA2C0392240074864C /* APIService.swift in Sources */,
 				9C9EFE6E2B58FE0200B43B99 /* ExplainerView1.swift in Sources */,
 				9CCA795B2BA015F10098DF6E /* ArticleRow.swift in Sources */,

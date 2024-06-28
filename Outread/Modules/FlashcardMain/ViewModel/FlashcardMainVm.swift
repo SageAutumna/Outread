@@ -31,11 +31,11 @@ final class FlashcardMainVm: ObservableObject {
                 }
             } catch let error as APIError {
                 DispatchQueue.main.async {
-                    UIApplication.keyWindow?.rootViewController?.showAlert(msg: error.description)
+                    Alert.shared.showAlert(msg: error.description)
                 }
             } catch {
                 DispatchQueue.main.async {
-                    UIApplication.keyWindow?.rootViewController?.showAlert(msg: error.localizedDescription)
+                    Alert.shared.showAlert(msg: error.localizedDescription)
                 }
             }
             DispatchQueue.main.async {

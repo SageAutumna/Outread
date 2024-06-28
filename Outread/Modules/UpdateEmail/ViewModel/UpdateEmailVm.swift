@@ -25,7 +25,7 @@ final class UpdateEmailVm: ObservableObject {
     func updateEmail() {
         HapticManager.generateHapticFeedback(for: .impact(feedbackStyle: .light))
         guard !email.isEmpty else {
-            UIApplication.keyWindow?.rootViewController?.showAlert(msg: "Email cannot be empty.")
+            Alert.shared.showAlert(msg: "Email cannot be empty.")
             return
         }
         isLoading = true
@@ -41,9 +41,9 @@ final class UpdateEmailVm: ObservableObject {
     
     private func handleError(_ error: Error) {
         if let apiError = error as? APIError {
-            UIApplication.keyWindow?.rootViewController?.showAlert(msg: apiError.description)
+            Alert.shared.showAlert(msg: apiError.description)
         } else {
-            UIApplication.keyWindow?.rootViewController?.showAlert(msg: error.localizedDescription)
+            Alert.shared.showAlert(msg: error.localizedDescription)
         }
     }
 }

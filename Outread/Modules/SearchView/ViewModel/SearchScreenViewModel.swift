@@ -32,10 +32,10 @@ class SearchScreenViewModel: ObservableObject {
                 isLoading = false
             } catch let error as APIError {
                 isLoading = false
-                UIApplication.keyWindow?.rootViewController?.showAlert(msg: error.description)
+                Alert.shared.showAlert(msg: error.description)
             } catch {
                 isLoading = false
-                UIApplication.keyWindow?.rootViewController?.showAlert(msg: error.localizedDescription)
+                Alert.shared.showAlert(msg: error.localizedDescription)
             }
         }.store(in: &taskDisposeBag)
     }
