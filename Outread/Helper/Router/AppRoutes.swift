@@ -10,7 +10,9 @@ import Foundation
 // MARK: - AppRoute
 enum AppRoutes: Equatable {
     case tab
-    case onboarding
+    case explainer1
+    case explainer2
+    case login
     case main
     case articles(products: [Product], categoryName: String, playlists: [Product], categories: [Category])
     case categories(categories: [Category], products: [Product], playlists: [Product])

@@ -38,7 +38,7 @@ struct SearchScreen: View {
         .onAppear {
             searchViewModel.fetchProduct(query: "")
         }
-        .onChange(of: searchText) { newText in
+        .onChange(of: searchText) { _, newText in
             searchTextPublisher.send(newText)
         }
         .onReceive(searchTextPublisher.debounce(for: .milliseconds(1500), scheduler: DispatchQueue.main)) { debouncedText in

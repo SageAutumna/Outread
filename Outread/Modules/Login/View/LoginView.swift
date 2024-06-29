@@ -4,6 +4,7 @@ struct LoginView: View {
     //MARK: - Properties
     @AppStorage("hasCompletedOnboarding") private var hasCompletedOnboarding: Bool = false
     @ObservedObject private var viewModel = LoginVm()
+    @FocusState private var focusedField: FocusableField?
     
     @State private var username: String = ""
     @State private var password: String = ""
@@ -12,6 +13,10 @@ struct LoginView: View {
     
     let imageNames = ["img_graphic_1", "img_graphic_2", "img_graphic_3", "img_graphic_4", "img_graphic_5"]
     let timer = Timer.publish(every: 2, on: .main, in: .common).autoconnect()
+    
+    enum FocusableField: Hashable {
+        case email, password
+    }
     
     //MARK: - Body
     var body: some View {
@@ -62,8 +67,9 @@ struct LoginView: View {
                     footerSec
                 }
             }
-            .hideKeyboardWhenTappedAround()
         }
+        .hideKeyboardWhenTappedAround()
+        .hideNavigationBar()
     }
     
     var footerSec: some View {
@@ -76,6 +82,11 @@ struct LoginView: View {
                 .autocapitalization(.none)
                 .keyboardType(.emailAddress)
                 .padding(.horizontal)
+                .focused($focusedField, equals: .email)
+                .submitLabel(.next)
+                .onSubmit {
+                    focusedField = .password
+                }
             
             SecureField("Password", text: $password)
                 .font(.poppins(weight: .regular, size: 18))
@@ -83,6 +94,8 @@ struct LoginView: View {
                 .background(Color.white.opacity(0.8))
                 .cornerRadius(8)
                 .padding(.horizontal)
+                .focused($focusedField, equals: .password)
+                .submitLabel(.done)
             
             Button {
                 HapticManager.generateHapticFeedback(for: .impact(feedbackStyle: .light))

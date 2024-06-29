@@ -37,10 +37,14 @@ struct OutreadApp: App {
     // MARK: - Body
     var body: some Scene {
         WindowGroup {
-            RouterHost(Router(initial: hasCompletedOnboarding ? AppRoutes.tab : AppRoutes.onboarding)) { route in
+            RouterHost(Router(initial: hasCompletedOnboarding ? AppRoutes.tab : AppRoutes.explainer1)) { route in
                 switch route {
-                case .onboarding: 
-                    OnboardingView()
+                case .explainer1:
+                    ExplainerView1()
+                case .explainer2:
+                    ExplainerView2()
+                case .login:
+                    LoginView()
                 case .tab:
                     MainTabView()
                 case .main:

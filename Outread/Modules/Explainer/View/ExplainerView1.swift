@@ -2,7 +2,7 @@ import SwiftUI
 
 struct ExplainerView1: View {
     //MARK: - Properties
-    @Binding var currentPage: Int
+    @EnvironmentObject private var router: Router<AppRoutes>
     
     //MARK: - Body
     var body: some View {
@@ -26,9 +26,7 @@ struct ExplainerView1: View {
             
             Button {
                 HapticManager.generateHapticFeedback(for: .impact(feedbackStyle: .light))
-                withAnimation {
-                    currentPage = 1
-                }
+                router.push(.explainer2)
             } label: {
                 Text("Next")
                     .font(.poppins(weight: .medium, size: 20))
@@ -42,9 +40,7 @@ struct ExplainerView1: View {
             
             Button {
                 HapticManager.generateHapticFeedback(for: .impact(feedbackStyle: .light))
-                withAnimation {
-                    currentPage = 2
-                }
+                router.push(.login)
             } label: {
                 Text("Log In")
                     .foregroundStyle(.white)
@@ -63,7 +59,7 @@ struct ExplainerView1: View {
 
 struct ExplainerView1_Previews: PreviewProvider {
     static var previews: some View {
-        ExplainerView1(currentPage: .constant(0))
+        ExplainerView1()
     }
 }
 

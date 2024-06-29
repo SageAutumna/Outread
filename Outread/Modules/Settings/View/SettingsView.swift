@@ -69,7 +69,7 @@ struct SettingsView: View {
                     case 0: break
                     case 1:
                         hasCompletedOnboarding = false
-                        router.popTo(.onboarding, inclusive: true)
+                        router.popTo(.explainer1, inclusive: true)
                     default: break
                     }
                 })

@@ -2,7 +2,7 @@ import SwiftUI
 
 struct ExplainerView2: View {
     //MARK: - Properties
-    @Binding var currentPage: Int
+    @EnvironmentObject private var router: Router<AppRoutes>
     
     //MARK: - Body
     var body: some View {
@@ -14,6 +14,7 @@ struct ExplainerView2: View {
                 .frame(width: UIApplication.keyWindow?.bounds.width,
                        height: (UIApplication.keyWindow?.bounds.height ?? 0) - (UIApplication.keyWindow?.safeAreaInsets.top ?? 0))
         }
+        .hideNavigationBar()
         .overlay {
             buttonsView
                 .padding(.horizontal)
@@ -26,11 +27,7 @@ struct ExplainerView2: View {
             
             Button {
                 HapticManager.generateHapticFeedback(for: .impact(feedbackStyle: .light))
-                withAnimation {
-                    if currentPage < 2 {
-                        currentPage += 1
-                    }
-                }
+                router.push(.login)
             } label: {
                 Text("Log In")
                     .foregroundStyle(.white)
@@ -49,7 +46,7 @@ struct ExplainerView2: View {
 
 struct ExplainerView2_Previews: PreviewProvider {
     static var previews: some View {
-        ExplainerView2(currentPage: .constant(0))
+        ExplainerView2()
     }
 }
 
