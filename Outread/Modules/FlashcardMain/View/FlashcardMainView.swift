@@ -237,7 +237,7 @@ struct FlashcardMainView: View {
     }
 }
 
-struct ListType: Codable, Equatable {
+struct ListType: Codable, Equatable, Hashable {
     var str1: String
     var str2: String
 }

@@ -35,30 +35,30 @@ extension String {
 }
 
 extension String{
-    func allStringsBetween(start: String, end: String) -> [Any] {
-        var strings = [Any]()
+    func allStringsBetween(start: String, end: String) -> [String] {
+        var strings = [String]()
         var startRange: NSRange = (self as NSString).range(of: start)
         
-        while true {
-            if startRange.location != NSNotFound {
-                var targetRange = NSRange()
-                targetRange.location = startRange.location + startRange.length
-                targetRange.length = self.count - targetRange.location
-                let endRange: NSRange = (self as NSString).range(of: end, options: [], range: targetRange)
-                if endRange.location != NSNotFound {
-                    targetRange.length = endRange.location - targetRange.location
-                    strings.append((self as NSString).substring(with: targetRange))
-                    var restOfString =  NSRange()
-                    restOfString.location = endRange.location + endRange.length
-                    restOfString.length = self.count - restOfString.location
-                    startRange = (self as NSString).range(of: start, options: [], range: restOfString)
-                } else {
-                    break
-                }
+        while startRange.location != NSNotFound {
+            var targetRange = NSRange(location: startRange.location + startRange.length,
+                                      length: self.count - (startRange.location + startRange.length))
+            let endRange: NSRange = (self as NSString).range(of: end, options: [], range: targetRange)
+            
+            if endRange.location != NSNotFound {
+                targetRange.length = endRange.location - targetRange.location
+                var foundString = (self as NSString).substring(with: targetRange)
+                foundString = foundString.replacingOccurrences(of: "\n", with: "")
+                foundString = foundString.trimmingCharacters(in: .whitespacesAndNewlines)
+                strings.append(foundString)
+                
+                let restOfStringRange = NSRange(location: endRange.location + endRange.length,
+                                                    length: self.count - (endRange.location + endRange.length))
+                startRange = (self as NSString).range(of: start, options: [], range: restOfStringRange)
             } else {
                 break
             }
         }
+        
         return strings
     }
 }

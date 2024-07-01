@@ -13,6 +13,7 @@ final class FlashcardMainVm: ObservableObject {
     //MARK: - Properties
     @Published var list = [ListType]()
     @Published var isLoading = true
+    @Published var htmlStr: String = ""
     private var taskDisposeBag = TaskBag()
     private let networkHandler: NetworkServices
     
@@ -27,6 +28,7 @@ final class FlashcardMainVm: ObservableObject {
             do {
                 let str = try await networkHandler.fetchArticleByTitle(name: name)
                 if let content = str {
+                    htmlStr = content
                     list = content.extractParagraphs()
                 }
             } catch let error as APIError {
@@ -51,14 +53,12 @@ extension String {
         var result = [ListType]()
         
         for paragraph in bodyStrings {
-            if let paragraph = paragraph as? String {
-                if paragraph.count < 100 {
-                    result.append(ListType(str1: paragraph.htmlToString, str2: ""))
-                } else {
-                    if var last = result.popLast() {
-                        last.str2 += "\n\(paragraph.htmlToString)"
-                        result.append(last)
-                    }
+            if paragraph.count < 100 {
+                result.append(ListType(str1: paragraph.htmlToString, str2: ""))
+            } else {
+                if var last = result.popLast() {
+                    last.str2 += paragraph.htmlToString
+                    result.append(last)
                 }
             }
         }

@@ -110,6 +110,7 @@ struct SearchScreen: View {
                 .padding(.vertical, 10)
                 .padding(.bottom, ((UIApplication.keyWindow?.safeAreaInsets.bottom ?? 0) + 35))
             }
+            .scrollDismissesKeyboard(.immediately)
         }
     }
 

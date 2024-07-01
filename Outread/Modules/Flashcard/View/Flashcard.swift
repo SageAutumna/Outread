@@ -15,80 +15,67 @@ struct FlashcardView: View {
         ZStack {
             Color.COLOR_141_D_2_A.edgesIgnoringSafeArea(.all)
             
-            contentView
-                .redacted(reason: viewModel.isLoading ? .placeholder : [])
-                .padding(.top, 16)
+            if !viewModel.list.isEmpty {
+                contentView
+//                    .redacted(reason: viewModel.isLoading ? .placeholder : [])
+                    .padding(.top, 16)
+            }
         }
         .navigationTitle("Article")
         .navigationBarColor(backgroundColor: .COLOR_141_D_2_A, titleColor: .white)
-        .gesture(dragGesture)
         .task {
             viewModel.loadArticle(name: productName)
         }
     }
     
     private var contentView: some View {
-        ZStack {
-            Color.COLOR_27394_F
-                .clipShape(RoundedRectangle(cornerRadius: 20))
-                .padding(.horizontal, 15)
-                .padding(.bottom, 10)
-            
-            VStack(alignment: .leading, spacing: 0) {
-                if !viewModel.list.isEmpty {
-                    Text(viewModel.list[currentSectionIndex].str1)
+        Color.COLOR_27394_F
+            .clipShape(RoundedRectangle(cornerRadius: 20))
+            .padding(.horizontal, 15)
+            .padding(.bottom, 10)
+            .overlay {
+                articalView
+            }
+        
+        /*
+        ModelPages(viewModel.list, currentPage: $currentSectionIndex, navigationOrientation: .horizontal, transitionStyle: .pageCurl) { pageIndex, listData in
+            ScrollView(showsIndicators: false) {
+                VStack(alignment: .leading, spacing: 10) {
+                    Text(listData.str1)
                         .foregroundColor(Color.white)
-                        .font(.poppins(weight: .medium, size: 30))
-                        .padding(.bottom, 10)
-                        .padding(.horizontal, 25)
+                        .font(.poppins(weight: .medium, size: 27))
                     
-                    ScrollView(showsIndicators: false) {
-                        Text(viewModel.list[currentSectionIndex].str2)
-                            .foregroundColor(Color.white)
-                            .font(.poppins(weight: .regular, size: 20))
-                            .padding(.horizontal, 25)
-                    }
-                    .padding(.bottom, 10)
-                } else {
-                    VStack(alignment: .center, spacing: 0) {
-                        Text("Contrary to popular belief, Lorem Ipsum is not simply random text.")
-                            .foregroundColor(Color.clear)
-                            .font(.poppins(weight: .medium, size: 30))
-                            .padding(.bottom, 10)
-                            .padding(.horizontal, 25)
-                        
-                        
-                        Text("It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using Lorem Ipsum is that it has a more-or-less normal distribution of letters, as opposed to using 'Content here, content here', making it look like readable English.")
-                            .font(.poppins(weight: .medium, size: 25))
-                            .foregroundColor(Color.white)
-                            .padding(.horizontal, 23)
-                        
-                        Spacer()
-                    }
+                    Text(listData.str2)
+                        .foregroundColor(Color.white)
+                        .font(.poppins(weight: .regular, size: 17))
                 }
             }
-            .padding([.vertical, .bottom], 15)
+            .padding(.horizontal, 16)
+            .padding(.bottom, 40)
         }
+         */
     }
     
-    private var dragGesture: some Gesture {
-        DragGesture(minimumDistance: 3.0, coordinateSpace: .local)
-            .onEnded { value in
-                switch (value.translation.width, value.translation.height) {
-                case (...0, -30...30):
-                    if currentSectionIndex < viewModel.list.count - 1 {
-                        currentSectionIndex += 1
+    private var articalView: some View {
+        TabView {
+            ForEach(viewModel.list, id: \.self) { listData in
+                ScrollView(showsIndicators: false) {
+                    VStack(alignment: .leading, spacing: 10) {
+                        Text(listData.str1)
+                            .foregroundColor(Color.white)
+                            .font(.poppins(weight: .medium, size: 27))
+                        
+                        Text(listData.str2)
+                            .foregroundColor(Color.white)
+                            .font(.poppins(weight: .regular, size: 17))
                     }
-                case (0..., -30...30):
-                    if currentSectionIndex == 0 {
-                        dismiss()
-                    } else {
-                        currentSectionIndex -= 1
-                    }
-                default:
-                    break
                 }
+                .padding(.bottom, 40)
+                .padding(.top, 10)
             }
+        }
+        .padding(.horizontal, 32)
+        .tabViewStyle(.page(indexDisplayMode: .automatic))
     }
     
     // MARK: - Functions
