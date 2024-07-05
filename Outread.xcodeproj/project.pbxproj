@@ -60,6 +60,7 @@
 		3898C5D72C02134D006A6C3C /* Ext+Fonts.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3898C5D62C02134D006A6C3C /* Ext+Fonts.swift */; };
 		38BA35AD2C0205F9009BB640 /* SearchScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38BA35AC2C0205F9009BB640 /* SearchScreen.swift */; };
 		38BAD9902C27E95500FF651D /* UpdateEmailVm.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38BAD98F2C27E95500FF651D /* UpdateEmailVm.swift */; };
+		38C13B9D2C35AEAB0003CA10 /* SwiftSoup in Frameworks */ = {isa = PBXBuildFile; productRef = 38C13B9C2C35AEAB0003CA10 /* SwiftSoup */; };
 		38E3C9602C25F00C00D1AA17 /* LoginVm.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38E3C95F2C25F00C00D1AA17 /* LoginVm.swift */; };
 		9231EB692BFF69D700959909 /* ArticlesVIew.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9231EB682BFF69D700959909 /* ArticlesVIew.swift */; };
 		9231EB6B2C008B3900959909 /* CategoriesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9231EB6A2C008B3900959909 /* CategoriesView.swift */; };
@@ -170,6 +171,7 @@
 			files = (
 				381075E72C03AE5A0074864C /* Kingfisher in Frameworks */,
 				3897EBF52C29FFE30004365D /* IQKeyboardManagerSwift in Frameworks */,
+				38C13B9D2C35AEAB0003CA10 /* SwiftSoup in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -757,6 +759,7 @@
 			packageProductDependencies = (
 				381075E62C03AE5A0074864C /* Kingfisher */,
 				3897EBF42C29FFE30004365D /* IQKeyboardManagerSwift */,
+				38C13B9C2C35AEAB0003CA10 /* SwiftSoup */,
 			);
 			productName = Outread;
 			productReference = 9C9EFE3C2B579AA200B43B99 /* Outread.app */;
@@ -789,6 +792,7 @@
 			packageReferences = (
 				381075E52C03AE5A0074864C /* XCRemoteSwiftPackageReference "Kingfisher" */,
 				3897EBF32C29FFE20004365D /* XCRemoteSwiftPackageReference "IQKeyboardManager" */,
+				38C13B9B2C35AEAB0003CA10 /* XCRemoteSwiftPackageReference "SwiftSoup" */,
 			);
 			productRefGroup = 9C9EFE3D2B579AA200B43B99 /* Products */;
 			projectDirPath = "";
@@ -1127,6 +1131,14 @@
 				minimumVersion = 7.0.3;
 			};
 		};
+		38C13B9B2C35AEAB0003CA10 /* XCRemoteSwiftPackageReference "SwiftSoup" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/scinfu/SwiftSoup.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 2.7.2;
+			};
+		};
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
@@ -1139,6 +1151,11 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 3897EBF32C29FFE20004365D /* XCRemoteSwiftPackageReference "IQKeyboardManager" */;
 			productName = IQKeyboardManagerSwift;
+		};
+		38C13B9C2C35AEAB0003CA10 /* SwiftSoup */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 38C13B9B2C35AEAB0003CA10 /* XCRemoteSwiftPackageReference "SwiftSoup" */;
+			productName = SwiftSoup;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};

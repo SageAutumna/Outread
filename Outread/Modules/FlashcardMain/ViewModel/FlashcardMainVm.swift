@@ -29,7 +29,8 @@ final class FlashcardMainVm: ObservableObject {
                 let str = try await networkHandler.fetchArticleByTitle(name: name)
                 if let content = str {
                     htmlStr = content
-                    list = content.extractParagraphs()
+//                    list = content.extractParagraphs()
+                    list = content.setStyledTextFromHtml()
                 }
             } catch let error as APIError {
                 DispatchQueue.main.async {

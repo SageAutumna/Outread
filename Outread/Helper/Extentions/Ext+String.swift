@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import SwiftSoup
 
 extension String {
     func stripOutHtml() -> String? {
@@ -52,7 +53,7 @@ extension String{
                 strings.append(foundString)
                 
                 let restOfStringRange = NSRange(location: endRange.location + endRange.length,
-                                                    length: self.count - (endRange.location + endRange.length))
+                                                length: self.count - (endRange.location + endRange.length))
                 startRange = (self as NSString).range(of: start, options: [], range: restOfStringRange)
             } else {
                 break
@@ -60,6 +61,155 @@ extension String{
         }
         
         return strings
+    }
+}
+
+extension String {
+    func setStyledTextFromHtml() -> [ListType] {
+        var arr = [ListType]()
+        do {
+            let document: Document = try SwiftSoup.parse(self)
+            let body = document.body()
+            
+            /*
+            // Extract and style headings (h2)
+            if let headings = try body?.select("h1") {
+                for heading in headings {
+                    let headingText = try heading.text()
+                    let headingAttributedString = NSMutableAttributedString(string: headingText + "\n\n", attributes: [
+                        .font: UIFont.boldSystemFont(ofSize: 24)
+                    ])
+                    arr.append(ListType(str1: headingAttributedString.string, str2: ""))
+                }
+            } else if let headings = try body?.select("h2") {
+                for heading in headings {
+                    let headingText = try heading.text()
+                    let headingAttributedString = NSMutableAttributedString(string: headingText + "\n\n", attributes: [
+                        .font: UIFont.boldSystemFont(ofSize: 24)
+                    ])
+                    arr.append(ListType(str1: headingAttributedString.string, str2: ""))
+                }
+            } else if let headings = try body?.select("h3") {
+                for heading in headings {
+                    let headingText = try heading.text()
+                    let headingAttributedString = NSMutableAttributedString(string: headingText + "\n\n", attributes: [
+                        .font: UIFont.boldSystemFont(ofSize: 24)
+                    ])
+                    arr.append(ListType(str1: headingAttributedString.string, str2: ""))
+                }
+            } else if let headings = try body?.select("h4") {
+                for heading in headings {
+                    let headingText = try heading.text()
+                    let headingAttributedString = NSMutableAttributedString(string: headingText + "\n\n", attributes: [
+                        .font: UIFont.boldSystemFont(ofSize: 24)
+                    ])
+                    arr.append(ListType(str1: headingAttributedString.string, str2: ""))
+                }
+            } else if let headings = try body?.select("h5") {
+                for heading in headings {
+                    let headingText = try heading.text()
+                    let headingAttributedString = NSMutableAttributedString(string: headingText + "\n", attributes: [
+                        .font: UIFont.boldSystemFont(ofSize: 24)
+                    ])
+                    arr.append(ListType(str1: headingAttributedString.string, str2: ""))
+                }
+            }
+             */
+            
+            // Extract and style paragraphs
+            if let paragraphs = try body?.select("p") {
+                for element in paragraphs {
+                    if let style = try? element.attr("style"), style.contains("font-size") {
+                        if let fontSizeValue = style.split(separator: ";").first(where: { $0.contains("font-size") })?.split(separator: ":").last {
+                            if let fontSize = Int(fontSizeValue.trimmingCharacters(in: .whitespacesAndNewlines).replacingOccurrences(of: "px", with: "")), fontSize >= 25 {
+                                let text = try element.text()
+                                arr.append(ListType(str1: text, str2: ""))
+                            } else {
+                                if var last = arr.popLast() {
+                                    let text = try element.text()
+                                    last.str2 += text
+                                    arr.append(last)
+                                }
+                            }
+                        } else {
+                            if var last = arr.popLast() {
+                                let text = try element.text()
+                                last.str2 += text
+                                arr.append(last)
+                            }
+                        }
+                    } else if element.children().count > 0 {
+                        for child in element.children() {
+                            if let style = try? child.attr("style"), style.contains("font-size") {
+                                if let fontSizeValue = style.split(separator: ";").first(where: { $0.contains("font-size") })?.split(separator: ":").last {
+                                    if let fontSize = Int(fontSizeValue.trimmingCharacters(in: .whitespacesAndNewlines).replacingOccurrences(of: "px", with: "")), fontSize >= 25 {
+                                        let text = try element.text()
+                                        arr.append(ListType(str1: text, str2: ""))
+                                    } else {
+                                        if var last = arr.popLast() {
+                                            let text = try element.text()
+                                            last.str2 += text
+                                            arr.append(last)
+                                        }
+                                    }
+                                } else {
+                                    if var last = arr.popLast() {
+                                        let text = try element.text()
+                                        last.str2 += text
+                                        arr.append(last)
+                                    }
+                                }
+                            } else if child.children().count > 0 {
+                                for subChild in child.children() {
+                                    if let subStyle = try? subChild.attr("style"), subStyle.contains("font-size") {
+                                        if let fontSizeValue = subStyle.split(separator: ";").first(where: { $0.contains("font-size") })?.split(separator: ":").last {
+                                            if let fontSize = Int(fontSizeValue.trimmingCharacters(in: .whitespacesAndNewlines).replacingOccurrences(of: "px", with: "")), fontSize >= 25 {
+                                                let text = try element.text()
+                                                arr.append(ListType(str1: text, str2: ""))
+                                            }  else {
+                                                if var last = arr.popLast() {
+                                                    let text = try element.text()
+                                                    last.str2 += text
+                                                    arr.append(last)
+                                                }
+                                            }
+                                        }  else {
+                                            if var last = arr.popLast() {
+                                                let text = try element.text()
+                                                last.str2 += text
+                                                arr.append(last)
+                                            }
+                                        }
+                                    } else {
+                                        if var last = arr.popLast() {
+                                            let text = try element.text()
+                                            last.str2 += text
+                                            arr.append(last)
+                                        }
+                                    }
+                                }
+                            } else {
+                                if var last = arr.popLast() {
+                                    let text = try element.text()
+                                    last.str2 += text
+                                    arr.append(last)
+                                }
+                            }
+                        }
+                    } else {
+                        if var last = arr.popLast() {
+                            let text = try element.text()
+                            last.str2 += text
+                            arr.append(last)
+                        }
+                    }
+                }
+            }
+        } catch {
+            print("Error parsing HTML: \(error)")
+        }
+        
+        return arr
     }
 }
 

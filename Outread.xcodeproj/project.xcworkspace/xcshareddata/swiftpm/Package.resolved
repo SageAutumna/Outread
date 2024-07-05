@@ -1,5 +1,5 @@
 {
-  "originHash" : "6c7d8115779014bef7e51a29cb01f18eb537d42f8f187f44352da5672efbe6ce",
+  "originHash" : "3cd014fd74ec7bb5e37f140c735a3942c93899ebb1164735a224de775a3a9c93",
   "pins" : [
     {
       "identity" : "iqkeyboardmanager",
@@ -17,6 +17,15 @@
       "state" : {
         "revision" : "2ef543ee21d63734e1c004ad6c870255e8716c50",
         "version" : "7.12.0"
+      }
+    },
+    {
+      "identity" : "swiftsoup",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/scinfu/SwiftSoup.git",
+      "state" : {
+        "revision" : "028487d4a8a291b2fe1b4392b5425b6172056148",
+        "version" : "2.7.2"
       }
     }
   ],
