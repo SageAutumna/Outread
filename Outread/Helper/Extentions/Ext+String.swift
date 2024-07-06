@@ -72,48 +72,48 @@ extension String {
             let body = document.body()
             
             /*
-            // Extract and style headings (h2)
-            if let headings = try body?.select("h1") {
-                for heading in headings {
-                    let headingText = try heading.text()
-                    let headingAttributedString = NSMutableAttributedString(string: headingText + "\n\n", attributes: [
-                        .font: UIFont.boldSystemFont(ofSize: 24)
-                    ])
-                    arr.append(ListType(str1: headingAttributedString.string, str2: ""))
-                }
-            } else if let headings = try body?.select("h2") {
-                for heading in headings {
-                    let headingText = try heading.text()
-                    let headingAttributedString = NSMutableAttributedString(string: headingText + "\n\n", attributes: [
-                        .font: UIFont.boldSystemFont(ofSize: 24)
-                    ])
-                    arr.append(ListType(str1: headingAttributedString.string, str2: ""))
-                }
-            } else if let headings = try body?.select("h3") {
-                for heading in headings {
-                    let headingText = try heading.text()
-                    let headingAttributedString = NSMutableAttributedString(string: headingText + "\n\n", attributes: [
-                        .font: UIFont.boldSystemFont(ofSize: 24)
-                    ])
-                    arr.append(ListType(str1: headingAttributedString.string, str2: ""))
-                }
-            } else if let headings = try body?.select("h4") {
-                for heading in headings {
-                    let headingText = try heading.text()
-                    let headingAttributedString = NSMutableAttributedString(string: headingText + "\n\n", attributes: [
-                        .font: UIFont.boldSystemFont(ofSize: 24)
-                    ])
-                    arr.append(ListType(str1: headingAttributedString.string, str2: ""))
-                }
-            } else if let headings = try body?.select("h5") {
-                for heading in headings {
-                    let headingText = try heading.text()
-                    let headingAttributedString = NSMutableAttributedString(string: headingText + "\n", attributes: [
-                        .font: UIFont.boldSystemFont(ofSize: 24)
-                    ])
-                    arr.append(ListType(str1: headingAttributedString.string, str2: ""))
-                }
-            }
+             // Extract and style headings (h2)
+             if let headings = try body?.select("h1") {
+             for heading in headings {
+             let headingText = try heading.text()
+             let headingAttributedString = NSMutableAttributedString(string: headingText + "\n\n", attributes: [
+             .font: UIFont.boldSystemFont(ofSize: 24)
+             ])
+             arr.append(ListType(str1: headingAttributedString.string, str2: ""))
+             }
+             } else if let headings = try body?.select("h2") {
+             for heading in headings {
+             let headingText = try heading.text()
+             let headingAttributedString = NSMutableAttributedString(string: headingText + "\n\n", attributes: [
+             .font: UIFont.boldSystemFont(ofSize: 24)
+             ])
+             arr.append(ListType(str1: headingAttributedString.string, str2: ""))
+             }
+             } else if let headings = try body?.select("h3") {
+             for heading in headings {
+             let headingText = try heading.text()
+             let headingAttributedString = NSMutableAttributedString(string: headingText + "\n\n", attributes: [
+             .font: UIFont.boldSystemFont(ofSize: 24)
+             ])
+             arr.append(ListType(str1: headingAttributedString.string, str2: ""))
+             }
+             } else if let headings = try body?.select("h4") {
+             for heading in headings {
+             let headingText = try heading.text()
+             let headingAttributedString = NSMutableAttributedString(string: headingText + "\n\n", attributes: [
+             .font: UIFont.boldSystemFont(ofSize: 24)
+             ])
+             arr.append(ListType(str1: headingAttributedString.string, str2: ""))
+             }
+             } else if let headings = try body?.select("h5") {
+             for heading in headings {
+             let headingText = try heading.text()
+             let headingAttributedString = NSMutableAttributedString(string: headingText + "\n", attributes: [
+             .font: UIFont.boldSystemFont(ofSize: 24)
+             ])
+             arr.append(ListType(str1: headingAttributedString.string, str2: ""))
+             }
+             }
              */
             
             // Extract and style paragraphs
@@ -202,6 +202,29 @@ extension String {
                             last.str2 += text
                             arr.append(last)
                         }
+                    }
+                }
+            }
+            
+            if let divTag = try body?.select("div") {
+                let paragraphs = try divTag.select("p")
+                for element in paragraphs {
+                    let strongParas = try element.select("strong")
+                    
+                    for strongpara in strongParas {
+                        let text = try strongpara.text()
+                        let textAttributedString = NSMutableAttributedString(string: text, attributes: [
+                            .font: UIFont.boldSystemFont(ofSize: 24)
+                        ])
+                        if !textAttributedString.string.contains("Figure") {
+                            arr.append(ListType(str1: textAttributedString.string, str2: ""))
+                        }
+                    }
+                    
+                    if var last = arr.popLast() {
+                        let text = try element.text()
+                        last.str2 += text
+                        arr.append(last)
                     }
                 }
             }
