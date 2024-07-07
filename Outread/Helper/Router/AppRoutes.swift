@@ -12,6 +12,7 @@ enum AppRoutes: Equatable {
     case tab
     case explainer1
     case explainer2
+    case signUp
     case login
     case main
     case articles(products: [Product], categoryName: String, playlists: [Product], categories: [Category])

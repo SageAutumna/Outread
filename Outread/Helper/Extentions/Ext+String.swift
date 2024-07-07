@@ -71,52 +71,6 @@ extension String {
             let document: Document = try SwiftSoup.parse(self)
             let body = document.body()
             
-            /*
-             // Extract and style headings (h2)
-             if let headings = try body?.select("h1") {
-             for heading in headings {
-             let headingText = try heading.text()
-             let headingAttributedString = NSMutableAttributedString(string: headingText + "\n\n", attributes: [
-             .font: UIFont.boldSystemFont(ofSize: 24)
-             ])
-             arr.append(ListType(str1: headingAttributedString.string, str2: ""))
-             }
-             } else if let headings = try body?.select("h2") {
-             for heading in headings {
-             let headingText = try heading.text()
-             let headingAttributedString = NSMutableAttributedString(string: headingText + "\n\n", attributes: [
-             .font: UIFont.boldSystemFont(ofSize: 24)
-             ])
-             arr.append(ListType(str1: headingAttributedString.string, str2: ""))
-             }
-             } else if let headings = try body?.select("h3") {
-             for heading in headings {
-             let headingText = try heading.text()
-             let headingAttributedString = NSMutableAttributedString(string: headingText + "\n\n", attributes: [
-             .font: UIFont.boldSystemFont(ofSize: 24)
-             ])
-             arr.append(ListType(str1: headingAttributedString.string, str2: ""))
-             }
-             } else if let headings = try body?.select("h4") {
-             for heading in headings {
-             let headingText = try heading.text()
-             let headingAttributedString = NSMutableAttributedString(string: headingText + "\n\n", attributes: [
-             .font: UIFont.boldSystemFont(ofSize: 24)
-             ])
-             arr.append(ListType(str1: headingAttributedString.string, str2: ""))
-             }
-             } else if let headings = try body?.select("h5") {
-             for heading in headings {
-             let headingText = try heading.text()
-             let headingAttributedString = NSMutableAttributedString(string: headingText + "\n", attributes: [
-             .font: UIFont.boldSystemFont(ofSize: 24)
-             ])
-             arr.append(ListType(str1: headingAttributedString.string, str2: ""))
-             }
-             }
-             */
-            
-            // Extract and style paragraphs
             if let paragraphs = try body?.select("p") {
                 for element in paragraphs {
                     if let style = try? element.attr("style"), style.contains("font-size") {
@@ -233,6 +187,41 @@ extension String {
         }
         
         return arr
+    }
+}
+
+extension String {
+    // MARK: - isEmail
+    var isEmail: Bool {
+        do {
+            let regex = try NSRegularExpression(pattern: "[A-Z0-9a-z._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,}", options: .caseInsensitive)
+            return regex.firstMatch(in: self, options: NSRegularExpression.MatchingOptions(rawValue: 0), range: NSRange(location: 0, length: count)) != nil
+        } catch {
+            return false
+        }
+    }
+
+    // MARK: - isPhoneNumber
+    var isPhoneNumber: Bool {
+        let types: NSTextCheckingResult.CheckingType = [.phoneNumber]
+        guard let detector = try? NSDataDetector(types: types.rawValue) else {
+            return false
+        }
+        if let match = detector.matches(in: self, options: [], range: NSRange(location: 0, length: count)).first?.phoneNumber {
+            return match == self
+        } else {
+            return false
+        }
+    }
+
+    // MARK: - isValidPassword
+    var isValidPassword: Bool {
+        do {
+            let regex = try NSRegularExpression(pattern: "^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)(?=.*[d$@$!%*?&#])[A-Za-z\\dd$@$!%*?&#]{8,}", options: .caseInsensitive)
+            return regex.firstMatch(in: self, options: NSRegularExpression.MatchingOptions(rawValue: 0), range: NSRange(location: 0, length: count)) != nil
+        } catch {
+            return false
+        }
     }
 }
 

@@ -43,6 +43,8 @@ struct OutreadApp: App {
                     ExplainerView1()
                 case .explainer2:
                     ExplainerView2()
+                case .signUp:
+                    SignUpScreen()
                 case .login:
                     LoginView()
                 case .tab:

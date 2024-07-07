@@ -15,6 +15,7 @@ enum API {
     case searchProduct(search: String)
     case article(name: String)
     case updateEmail(email: String)
+    case signUpUser(model: SignUpModel)
 }
 
 // MARK: - APIProtocol
@@ -42,6 +43,8 @@ extension API: APIProtocol {
             return "wp/v2/article"
         case .updateEmail:
             return "update-email"
+        case .signUpUser:
+            return "wp/v2/users"
         }
     }
     
@@ -49,7 +52,7 @@ extension API: APIProtocol {
         switch self {
         case .products, .categories, .searchProduct, .article:
             return .get
-        case .login, .updateEmail:
+        case .login, .updateEmail, .signUpUser:
             return .post
         }
     }
@@ -90,12 +93,14 @@ extension API: APIProtocol {
         case let .updateEmail(email):
             let params: [String: Any] = ["email": email]
             return .jsonEncoding(params)
+        case let .signUpUser(model):
+            return .jsonEncoding(model.asDictionary)
         }
     }
     
     var header: [String: String] {
         switch self {
-        case .login, .products, .categories, .searchProduct, .article, .updateEmail:
+        case .login, .products, .categories, .searchProduct, .article, .updateEmail, .signUpUser:
             return ["Content-Type": "application/json"]
         }
     }

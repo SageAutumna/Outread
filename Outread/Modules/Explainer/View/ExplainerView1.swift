@@ -50,6 +50,27 @@ struct ExplainerView1: View {
                     .background(Color.orange)
                     .cornerRadius(8)
             }
+            .padding(.bottom, 10)
+            
+            
+            HStack(spacing: 3) {
+                Spacer()
+                
+                Text("Don't have an account?")
+                    .foregroundStyle(.white)
+                    .font(.poppins(weight: .medium, size: 14))
+                
+                Button {
+                    HapticManager.generateHapticFeedback(for: .impact(feedbackStyle: .light))
+                    router.push(.signUp)
+                } label: {
+                    Text("Sign Up")
+                        .foregroundStyle(Color.COLOR_9178_A_8)
+                        .font(.poppins(weight: .medium, size: 14))
+                }
+                
+                Spacer()
+            }
             .padding(.bottom, 30)
         }
     }

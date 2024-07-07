@@ -21,6 +21,8 @@ protocol NetworkServices {
     func authenticate(username: String, password: String) async throws -> LoginResponse
     
     func updateEmail(email: String) async throws -> Bool
+    
+    func signUpUser(model: SignUpModel) async throws -> Bool
 }
 
 class NetworkHandler: NetworkServices {
@@ -52,5 +54,9 @@ class NetworkHandler: NetworkServices {
     
     func updateEmail(email: String) async throws -> Bool {
         try await APIService.request(API.updateEmail(email: email))
+    }
+    
+    func signUpUser(model: SignUpModel) async throws -> Bool {
+        try await APIService.request(API.signUpUser(model: model))
     }
 }

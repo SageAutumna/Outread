@@ -54,7 +54,7 @@ struct LoginView: View {
                                 .foregroundStyle(.white)
                                 .font(.poppins(weight: .semibold, size: 30))
                             
-                            Text("Signin to continue")
+                            Text("SignIn to continue")
                                 .foregroundStyle(.white)
                                 .font(.poppins(weight: .medium, size: 20))
                         }

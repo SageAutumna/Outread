@@ -17,6 +17,8 @@ struct FlashcardMainView: View {
     
     @State private var isShowCategory = false
     @State private var categoriesList = [Category]()
+    @State var tempProducts: [Product] = []
+    @State var playLists = [Product]()
     
     @State var product: Product
     @Query var bookmarksList: [LocalDataStorage]
@@ -82,8 +84,12 @@ struct FlashcardMainView: View {
                                 
                                 CategoriesScrollView(categories: uniqueCategories(categoriesList.filter{ $0.colorCategory != "" }),
                                                      products: [product],
-                                                     isNeedFilter: false) { id in }
-                                    .padding(.bottom, 15)
+                                                     isNeedFilter: false) { id in
+                                    if let selectedCategory = categoriesList.first(where: { $0.id == id }) {
+                                        router.push(.articles(products: tempProducts, categoryName: selectedCategory.name ?? "", playlists: playLists, categories: categoriesList))
+                                    }
+                                }
+                                .padding(.bottom, 15)
                             }
                         }
                         .padding(.horizontal, 15)

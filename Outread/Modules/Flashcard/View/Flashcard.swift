@@ -15,12 +15,10 @@ struct FlashcardView: View {
         ZStack {
             Color.COLOR_141_D_2_A.edgesIgnoringSafeArea(.all)
             
-            if !viewModel.list.isEmpty {
-                contentView
-//                    .redacted(reason: viewModel.isLoading ? .placeholder : [])
-                    .padding(.top, 16)
-            }
+            contentView
+                .padding(.top, 16)
         }
+        .redacted(reason: viewModel.isLoading ? .placeholder : [])
         .navigationTitle("Article")
         .navigationBarColor(backgroundColor: .COLOR_141_D_2_A, titleColor: .white)
         .task {
@@ -34,52 +32,45 @@ struct FlashcardView: View {
             .padding(.horizontal, 15)
             .padding(.bottom, 10)
             .overlay {
-                articalView
-            }
-        
-        /*
-        ModelPages(viewModel.list, currentPage: $currentSectionIndex, navigationOrientation: .horizontal, transitionStyle: .pageCurl) { pageIndex, listData in
-            ScrollView(showsIndicators: false) {
-                VStack(alignment: .leading, spacing: 10) {
-                    Text(listData.str1)
-                        .foregroundColor(Color.white)
-                        .font(.poppins(weight: .medium, size: 27))
-                    
-                    Text(listData.str2)
-                        .foregroundColor(Color.white)
-                        .font(.poppins(weight: .regular, size: 17))
+                if !viewModel.list.isEmpty {
+                    articalView
+                } else {
+                    VStack(spacing: 10) {
+                        Text("Test Tes Test Test Test")
+                            .foregroundColor(Color.white)
+                            .font(.poppins(weight: .medium, size: 27))
+                            .multilineTextAlignment(.center)
+                        
+                        Text("Test Tes Test Test Test Test Tes Test Test Test Test Tes Test Test Test Test Tes Test Test Test Test Tes Test Test Test Test Tes Test Test Test Test Tes Test Test Test Test Tes Test Test Test Test Tes Test Test Test Test Tes Test Test Test")
+                            .foregroundColor(Color.white)
+                            .font(.poppins(weight: .regular, size: 17))
+                        
+                        Spacer()
+                    }
+                    .padding(.bottom, 40)
+                    .padding(.top, 10)
+                    .padding(.horizontal, 32)
                 }
             }
-            .padding(.horizontal, 16)
-            .padding(.bottom, 40)
-        }
-         */
     }
     
     private var articalView: some View {
         TabView {
-            if !viewModel.list.isEmpty {
-                ForEach(viewModel.list, id: \.self) { listData in
-                    ScrollView(showsIndicators: false) {
-                        VStack(spacing: 10) {
-                            Text(listData.str1)
-                                .foregroundColor(Color.white)
-                                .font(.poppins(weight: .medium, size: 27))
-                                .multilineTextAlignment(.center)
-                            
-                            Text(listData.str2)
-                                .foregroundColor(Color.white)
-                                .font(.poppins(weight: .regular, size: 17))
-                        }
+            ForEach(viewModel.list, id: \.self) { listData in
+                ScrollView(showsIndicators: false) {
+                    VStack(spacing: 10) {
+                        Text(listData.str1)
+                            .foregroundColor(Color.white)
+                            .font(.poppins(weight: .medium, size: 27))
+                            .multilineTextAlignment(.center)
+                        
+                        Text(listData.str2)
+                            .foregroundColor(Color.white)
+                            .font(.poppins(weight: .regular, size: 17))
                     }
-                    .padding(.bottom, 40)
-                    .padding(.top, 10)
                 }
-            } else {
-                Text("No Data Found!!!")
-                    .foregroundColor(Color.white)
-                    .font(.poppins(weight: .medium, size: 27))
-                    .multilineTextAlignment(.center)
+                .padding(.bottom, 40)
+                .padding(.top, 10)
             }
         }
         .padding(.horizontal, 32)
