@@ -15,7 +15,7 @@ struct FlashcardView: View {
         ZStack {
             Color.COLOR_141_D_2_A.edgesIgnoringSafeArea(.all)
             
-            contentView
+            articalView
                 .padding(.top, 16)
         }
         .redacted(reason: viewModel.isLoading ? .placeholder : [])
@@ -26,55 +26,92 @@ struct FlashcardView: View {
         }
     }
     
-    private var contentView: some View {
-        Color.COLOR_27394_F
-            .clipShape(RoundedRectangle(cornerRadius: 20))
-            .padding(.horizontal, 15)
-            .padding(.bottom, 10)
-            .overlay {
-                if !viewModel.list.isEmpty {
-                    articalView
-                } else {
-                    VStack(spacing: 10) {
-                        Text("Test Tes Test Test Test")
-                            .foregroundColor(Color.white)
-                            .font(.poppins(weight: .medium, size: 27))
-                            .multilineTextAlignment(.center)
-                        
-                        Text("Test Tes Test Test Test Test Tes Test Test Test Test Tes Test Test Test Test Tes Test Test Test Test Tes Test Test Test Test Tes Test Test Test Test Tes Test Test Test Test Tes Test Test Test Test Tes Test Test Test Test Tes Test Test Test")
-                            .foregroundColor(Color.white)
-                            .font(.poppins(weight: .regular, size: 17))
-                        
-                        Spacer()
-                    }
-                    .padding(.bottom, 40)
-                    .padding(.top, 10)
-                    .padding(.horizontal, 32)
-                }
-            }
-    }
+    /*
+     private var contentView: some View {
+     Color.COLOR_27394_F
+     .clipShape(RoundedRectangle(cornerRadius: 20))
+     .padding(.horizontal, 15)
+     .padding(.bottom, 10)
+     .overlay {
+     if !viewModel.list.isEmpty {
+     articalView
+     } else {
+     VStack(spacing: 10) {
+     Text("Test Tes Test Test Test")
+     .foregroundColor(Color.white)
+     .font(.poppins(weight: .medium, size: 27))
+     .multilineTextAlignment(.center)
+     
+     Text("Test Tes Test Test Test Test Tes Test Test Test Test Tes Test Test Test Test Tes Test Test Test Test Tes Test Test Test Test Tes Test Test Test Test Tes Test Test Test Test Tes Test Test Test Test Tes Test Test Test Test Tes Test Test Test")
+     .foregroundColor(Color.white)
+     .font(.poppins(weight: .regular, size: 17))
+     
+     Spacer()
+     }
+     .padding(.bottom, 40)
+     .padding(.top, 10)
+     .padding(.horizontal, 32)
+     }
+     }
+     }
+     */
+    
+    /*
+     private var articalView: some View {
+     TabView {
+     ForEach(viewModel.list, id: \.self) { listData in
+     ScrollView(showsIndicators: false) {
+     VStack(spacing: 10) {
+     Text(listData.str1)
+     .foregroundColor(Color.white)
+     .font(.poppins(weight: .medium, size: 27))
+     .multilineTextAlignment(.center)
+     
+     Text(listData.str2)
+     .foregroundColor(Color.white)
+     .font(.poppins(weight: .regular, size: 17))
+     }
+     }
+     .padding(.bottom, 40)
+     .padding(.top, 10)
+     }
+     }
+     .padding(.horizontal, 32)
+     .tabViewStyle(.page(indexDisplayMode: .automatic))
+     }
+     */
     
     private var articalView: some View {
-        TabView {
-            ForEach(viewModel.list, id: \.self) { listData in
-                ScrollView(showsIndicators: false) {
-                    VStack(spacing: 10) {
+        GeometryReader { geo in
+            ScrollView(showsIndicators: false) {
+                ForEach(viewModel.list, id: \.self) { listData in
+                    VStack(spacing: 16) {
+                        Spacer()
+                        
                         Text(listData.str1)
                             .foregroundColor(Color.white)
                             .font(.poppins(weight: .medium, size: 27))
                             .multilineTextAlignment(.center)
+                            .padding(.horizontal, 15)
+                            .padding(.top, 15)
                         
                         Text(listData.str2)
                             .foregroundColor(Color.white)
                             .font(.poppins(weight: .regular, size: 17))
+                            .padding(.horizontal, 15)
+                            .padding(.bottom, 15)
+                        
+                        Spacer()
                     }
+                    .background(Color.COLOR_27394_F)
+                    .frame(width: geo.size.width - 30, height: geo.size.height)
+                    .clipShape(RoundedRectangle(cornerRadius: 20))
+                    .padding(.leading, 15)
+                    .padding(.bottom, 10)
                 }
-                .padding(.bottom, 40)
-                .padding(.top, 10)
             }
+            .scrollTargetBehavior(.paging)
         }
-        .padding(.horizontal, 32)
-        .tabViewStyle(.page(indexDisplayMode: .automatic))
     }
     
     // MARK: - Functions
