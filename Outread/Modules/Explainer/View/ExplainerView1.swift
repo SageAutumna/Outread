@@ -62,7 +62,10 @@ struct ExplainerView1: View {
                 
                 Button {
                     HapticManager.generateHapticFeedback(for: .impact(feedbackStyle: .light))
-                    router.push(.signUp)
+//                    router.push(.signUp)
+                    if let url = URL(string: "https://out-read.com/membership"), UIApplication.shared.canOpenURL(url) {
+                        UIApplication.shared.open(url)
+                    }
                 } label: {
                     Text("Sign Up")
                         .foregroundStyle(Color.COLOR_9178_A_8)
